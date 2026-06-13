@@ -4,7 +4,7 @@ This file tracks implementation and verification work derived from requirements.
 
 ## Authentication and Authorization
 
-- [x] Create Draw.io context and container diagrams under `/architecture` for the authentication, authorization, Angular UI delivery, CloudFront HTTPS certificate, and backend REST routing design. Related: REQ-AUTH-001, REQ-AUTH-002, REQ-UI-001, REQ-UI-002, REQ-API-001.
+- [x] Create Draw.io context and container diagrams under `/architecture` for the authentication, authorization, Angular UI delivery, CloudFront HTTPS certificate, backend REST routing, and DNS routing design. Related: REQ-AUTH-001, REQ-AUTH-002, REQ-UI-001, REQ-UI-002, REQ-API-001, REQ-DNS-001, REQ-DNS-002, REQ-DNS-003.
 - [ ] Define the source of `tenant_id` after Cognito authentication. Related: REQ-AUTH-001, REQ-AUTH-002.
 - [ ] Define the Amazon Verified Permissions action model for tenant-scoped UI features and actions. Related: REQ-AUTH-001, REQ-AUTH-002.
 - [ ] Specify fail-closed behavior for unavailable or incomplete authorization responses. Related: REQ-AUTH-002.
@@ -26,3 +26,10 @@ This file tracks implementation and verification work derived from requirements.
 - [ ] Define how Angular UI actions map to API Gateway REST paths, HTTP methods, and authorization actions. Related: REQ-API-001.
 - [ ] Define fail-closed behavior when authorized endpoint data is missing or stale. Related: REQ-API-001.
 - [ ] Define verification cases for allowed and denied Angular backend REST requests. Related: REQ-API-001.
+
+## DNS Routing
+
+- [ ] Define hosted zones and domain naming conventions for CloudFront, Cognito authorization, REST API, and WebSocket API Alias records. Related: REQ-DNS-001, REQ-DNS-002, REQ-DNS-003.
+- [ ] Define whether Route 53 Alias records are tenant-specific, environment-specific, application-specific, or shared. Related: REQ-DNS-001, REQ-DNS-002, REQ-DNS-003.
+- [ ] Define Cognito authorization endpoint domain strategy. Related: REQ-DNS-002.
+- [ ] Define verification cases for Route 53 Alias records routing to CloudFront, Cognito authorization, REST API, and WebSocket API endpoints. Related: REQ-DNS-001, REQ-DNS-002, REQ-DNS-003.

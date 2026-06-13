@@ -46,6 +46,14 @@ Endpoint authorization should align with the action authorization model used for
 
 Unauthorized endpoints should fail closed: the Angular UI should not route to an endpoint that is missing from the authorized endpoint set, and server-side enforcement should still reject unauthorized requests if a client bypasses the UI.
 
+## DNS Routing
+
+Amazon Route 53 Alias DNS records are created when externally addressable AWS service endpoints are provisioned.
+
+The CloudFront Alias record routes Angular UI access to the Amazon CloudFront Distribution URI. The Cognito authorization Alias record routes authentication authorization traffic to the Cognito authorization endpoint. API Gateway Alias records route REST and WebSocket API traffic to the intended Amazon API Gateway URI.
+
+Route 53 Alias records should be updated when the underlying service endpoint URI changes during replacement or reprovisioning.
+
 ## Fail-Closed UI Behavior
 
 Until authorization is successfully retrieved and evaluated, tenant-scoped UI features and actions should not be enabled by default.

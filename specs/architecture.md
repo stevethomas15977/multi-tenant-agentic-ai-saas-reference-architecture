@@ -24,8 +24,13 @@ When the Amazon CloudFront Distribution is provisioned, it uses a TLS/SSL certif
 
 When the Angular UI Web Application issues backend REST requests, those requests are routed to Amazon API Gateway REST endpoints only when the endpoint is authorized for the authenticated user and tenant context.
 
+## DNS Routing Context
+
+Amazon Route 53 provides Alias DNS records for provisioned service endpoints. Alias records route to the Amazon CloudFront Distribution URI, the Cognito authorization endpoint, and Amazon API Gateway REST or WebSocket endpoint URIs.
+
 ## Architecture Notes
 
+- Amazon Route 53 is responsible for DNS alias routing to provisioned AWS service endpoints.
 - Amazon Cognito User Pools are responsible for authenticating users.
 - Amazon Verified Permissions is responsible for evaluating action authorization.
 - UI feature/action enablement depends on authorization decisions scoped by `tenant_id`.
@@ -48,3 +53,6 @@ When the Angular UI Web Application issues backend REST requests, those requests
 - Whether certificates are tenant-specific, application-specific, or shared across tenant domains.
 - Source of truth for authorized API Gateway REST endpoints.
 - Whether unauthorized endpoint blocking is enforced in Angular only, API Gateway only, backend services only, or multiple layers.
+- Hosted zone and domain naming strategy for Route 53 Alias records.
+- Whether Route 53 Alias records are tenant-specific, environment-specific, application-specific, or shared.
+- Whether the Cognito authorization endpoint uses a Cognito-managed domain or a custom domain.

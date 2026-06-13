@@ -90,3 +90,43 @@ When the Angular UI Web Application issues a backend REST request, the system sh
 - Is endpoint authorization derived directly from Amazon Verified Permissions actions, a separate endpoint allowlist, or both?
 - Should unauthorized backend REST endpoints be omitted from Angular runtime configuration, blocked by the UI authorization layer, rejected by Amazon API Gateway, or all of these?
 - How should route authorization be represented: by API path, HTTP method, domain action, resource type, or a combination?
+
+## DNS Routing
+
+### REQ-DNS-001: Create CloudFront Alias Record
+
+When the Amazon CloudFront Distribution is provisioned, the system shall create an Amazon Route 53 Alias DNS record that routes to the Amazon CloudFront Distribution URI.
+
+**Acceptance Criteria**
+
+- Given the Amazon CloudFront Distribution is provisioned, then an Amazon Route 53 Alias DNS record exists for the distribution.
+- Given the Amazon Route 53 Alias DNS record for the Angular UI is resolved, then it routes to the Amazon CloudFront Distribution URI.
+- Given the Amazon CloudFront Distribution URI changes during replacement or reprovisioning, then the Amazon Route 53 Alias DNS record is updated to route to the current distribution URI.
+
+### REQ-DNS-002: Create Cognito Authorization Endpoint Alias Record
+
+When Amazon Cognito is provisioned, the system shall create an Amazon Route 53 Alias DNS record that routes to the Cognito authorization endpoint.
+
+**Acceptance Criteria**
+
+- Given Amazon Cognito is provisioned for authentication, then an Amazon Route 53 Alias DNS record exists for the Cognito authorization endpoint.
+- Given the Amazon Route 53 Alias DNS record for Cognito authorization is resolved, then it routes to the Cognito authorization endpoint.
+- Given the Cognito authorization endpoint changes during replacement or reprovisioning, then the Amazon Route 53 Alias DNS record is updated to route to the current Cognito authorization endpoint.
+
+### REQ-DNS-003: Create API Gateway Endpoint Alias Record
+
+When an Amazon API Gateway REST or WebSocket endpoint is provisioned, the system shall create an Amazon Route 53 Alias DNS record that routes to the Amazon API Gateway URI.
+
+**Acceptance Criteria**
+
+- Given an Amazon API Gateway REST endpoint is provisioned, then an Amazon Route 53 Alias DNS record exists that routes to the Amazon API Gateway URI.
+- Given an Amazon API Gateway WebSocket endpoint is provisioned, then an Amazon Route 53 Alias DNS record exists that routes to the Amazon API Gateway URI.
+- Given the Amazon Route 53 Alias DNS record for an API endpoint is resolved, then it routes to the intended Amazon API Gateway URI.
+- Given an Amazon API Gateway URI changes during replacement or reprovisioning, then the Amazon Route 53 Alias DNS record is updated to route to the current Amazon API Gateway URI.
+
+## DNS Routing Open Questions
+
+- What hosted zones and domain naming conventions should be used for tenant, application, Cognito authorization, REST API, and WebSocket API records?
+- Should Route 53 records be tenant-specific, environment-specific, application-specific, or shared?
+- Does the Cognito authorization endpoint use a Cognito-managed domain or a custom domain backed by Amazon CloudFront?
+- Should DNS records be created only for public endpoints, or are private/internal endpoints also in scope?
