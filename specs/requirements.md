@@ -50,6 +50,16 @@ When the Angular UI Web Application is deployed for tenant access, the system sh
 - Given the Angular UI Web Application is deployed for tenant access, then the application static assets are hosted as an Amazon S3 Static Website.
 - Given an end user accesses the Angular UI Web Application, then the system does not require the end user to access the S3 Static Website endpoint URI directly.
 
+### REQ-UI-002: Configure CloudFront HTTPS Certificate
+
+When the Amazon CloudFront Distribution is provisioned, the system shall configure it with a TLS/SSL certificate issued by Amazon Certificate Manager to enable secure HTTPS connections.
+
+**Acceptance Criteria**
+
+- Given the Amazon CloudFront Distribution is provisioned, then the distribution is configured with a TLS/SSL certificate issued by Amazon Certificate Manager.
+- Given an end user accesses the Angular UI through the Amazon CloudFront Distribution over HTTPS, then the distribution uses the configured Amazon Certificate Manager certificate for TLS/SSL.
+- Given the Amazon CloudFront Distribution is provisioned for tenant access, then the certificate configuration supports secure HTTPS connections for the distribution's intended domain name.
+
 ## Global Assumptions
 
 - Each deployed Angular UI Web Application has a corresponding S3 Static Website endpoint URI.
@@ -58,9 +68,10 @@ When the Angular UI Web Application is deployed for tenant access, the system sh
 
 - Should direct end-user access to the S3 Static Website endpoint URI be blocked, redirected, or treated as out of scope?
 - Should tenant-specific Angular UI deployments use separate CloudFront distributions, separate origins, separate S3 buckets, or a shared distribution with tenant-aware routing?
-- Should CloudFront enforce HTTPS-only viewer access?
+- Should CloudFront redirect HTTP viewer requests to HTTPS, reject HTTP requests, or support both HTTP and HTTPS?
 - Does the requirement intentionally prefer the S3 Static Website endpoint over the S3 REST endpoint with CloudFront Origin Access Control?
 - Which end-user HTTP/HTTPS requests should be routed through Amazon API Gateway instead of the Angular UI CloudFront Distribution?
+- Are Amazon Certificate Manager certificates tenant-specific, application-specific, or shared across tenant domains?
 
 ## Backend REST Routing
 
