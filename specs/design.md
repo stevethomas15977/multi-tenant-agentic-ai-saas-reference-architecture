@@ -17,11 +17,21 @@ Store architecture diagram artifacts under `/architecture`.
 
 ## Authentication and Authorization Flow
 
-1. The user authenticates through the configured Amazon Cognito User Pool.
-2. After successful authentication, the system resolves the user's tenant context, including `tenant_id`.
-3. The system requests action authorization from Amazon Verified Permissions.
-4. The UI authorization layer receives the resulting action permissions.
-5. The UI enables only the tenant-scoped features or actions authorized for the authenticated user.
+1. The user accesses protected Angular UI functionality.
+2. The system authenticates the user through the configured Amazon Cognito User Pool.
+3. The Angular UI receives Cognito-issued tokens required for UI identity and API Gateway access.
+4. After successful authentication, the system resolves the user's tenant context, including `tenant_id`.
+5. The system requests action authorization from Amazon Verified Permissions.
+6. The UI authorization layer receives the resulting action permissions.
+7. The UI enables only the tenant-scoped features or actions authorized for the authenticated user.
+
+Backend operations that require tenant-scoped action authorization must enforce Amazon Verified Permissions decisions before completing the operation.
+
+## Tenant Isolation
+
+Tenant isolation is a system-wide requirement across identity, authorization, API access, data storage, DNS/resource scoping, and long-term memory.
+
+Tenant-scoped operations must fail closed when tenant context is missing or cannot be validated.
 
 ## Angular UI Delivery
 
@@ -46,25 +56,25 @@ The Amazon Cognito Authorizer validates the caller's Cognito-authenticated ident
 
 Unauthorized API Gateway requests should fail closed: if a request does not satisfy the configured Amazon Cognito Authorizer, API Gateway should not authorize the request for downstream processing.
 
-After API Gateway authorizes a backend request, the request is processed by one or more Python-based Amazon Lambda functions. These Lambda functions contain backend request processing and business logic execution responsibilities.
+After API Gateway authorizes a backend request, the request is processed by one or more Python-based and/or TypeScript-based Amazon Lambda functions. These Lambda functions contain backend request processing and business logic execution responsibilities.
 
 The API Gateway to Lambda integration style, function granularity, and tenant isolation model remain open design decisions.
 
-For Amazon API Gateway WebSocket endpoints, Python-based Amazon Lambda functions integrate with a simple Amazon Bedrock Agent when agentic processing is required. The Bedrock Agent uses an Amazon Bedrock Knowledge Base for long-term memory.
+For Amazon API Gateway WebSocket endpoints, Python-based and/or TypeScript-based Amazon Lambda functions integrate with a simple Amazon Bedrock Agent when agentic processing is required. The Bedrock Agent uses an Amazon Bedrock Knowledge Base for long-term memory.
 
 The Amazon Bedrock Knowledge Base is backed by an Amazon S3 vector index. Long-term memory access must preserve tenant boundaries and should use explicit retention, deletion, and retrieval policies before implementation.
 
-For Amazon API Gateway REST endpoints, Python-based Amazon Lambda functions use an Amazon DynamoDB table to manage user session and preferences data.
+For Amazon API Gateway REST endpoints, Python-based and/or TypeScript-based Amazon Lambda functions use an Amazon DynamoDB table to manage user session and preferences data.
 
 Session and preferences data must be associated with user and tenant context. DynamoDB key design, indexing, TTL, retention, and tenant isolation remain open design decisions.
 
 ## DNS Routing
 
-Amazon Route 53 Alias DNS records are created when externally addressable AWS service endpoints are provisioned.
+Amazon Route 53 Alias or CNAME DNS records are created when externally addressable AWS service endpoints are provisioned.
 
-The CloudFront Alias record routes Angular UI access to the Amazon CloudFront Distribution URI. The Cognito authorization Alias record routes authentication authorization traffic to the Cognito authorization endpoint. API Gateway Alias records route REST and WebSocket API traffic to the intended Amazon API Gateway URI.
+The CloudFront DNS record routes Angular UI access to the Amazon CloudFront Distribution URI. The Cognito authorization DNS record routes authentication authorization traffic to the Cognito authorization endpoint. API Gateway DNS records route REST and WebSocket API traffic to the intended Amazon API Gateway URI.
 
-Route 53 Alias records should be updated when the underlying service endpoint URI changes during replacement or reprovisioning.
+Route 53 DNS records should be updated when the underlying service endpoint URI changes during replacement or reprovisioning.
 
 ## Fail-Closed UI Behavior
 
@@ -75,5 +85,5 @@ This behavior prevents optimistic UI access when authorization state is missing,
 ## Design Notes
 
 - UI enablement should not be treated as the only authorization control.
-- Backend/API enforcement starts at API Gateway through Amazon Cognito Authorizers and may be extended with downstream action authorization requirements in Python-based Amazon Lambda functions, DynamoDB-backed state operations, and Bedrock agent workflows.
+- Backend/API enforcement starts at API Gateway through Amazon Cognito Authorizers and may be extended with downstream action authorization requirements in Python-based and/or TypeScript-based Amazon Lambda functions, DynamoDB-backed state operations, and Bedrock agent workflows.
 - Authorization checks should use a stable action naming scheme that can be mapped to both UI features and protected operations.

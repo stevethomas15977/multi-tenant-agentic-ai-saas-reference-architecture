@@ -4,6 +4,16 @@ This file is the canonical source for system requirements. Requirements use EARS
 
 ## Authentication and Authorization
 
+### REQ-AUTH-000: Authenticate Angular Users with Cognito
+
+When a user accesses the Angular UI Web Application, the system shall authenticate the user with Amazon Cognito and obtain tokens required for Angular UI and API Gateway access.
+
+**Acceptance Criteria**
+
+- Given an unauthenticated user accesses protected Angular UI functionality, then the system initiates authentication with Amazon Cognito.
+- Given Amazon Cognito successfully authenticates the user, then the Angular UI receives tokens required to identify the user.
+- Given the Angular UI issues backend requests to Amazon API Gateway, then the Angular UI uses Cognito-issued tokens required by the configured API Gateway authorizer.
+
 ### REQ-AUTH-001: Retrieve Action Authorization
 
 When the system authenticates a user via an Amazon Cognito User Pool, the system shall retrieve action authorization from Amazon Verified Permissions.
@@ -23,6 +33,35 @@ If the user is authenticated, then the system shall enable only the UI features 
 - Given an authenticated user has a resolved `tenant_id`, when the UI renders tenant-scoped functionality, then only features or actions authorized by Amazon Verified Permissions for that `tenant_id` are enabled.
 - Given a UI feature or action is not authorized for the authenticated user's `tenant_id`, then the system does not enable that feature or action for the user.
 - Given authorization cannot be retrieved or evaluated, then tenant-scoped UI features and actions are not enabled by default.
+
+### REQ-AUTH-003: Enforce Backend Action Authorization
+
+When a backend operation requires tenant-scoped action authorization, the system shall enforce Amazon Verified Permissions authorization decisions before completing the operation.
+
+**Acceptance Criteria**
+
+- Given a backend operation requires tenant-scoped action authorization, when the authenticated user is authorized by Amazon Verified Permissions for the requested action and tenant context, then the system allows the operation to proceed.
+- Given a backend operation requires tenant-scoped action authorization, when the authenticated user is not authorized by Amazon Verified Permissions for the requested action and tenant context, then the system rejects the operation.
+- Given Amazon Verified Permissions cannot be evaluated for a backend operation that requires tenant-scoped action authorization, then the system does not allow the operation by default.
+
+## Multi-Tenant SaaS
+
+### REQ-TENANT-001: Enforce Tenant Isolation
+
+The system shall enforce tenant isolation across identity, authorization, API access, data storage, DNS/resource scoping, and long-term memory.
+
+**Acceptance Criteria**
+
+- Given a request includes tenant context, then the system uses that tenant context when evaluating identity, authorization, API access, data access, and long-term memory access.
+- Given data, preferences, session state, or long-term memory belongs to one tenant, then users from another tenant cannot access it.
+- Given infrastructure resources are shared across tenants, then the system applies tenant-scoped controls that prevent cross-tenant access.
+- Given tenant context is missing or cannot be validated, then tenant-scoped operations fail closed.
+
+## Tenant Isolation Open Questions
+
+- Is `tenant_id` sourced from Cognito token claims, application membership data, request context, or a combination?
+- Which resources are tenant-specific versus shared multi-tenant resources?
+- What tenant isolation verification evidence is required before implementation is accepted?
 
 ## Assumptions
 
@@ -86,37 +125,37 @@ When an Amazon API Gateway endpoint is provisioned, the system shall configure t
 - Given a backend request is made to a provisioned Amazon API Gateway endpoint, when the request does not satisfy the configured Amazon Cognito Authorizer, then Amazon API Gateway does not authorize the request.
 - Given a backend request is made to a provisioned Amazon API Gateway endpoint, when the request satisfies the configured Amazon Cognito Authorizer, then Amazon API Gateway authorizes the request for downstream processing.
 
-### REQ-API-002: Integrate API Gateway with Python Lambda Backend
+### REQ-API-002: Integrate API Gateway with Lambda Backend
 
-When an Amazon API Gateway endpoint is provisioned, the system shall integrate the backend with Python-based Amazon Lambda functions for request processing and business logic execution.
+When an Amazon API Gateway endpoint is provisioned, the system shall integrate the backend with Python-based and/or TypeScript-based Amazon Lambda functions for request processing and business logic execution.
 
 **Acceptance Criteria**
 
 - Given an Amazon API Gateway endpoint is provisioned, then the endpoint is integrated with one or more Amazon Lambda functions.
-- Given an Amazon Lambda function is integrated with the Amazon API Gateway endpoint, then the Lambda function uses a Python runtime.
-- Given an authorized request is received by the Amazon API Gateway endpoint, when the request is routed for backend processing, then the integrated Python-based Amazon Lambda function processes the request.
-- Given backend business logic is required for an API operation, then the business logic executes in a Python-based Amazon Lambda function.
+- Given an Amazon Lambda function is integrated with the Amazon API Gateway endpoint, then the Lambda function uses a Python or TypeScript runtime.
+- Given an authorized request is received by the Amazon API Gateway endpoint, when the request is routed for backend processing, then the integrated Python-based or TypeScript-based Amazon Lambda function processes the request.
+- Given backend business logic is required for an API operation, then the business logic executes in a Python-based or TypeScript-based Amazon Lambda function.
 
 ### REQ-API-003: Integrate WebSocket Backend with Bedrock Agent Memory
 
-When an Amazon API Gateway WebSocket endpoint is provisioned, the system shall integrate the endpoint with Python-based Amazon Lambda functions and a simple Amazon Bedrock Agent that uses an Amazon Bedrock Knowledge Base backed by an Amazon S3 vector index for long-term memory.
+When an Amazon API Gateway WebSocket endpoint is provisioned, the system shall integrate the endpoint with Python-based and/or TypeScript-based Amazon Lambda functions and a simple Amazon Bedrock Agent that uses an Amazon Bedrock Knowledge Base backed by an Amazon S3 vector index for long-term memory.
 
 **Acceptance Criteria**
 
-- Given an Amazon API Gateway WebSocket endpoint is provisioned, then the endpoint is integrated with one or more Python-based Amazon Lambda functions.
-- Given a Python-based Amazon Lambda function handles WebSocket backend processing, then the function integrates with a simple Amazon Bedrock Agent.
+- Given an Amazon API Gateway WebSocket endpoint is provisioned, then the endpoint is integrated with one or more Python-based and/or TypeScript-based Amazon Lambda functions.
+- Given a Python-based or TypeScript-based Amazon Lambda function handles WebSocket backend processing, then the function integrates with a simple Amazon Bedrock Agent.
 - Given the Amazon Bedrock Agent requires long-term memory, then the agent uses an Amazon Bedrock Knowledge Base.
 - Given the Amazon Bedrock Knowledge Base stores or retrieves long-term memory, then the knowledge base is backed by an Amazon S3 vector index.
 - Given a WebSocket request requires agentic processing, when the backend invokes the Amazon Bedrock Agent, then the agent can use the Amazon Bedrock Knowledge Base for long-term memory retrieval.
 
 ### REQ-API-004: Integrate REST Backend with DynamoDB Session Preferences
 
-When an Amazon API Gateway REST endpoint is provisioned, the system shall integrate the backend with Python-based Amazon Lambda functions and an Amazon DynamoDB table for user session and preferences management.
+When an Amazon API Gateway REST endpoint is provisioned, the system shall integrate the backend with Python-based and/or TypeScript-based Amazon Lambda functions and an Amazon DynamoDB table for user session and preferences management.
 
 **Acceptance Criteria**
 
-- Given an Amazon API Gateway REST endpoint is provisioned, then the endpoint is integrated with one or more Python-based Amazon Lambda functions.
-- Given a Python-based Amazon Lambda function handles REST backend processing, then the function is integrated with an Amazon DynamoDB table.
+- Given an Amazon API Gateway REST endpoint is provisioned, then the endpoint is integrated with one or more Python-based and/or TypeScript-based Amazon Lambda functions.
+- Given a Python-based or TypeScript-based Amazon Lambda function handles REST backend processing, then the function is integrated with an Amazon DynamoDB table.
 - Given user session state is created, read, updated, or deleted by a REST API operation, then the operation uses the Amazon DynamoDB table for session management.
 - Given user preferences are created, read, updated, or deleted by a REST API operation, then the operation uses the Amazon DynamoDB table for preferences management.
 - Given user session or preferences data is persisted, then the data is associated with user and tenant context.
@@ -126,7 +165,7 @@ When an Amazon API Gateway REST endpoint is provisioned, the system shall integr
 - Which Cognito User Pool, app client, token type, scopes, and claims are used by the Amazon Cognito Authorizer?
 - How should Amazon Cognito Authorizer authentication combine with Amazon Verified Permissions action authorization?
 - Should API Gateway authorization differ for REST endpoints and WebSocket endpoints?
-- Should API Gateway use Lambda proxy integration or non-proxy integration for Python-based Amazon Lambda functions?
+- Should API Gateway use Lambda proxy integration or non-proxy integration for Python-based and/or TypeScript-based Amazon Lambda functions?
 - Are Lambda functions organized per API route, per bounded context, per tenant, or shared across tenants?
 - What behavior qualifies the Amazon Bedrock Agent as "simple"?
 - What tenant isolation, retention, and deletion rules apply to long-term memory in the Amazon Bedrock Knowledge Base and Amazon S3 vector index?
@@ -137,36 +176,36 @@ When an Amazon API Gateway REST endpoint is provisioned, the system shall integr
 
 ## DNS Routing
 
-### REQ-DNS-001: Create CloudFront Alias Record
+### REQ-DNS-001: Create CloudFront DNS Record
 
-When the Amazon CloudFront Distribution is provisioned, the system shall create an Amazon Route 53 Alias DNS record that routes to the Amazon CloudFront Distribution URI.
-
-**Acceptance Criteria**
-
-- Given the Amazon CloudFront Distribution is provisioned, then an Amazon Route 53 Alias DNS record exists for the distribution.
-- Given the Amazon Route 53 Alias DNS record for the Angular UI is resolved, then it routes to the Amazon CloudFront Distribution URI.
-- Given the Amazon CloudFront Distribution URI changes during replacement or reprovisioning, then the Amazon Route 53 Alias DNS record is updated to route to the current distribution URI.
-
-### REQ-DNS-002: Create Cognito Authorization Endpoint Alias Record
-
-When Amazon Cognito is provisioned, the system shall create an Amazon Route 53 Alias DNS record that routes to the Cognito authorization endpoint.
+When the Amazon CloudFront Distribution is provisioned, the system shall create an Amazon Route 53 Alias or CNAME DNS record that routes to the Amazon CloudFront Distribution URI.
 
 **Acceptance Criteria**
 
-- Given Amazon Cognito is provisioned for authentication, then an Amazon Route 53 Alias DNS record exists for the Cognito authorization endpoint.
-- Given the Amazon Route 53 Alias DNS record for Cognito authorization is resolved, then it routes to the Cognito authorization endpoint.
-- Given the Cognito authorization endpoint changes during replacement or reprovisioning, then the Amazon Route 53 Alias DNS record is updated to route to the current Cognito authorization endpoint.
+- Given the Amazon CloudFront Distribution is provisioned, then an Amazon Route 53 Alias or CNAME DNS record exists for the distribution.
+- Given the Amazon Route 53 DNS record for the Angular UI is resolved, then it routes to the Amazon CloudFront Distribution URI.
+- Given the Amazon CloudFront Distribution URI changes during replacement or reprovisioning, then the Amazon Route 53 DNS record is updated to route to the current distribution URI.
 
-### REQ-DNS-003: Create API Gateway Endpoint Alias Record
+### REQ-DNS-002: Create Cognito Authorization Endpoint DNS Record
 
-When an Amazon API Gateway REST or WebSocket endpoint is provisioned, the system shall create an Amazon Route 53 Alias DNS record that routes to the Amazon API Gateway URI.
+When Amazon Cognito is provisioned, the system shall create an Amazon Route 53 Alias or CNAME DNS record that routes to the Cognito authorization endpoint.
 
 **Acceptance Criteria**
 
-- Given an Amazon API Gateway REST endpoint is provisioned, then an Amazon Route 53 Alias DNS record exists that routes to the Amazon API Gateway URI.
-- Given an Amazon API Gateway WebSocket endpoint is provisioned, then an Amazon Route 53 Alias DNS record exists that routes to the Amazon API Gateway URI.
-- Given the Amazon Route 53 Alias DNS record for an API endpoint is resolved, then it routes to the intended Amazon API Gateway URI.
-- Given an Amazon API Gateway URI changes during replacement or reprovisioning, then the Amazon Route 53 Alias DNS record is updated to route to the current Amazon API Gateway URI.
+- Given Amazon Cognito is provisioned for authentication, then an Amazon Route 53 Alias or CNAME DNS record exists for the Cognito authorization endpoint.
+- Given the Amazon Route 53 DNS record for Cognito authorization is resolved, then it routes to the Cognito authorization endpoint.
+- Given the Cognito authorization endpoint changes during replacement or reprovisioning, then the Amazon Route 53 DNS record is updated to route to the current Cognito authorization endpoint.
+
+### REQ-DNS-003: Create API Gateway Endpoint DNS Record
+
+When an Amazon API Gateway REST or WebSocket endpoint is provisioned, the system shall create an Amazon Route 53 Alias or CNAME DNS record that routes to the Amazon API Gateway URI.
+
+**Acceptance Criteria**
+
+- Given an Amazon API Gateway REST endpoint is provisioned, then an Amazon Route 53 Alias or CNAME DNS record exists that routes to the Amazon API Gateway URI.
+- Given an Amazon API Gateway WebSocket endpoint is provisioned, then an Amazon Route 53 Alias or CNAME DNS record exists that routes to the Amazon API Gateway URI.
+- Given the Amazon Route 53 DNS record for an API endpoint is resolved, then it routes to the intended Amazon API Gateway URI.
+- Given an Amazon API Gateway URI changes during replacement or reprovisioning, then the Amazon Route 53 DNS record is updated to route to the current Amazon API Gateway URI.
 
 ## DNS Routing Open Questions
 

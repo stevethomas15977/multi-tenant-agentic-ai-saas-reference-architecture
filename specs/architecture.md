@@ -8,9 +8,13 @@ The system uses Amazon Cognito User Pools for user authentication and Amazon Ver
 
 Authentication identifies the user. Authorization determines which tenant-scoped actions the authenticated user may perform.
 
+The Angular UI Web Application uses Amazon Cognito authentication to obtain tokens for Angular UI identity and Amazon API Gateway access.
+
 ## Tenant Boundary
 
 Authorization decisions must include tenant context. The initial requirements identify `tenant_id` as the tenant-scoping value used to determine which UI features or actions are enabled.
+
+Tenant isolation applies across identity, authorization, API access, data storage, DNS/resource scoping, and long-term memory.
 
 ## Angular UI Delivery Context
 
@@ -24,15 +28,15 @@ When the Amazon CloudFront Distribution is provisioned, it uses a TLS/SSL certif
 
 When Amazon API Gateway endpoints are provisioned, they use an Amazon Cognito Authorizer to authorize backend requests before downstream processing.
 
-Provisioned Amazon API Gateway endpoints integrate with Python-based Amazon Lambda functions for request processing and business logic execution.
+Provisioned Amazon API Gateway endpoints integrate with Python-based and/or TypeScript-based Amazon Lambda functions for request processing and business logic execution.
 
-Provisioned Amazon API Gateway WebSocket endpoints integrate with Python-based Amazon Lambda functions and a simple Amazon Bedrock Agent. The Amazon Bedrock Agent uses an Amazon Bedrock Knowledge Base backed by an Amazon S3 vector index for long-term memory.
+Provisioned Amazon API Gateway WebSocket endpoints integrate with Python-based and/or TypeScript-based Amazon Lambda functions and a simple Amazon Bedrock Agent. The Amazon Bedrock Agent uses an Amazon Bedrock Knowledge Base backed by an Amazon S3 vector index for long-term memory.
 
-Provisioned Amazon API Gateway REST endpoints integrate with Python-based Amazon Lambda functions and an Amazon DynamoDB table for user session and preferences management.
+Provisioned Amazon API Gateway REST endpoints integrate with Python-based and/or TypeScript-based Amazon Lambda functions and an Amazon DynamoDB table for user session and preferences management.
 
 ## DNS Routing Context
 
-Amazon Route 53 provides Alias DNS records for provisioned service endpoints. Alias records route to the Amazon CloudFront Distribution URI, the Cognito authorization endpoint, and Amazon API Gateway REST or WebSocket endpoint URIs.
+Amazon Route 53 provides Alias or CNAME DNS records for provisioned service endpoints. DNS records route to the Amazon CloudFront Distribution URI, the Cognito authorization endpoint, and Amazon API Gateway REST or WebSocket endpoint URIs.
 
 ## Architecture Notes
 
@@ -40,14 +44,15 @@ Amazon Route 53 provides Alias DNS records for provisioned service endpoints. Al
 - Amazon Cognito User Pools are responsible for authenticating users.
 - Amazon Verified Permissions is responsible for evaluating action authorization.
 - UI feature/action enablement depends on authorization decisions scoped by `tenant_id`.
-- Server-side authorization enforcement is not yet specified and should be added before implementation begins.
+- Backend operations that require tenant-scoped action authorization must enforce Amazon Verified Permissions decisions.
+- Tenant isolation applies to identity, authorization, API access, data storage, DNS/resource scoping, and long-term memory.
 - Amazon CloudFront is the end-user entry point for the Angular UI Web Application.
 - Amazon S3 Static Website hosting is the origin hosting model for Angular UI static assets.
 - Amazon Certificate Manager issues the TLS/SSL certificate configured on the Amazon CloudFront Distribution.
 - Amazon API Gateway routing for non-UI HTTP/HTTPS requests is outside REQ-UI-001 and should be specified separately.
 - Amazon API Gateway is the entry point for backend REST and WebSocket requests.
 - Amazon Cognito Authorizers are responsible for authorizing requests received by provisioned Amazon API Gateway endpoints.
-- Python-based Amazon Lambda functions process backend requests and execute business logic behind Amazon API Gateway.
+- Python-based and/or TypeScript-based Amazon Lambda functions process backend requests and execute business logic behind Amazon API Gateway.
 - Amazon DynamoDB stores user session and preferences data for REST backend operations.
 - Amazon Bedrock Agents provide agentic processing for WebSocket backend interactions.
 - Amazon Bedrock Knowledge Bases backed by Amazon S3 vector indexes provide long-term memory for agentic WebSocket interactions.
@@ -55,6 +60,7 @@ Amazon Route 53 provides Alias DNS records for provisioned service endpoints. Al
 ## Open Decisions
 
 - Source and validation rules for `tenant_id`.
+- Tenant-specific versus shared resource strategy.
 - Policy model and action taxonomy for Amazon Verified Permissions.
 - Caching strategy and failure behavior for authorization decisions.
 - Relationship between UI enablement and backend/API authorization enforcement.
@@ -69,6 +75,6 @@ Amazon Route 53 provides Alias DNS records for provisioned service endpoints. Al
 - Tenant isolation, retention, deletion, and retrieval policy for long-term memory.
 - WebSocket route mapping between Lambda-only processing and Bedrock Agent processing.
 - DynamoDB key schema, indexing, TTL, retention, and tenant isolation model for user sessions and preferences.
-- Hosted zone and domain naming strategy for Route 53 Alias records.
-- Whether Route 53 Alias records are tenant-specific, environment-specific, application-specific, or shared.
+- Hosted zone and domain naming strategy for Route 53 DNS records.
+- Whether Route 53 DNS records are tenant-specific, environment-specific, application-specific, or shared.
 - Whether the Cognito authorization endpoint uses a Cognito-managed domain or a custom domain.
