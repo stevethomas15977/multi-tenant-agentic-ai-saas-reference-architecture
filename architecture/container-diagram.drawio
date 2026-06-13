@@ -23,6 +23,9 @@
     <mxCell id="avp" value="Amazon Verified Permissions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
       <mxGeometry x="790" y="430" width="170" height="70" as="geometry"/>
     </mxCell>
+    <mxCell id="apigw" value="Amazon API Gateway REST Endpoints" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+      <mxGeometry x="1040" y="300" width="170" height="80" as="geometry"/>
+    </mxCell>
     <mxCell id="e1" value="Angular UI access" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=classic;" edge="1" parent="1" source="user" target="cloudfront">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
@@ -36,6 +39,9 @@
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
     <mxCell id="e5" value="Action authorization by tenant_id" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=classic;" edge="1" parent="1" source="angular" target="avp">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e6" value="Authorized backend REST requests" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=classic;" edge="1" parent="1" source="angular" target="apigw">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
   </root>

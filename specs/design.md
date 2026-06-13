@@ -34,6 +34,14 @@ Editable Draw.io architecture views for this design are stored in `/architecture
 - Context Diagram: `/architecture/context-diagram.drawio`
 - Container Diagram: `/architecture/container-diagram.drawio`
 
+## Backend REST Routing
+
+When the Angular UI Web Application issues a backend REST request, the application uses only Amazon API Gateway REST endpoints authorized for the authenticated user and tenant context.
+
+Endpoint authorization should align with the action authorization model used for tenant-scoped UI features. The precise mapping between UI action, backend REST route, HTTP method, and Amazon Verified Permissions action remains an open design decision.
+
+Unauthorized endpoints should fail closed: the Angular UI should not route to an endpoint that is missing from the authorized endpoint set, and server-side enforcement should still reject unauthorized requests if a client bypasses the UI.
+
 ## Fail-Closed UI Behavior
 
 Until authorization is successfully retrieved and evaluated, tenant-scoped UI features and actions should not be enabled by default.

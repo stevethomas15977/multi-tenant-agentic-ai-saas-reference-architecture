@@ -18,6 +18,10 @@ The Angular UI Web Application is deployed for tenant access as static website c
 
 Angular UI access is delivered through an Amazon CloudFront Distribution. The distribution uses the S3 Static Website endpoint URI for that Angular application as its origin.
 
+## Backend REST Routing Context
+
+When the Angular UI Web Application issues backend REST requests, those requests are routed to Amazon API Gateway REST endpoints only when the endpoint is authorized for the authenticated user and tenant context.
+
 ## Architecture Notes
 
 - Amazon Cognito User Pools are responsible for authenticating users.
@@ -27,6 +31,7 @@ Angular UI access is delivered through an Amazon CloudFront Distribution. The di
 - Amazon CloudFront is the end-user entry point for the Angular UI Web Application.
 - Amazon S3 Static Website hosting is the origin hosting model for Angular UI static assets.
 - Amazon API Gateway routing for non-UI HTTP/HTTPS requests is outside REQ-UI-001 and should be specified separately.
+- Amazon API Gateway is the entry point for authorized backend REST requests issued by the Angular UI Web Application.
 
 ## Open Decisions
 
@@ -37,3 +42,5 @@ Angular UI access is delivered through an Amazon CloudFront Distribution. The di
 - Whether direct S3 Static Website endpoint access is allowed, blocked, or redirected.
 - Whether tenant access uses one CloudFront Distribution per tenant, one distribution per application, or a shared distribution with tenant-aware routing.
 - Whether HTTPS-only viewer protocol policy is required.
+- Source of truth for authorized API Gateway REST endpoints.
+- Whether unauthorized endpoint blocking is enforced in Angular only, API Gateway only, backend services only, or multiple layers.
