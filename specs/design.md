@@ -11,6 +11,8 @@ Every design update shall include the following architecture views when the chan
 
 Use the Draw.io MCP service to generate diagrams.
 
+Use the AWS 2026 (Open Library) within Draw.io for each specified AWS service when a corresponding service shape exists.
+
 Store architecture diagram artifacts under `/architecture`.
 
 ## Authentication and Authorization Flow
