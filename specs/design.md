@@ -2,6 +2,17 @@
 
 This file describes intended behavior and design details derived from the requirements.
 
+## Design Standards
+
+Every design update shall include the following architecture views when the change affects system structure, boundaries, integrations, or deployment responsibilities:
+
+- Context Diagram
+- Container Diagram
+
+Use the Draw.io MCP service to generate diagrams.
+
+Store architecture diagram artifacts under `/architecture`.
+
 ## Authentication and Authorization Flow
 
 1. The user authenticates through the configured Amazon Cognito User Pool.
@@ -21,4 +32,3 @@ This behavior prevents optimistic UI access when authorization state is missing,
 - UI enablement should not be treated as the only authorization control.
 - Backend/API enforcement requirements should be added so authorization is enforced even if a user bypasses the UI.
 - Authorization checks should use a stable action naming scheme that can be mapped to both UI features and protected operations.
-
