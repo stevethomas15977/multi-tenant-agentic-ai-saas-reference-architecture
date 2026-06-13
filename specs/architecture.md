@@ -24,6 +24,8 @@ When the Amazon CloudFront Distribution is provisioned, it uses a TLS/SSL certif
 
 When Amazon API Gateway endpoints are provisioned, they use an Amazon Cognito Authorizer to authorize backend requests before downstream processing.
 
+Provisioned Amazon API Gateway endpoints integrate with Python-based Amazon Lambda functions for request processing and business logic execution.
+
 ## DNS Routing Context
 
 Amazon Route 53 provides Alias DNS records for provisioned service endpoints. Alias records route to the Amazon CloudFront Distribution URI, the Cognito authorization endpoint, and Amazon API Gateway REST or WebSocket endpoint URIs.
@@ -41,6 +43,7 @@ Amazon Route 53 provides Alias DNS records for provisioned service endpoints. Al
 - Amazon API Gateway routing for non-UI HTTP/HTTPS requests is outside REQ-UI-001 and should be specified separately.
 - Amazon API Gateway is the entry point for backend REST and WebSocket requests.
 - Amazon Cognito Authorizers are responsible for authorizing requests received by provisioned Amazon API Gateway endpoints.
+- Python-based Amazon Lambda functions process backend requests and execute business logic behind Amazon API Gateway.
 
 ## Open Decisions
 
@@ -54,6 +57,7 @@ Amazon Route 53 provides Alias DNS records for provisioned service endpoints. Al
 - Whether certificates are tenant-specific, application-specific, or shared across tenant domains.
 - Cognito User Pool, app client, token type, scopes, and claims used by API Gateway Cognito Authorizers.
 - Relationship between Amazon Cognito Authorizer authentication and Amazon Verified Permissions action authorization.
+- API Gateway Lambda integration style and Lambda function organization strategy.
 - Hosted zone and domain naming strategy for Route 53 Alias records.
 - Whether Route 53 Alias records are tenant-specific, environment-specific, application-specific, or shared.
 - Whether the Cognito authorization endpoint uses a Cognito-managed domain or a custom domain.

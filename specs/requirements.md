@@ -86,11 +86,24 @@ When an Amazon API Gateway endpoint is provisioned, the system shall configure t
 - Given a backend request is made to a provisioned Amazon API Gateway endpoint, when the request does not satisfy the configured Amazon Cognito Authorizer, then Amazon API Gateway does not authorize the request.
 - Given a backend request is made to a provisioned Amazon API Gateway endpoint, when the request satisfies the configured Amazon Cognito Authorizer, then Amazon API Gateway authorizes the request for downstream processing.
 
+### REQ-API-002: Integrate API Gateway with Python Lambda Backend
+
+When an Amazon API Gateway endpoint is provisioned, the system shall integrate the backend with Python-based Amazon Lambda functions for request processing and business logic execution.
+
+**Acceptance Criteria**
+
+- Given an Amazon API Gateway endpoint is provisioned, then the endpoint is integrated with one or more Amazon Lambda functions.
+- Given an Amazon Lambda function is integrated with the Amazon API Gateway endpoint, then the Lambda function uses a Python runtime.
+- Given an authorized request is received by the Amazon API Gateway endpoint, when the request is routed for backend processing, then the integrated Python-based Amazon Lambda function processes the request.
+- Given backend business logic is required for an API operation, then the business logic executes in a Python-based Amazon Lambda function.
+
 ## Backend REST Routing Open Questions
 
 - Which Cognito User Pool, app client, token type, scopes, and claims are used by the Amazon Cognito Authorizer?
 - How should Amazon Cognito Authorizer authentication combine with Amazon Verified Permissions action authorization?
 - Should API Gateway authorization differ for REST endpoints and WebSocket endpoints?
+- Should API Gateway use Lambda proxy integration or non-proxy integration for Python-based Amazon Lambda functions?
+- Are Lambda functions organized per API route, per bounded context, per tenant, or shared across tenants?
 
 ## DNS Routing
 

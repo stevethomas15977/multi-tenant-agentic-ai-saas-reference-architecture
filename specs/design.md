@@ -46,6 +46,10 @@ The Amazon Cognito Authorizer validates the caller's Cognito-authenticated ident
 
 Unauthorized API Gateway requests should fail closed: if a request does not satisfy the configured Amazon Cognito Authorizer, API Gateway should not authorize the request for downstream processing.
 
+After API Gateway authorizes a backend request, the request is processed by one or more Python-based Amazon Lambda functions. These Lambda functions contain backend request processing and business logic execution responsibilities.
+
+The API Gateway to Lambda integration style, function granularity, and tenant isolation model remain open design decisions.
+
 ## DNS Routing
 
 Amazon Route 53 Alias DNS records are created when externally addressable AWS service endpoints are provisioned.
@@ -63,5 +67,5 @@ This behavior prevents optimistic UI access when authorization state is missing,
 ## Design Notes
 
 - UI enablement should not be treated as the only authorization control.
-- Backend/API enforcement starts at API Gateway through Amazon Cognito Authorizers and may be extended with downstream action authorization requirements.
+- Backend/API enforcement starts at API Gateway through Amazon Cognito Authorizers and may be extended with downstream action authorization requirements in Python-based Amazon Lambda functions.
 - Authorization checks should use a stable action naming scheme that can be mapped to both UI features and protected operations.

@@ -4,7 +4,7 @@ This file tracks implementation and verification work derived from requirements.
 
 ## Authentication and Authorization
 
-- [x] Create Draw.io context and container diagrams under `/architecture` for the authentication, authorization, Angular UI delivery, CloudFront HTTPS certificate, backend REST routing, and DNS routing design. Related: REQ-AUTH-001, REQ-AUTH-002, REQ-UI-001, REQ-UI-002, REQ-API-001, REQ-DNS-001, REQ-DNS-002, REQ-DNS-003.
+- [x] Create Draw.io context and container diagrams under `/architecture` for the authentication, authorization, Angular UI delivery, CloudFront HTTPS certificate, backend REST routing, Lambda backend processing, and DNS routing design. Related: REQ-AUTH-001, REQ-AUTH-002, REQ-UI-001, REQ-UI-002, REQ-API-001, REQ-API-002, REQ-DNS-001, REQ-DNS-002, REQ-DNS-003.
 - [ ] Define the source of `tenant_id` after Cognito authentication. Related: REQ-AUTH-001, REQ-AUTH-002.
 - [ ] Define the Amazon Verified Permissions action model for tenant-scoped UI features and actions. Related: REQ-AUTH-001, REQ-AUTH-002.
 - [ ] Specify fail-closed behavior for unavailable or incomplete authorization responses. Related: REQ-AUTH-002.
@@ -26,6 +26,9 @@ This file tracks implementation and verification work derived from requirements.
 - [ ] Define how Amazon Cognito Authorizer authentication combines with Amazon Verified Permissions action authorization. Related: REQ-API-001, REQ-AUTH-001, REQ-AUTH-002.
 - [ ] Define fail-closed behavior for API Gateway requests that do not satisfy the Amazon Cognito Authorizer. Related: REQ-API-001.
 - [ ] Define verification cases for allowed and denied API Gateway requests using the Amazon Cognito Authorizer. Related: REQ-API-001.
+- [ ] Define API Gateway to Python-based Amazon Lambda integration style. Related: REQ-API-002.
+- [ ] Define Lambda function granularity and tenant isolation strategy. Related: REQ-API-002.
+- [ ] Define verification cases for API Gateway requests invoking Python-based Amazon Lambda functions. Related: REQ-API-002.
 
 ## DNS Routing
 
