@@ -37,3 +37,26 @@ If the user is authenticated, then the system shall enable only the UI features 
 - What action model should Amazon Verified Permissions use: coarse UI feature flags, domain actions, API operations, or a combination?
 - What is the required behavior when Amazon Verified Permissions is unavailable?
 
+## Angular UI Delivery
+
+### REQ-UI-001: Route Tenant UI Access Through CloudFront
+
+When the Angular UI Web Application is deployed for tenant access, the system shall host the Angular UI as an Amazon S3 Static Website and route all end-user HTTP/HTTPS requests through an Amazon CloudFront Distribution whose origin is the S3 Static Website endpoint URI for that application.
+
+**Acceptance Criteria**
+
+- Given the Angular UI Web Application is deployed for tenant access, when an end user requests the application over HTTP or HTTPS, then the request is routed through an Amazon CloudFront Distribution.
+- Given the CloudFront Distribution routes requests for the Angular UI Web Application, then its origin is configured as the S3 Static Website endpoint URI for that application.
+- Given the Angular UI Web Application is deployed for tenant access, then the application static assets are hosted as an Amazon S3 Static Website.
+- Given an end-user HTTP/HTTPS request targets the Angular UI Web Application, then the system does not require end users to access the S3 Static Website endpoint URI directly.
+
+## Global Assumptions
+
+- Each deployed Angular UI Web Application has a corresponding S3 Static Website endpoint URI.
+
+## Global Open Questions
+
+- Should direct end-user access to the S3 Static Website endpoint URI be blocked, redirected, or treated as out of scope?
+- Should tenant-specific Angular UI deployments use separate CloudFront distributions, separate origins, separate S3 buckets, or a shared distribution with tenant-aware routing?
+- Should CloudFront enforce HTTPS-only viewer access?
+- Does the requirement intentionally prefer the S3 Static Website endpoint over the S3 REST endpoint with CloudFront Origin Access Control?

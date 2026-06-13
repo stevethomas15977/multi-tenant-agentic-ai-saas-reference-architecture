@@ -21,6 +21,17 @@ Store architecture diagram artifacts under `/architecture`.
 4. The UI authorization layer receives the resulting action permissions.
 5. The UI enables only the tenant-scoped features or actions authorized for the authenticated user.
 
+## Angular UI Delivery
+
+The Angular UI Web Application is hosted as static website content in Amazon S3.
+
+End-user HTTP/HTTPS requests route through an Amazon CloudFront Distribution before reaching the Angular UI. The CloudFront Distribution origin is the S3 Static Website endpoint URI for the deployed Angular application.
+
+Editable Draw.io architecture views for this design are stored in `/architecture`:
+
+- Context Diagram: `/architecture/context-diagram.drawio`
+- Container Diagram: `/architecture/container-diagram.drawio`
+
 ## Fail-Closed UI Behavior
 
 Until authorization is successfully retrieved and evaluated, tenant-scoped UI features and actions should not be enabled by default.
