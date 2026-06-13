@@ -22,7 +22,7 @@ When the Amazon CloudFront Distribution is provisioned, it uses a TLS/SSL certif
 
 ## Backend REST Routing Context
 
-When the Angular UI Web Application issues backend REST requests, those requests are routed to Amazon API Gateway REST endpoints only when the endpoint is authorized for the authenticated user and tenant context.
+When Amazon API Gateway endpoints are provisioned, they use an Amazon Cognito Authorizer to authorize backend requests before downstream processing.
 
 ## DNS Routing Context
 
@@ -39,7 +39,8 @@ Amazon Route 53 provides Alias DNS records for provisioned service endpoints. Al
 - Amazon S3 Static Website hosting is the origin hosting model for Angular UI static assets.
 - Amazon Certificate Manager issues the TLS/SSL certificate configured on the Amazon CloudFront Distribution.
 - Amazon API Gateway routing for non-UI HTTP/HTTPS requests is outside REQ-UI-001 and should be specified separately.
-- Amazon API Gateway is the entry point for authorized backend REST requests issued by the Angular UI Web Application.
+- Amazon API Gateway is the entry point for backend REST and WebSocket requests.
+- Amazon Cognito Authorizers are responsible for authorizing requests received by provisioned Amazon API Gateway endpoints.
 
 ## Open Decisions
 
@@ -51,8 +52,8 @@ Amazon Route 53 provides Alias DNS records for provisioned service endpoints. Al
 - Whether tenant access uses one CloudFront Distribution per tenant, one distribution per application, or a shared distribution with tenant-aware routing.
 - Whether CloudFront should redirect HTTP viewer requests to HTTPS, reject HTTP requests, or support both HTTP and HTTPS.
 - Whether certificates are tenant-specific, application-specific, or shared across tenant domains.
-- Source of truth for authorized API Gateway REST endpoints.
-- Whether unauthorized endpoint blocking is enforced in Angular only, API Gateway only, backend services only, or multiple layers.
+- Cognito User Pool, app client, token type, scopes, and claims used by API Gateway Cognito Authorizers.
+- Relationship between Amazon Cognito Authorizer authentication and Amazon Verified Permissions action authorization.
 - Hosted zone and domain naming strategy for Route 53 Alias records.
 - Whether Route 53 Alias records are tenant-specific, environment-specific, application-specific, or shared.
 - Whether the Cognito authorization endpoint uses a Cognito-managed domain or a custom domain.

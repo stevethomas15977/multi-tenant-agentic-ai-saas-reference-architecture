@@ -8,7 +8,7 @@ This file tracks implementation and verification work derived from requirements.
 - [ ] Define the source of `tenant_id` after Cognito authentication. Related: REQ-AUTH-001, REQ-AUTH-002.
 - [ ] Define the Amazon Verified Permissions action model for tenant-scoped UI features and actions. Related: REQ-AUTH-001, REQ-AUTH-002.
 - [ ] Specify fail-closed behavior for unavailable or incomplete authorization responses. Related: REQ-AUTH-002.
-- [ ] Add server-side authorization requirements for protected backend/API operations. Related: REQ-AUTH-002, REQ-API-001.
+- [ ] Define downstream action authorization requirements for protected backend/API operations. Related: REQ-AUTH-002, REQ-API-001.
 - [ ] Define verification cases for authenticated users with allowed, denied, and missing tenant-scoped actions. Related: REQ-AUTH-001, REQ-AUTH-002.
 
 ## Angular UI Delivery
@@ -22,10 +22,10 @@ This file tracks implementation and verification work derived from requirements.
 
 ## Backend REST Routing
 
-- [ ] Define the source of truth for authorized Amazon API Gateway REST endpoints. Related: REQ-API-001.
-- [ ] Define how Angular UI actions map to API Gateway REST paths, HTTP methods, and authorization actions. Related: REQ-API-001.
-- [ ] Define fail-closed behavior when authorized endpoint data is missing or stale. Related: REQ-API-001.
-- [ ] Define verification cases for allowed and denied Angular backend REST requests. Related: REQ-API-001.
+- [ ] Define the Cognito User Pool, app client, token type, scopes, and claims used by Amazon Cognito Authorizers. Related: REQ-API-001.
+- [ ] Define how Amazon Cognito Authorizer authentication combines with Amazon Verified Permissions action authorization. Related: REQ-API-001, REQ-AUTH-001, REQ-AUTH-002.
+- [ ] Define fail-closed behavior for API Gateway requests that do not satisfy the Amazon Cognito Authorizer. Related: REQ-API-001.
+- [ ] Define verification cases for allowed and denied API Gateway requests using the Amazon Cognito Authorizer. Related: REQ-API-001.
 
 ## DNS Routing
 

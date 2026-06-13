@@ -40,11 +40,11 @@ Editable Draw.io architecture views for this design are stored in `/architecture
 
 ## Backend REST Routing
 
-When the Angular UI Web Application issues a backend REST request, the application uses only Amazon API Gateway REST endpoints authorized for the authenticated user and tenant context.
+Provisioned Amazon API Gateway endpoints use an Amazon Cognito Authorizer to authorize backend requests before downstream processing.
 
-Endpoint authorization should align with the action authorization model used for tenant-scoped UI features. The precise mapping between UI action, backend REST route, HTTP method, and Amazon Verified Permissions action remains an open design decision.
+The Amazon Cognito Authorizer validates the caller's Cognito-authenticated identity at the API Gateway boundary. Amazon Verified Permissions remains the action authorization source for tenant-scoped feature and action decisions unless a later requirement changes that responsibility.
 
-Unauthorized endpoints should fail closed: the Angular UI should not route to an endpoint that is missing from the authorized endpoint set, and server-side enforcement should still reject unauthorized requests if a client bypasses the UI.
+Unauthorized API Gateway requests should fail closed: if a request does not satisfy the configured Amazon Cognito Authorizer, API Gateway should not authorize the request for downstream processing.
 
 ## DNS Routing
 
@@ -63,5 +63,5 @@ This behavior prevents optimistic UI access when authorization state is missing,
 ## Design Notes
 
 - UI enablement should not be treated as the only authorization control.
-- Backend/API enforcement requirements should be added so authorization is enforced even if a user bypasses the UI.
+- Backend/API enforcement starts at API Gateway through Amazon Cognito Authorizers and may be extended with downstream action authorization requirements.
 - Authorization checks should use a stable action naming scheme that can be mapped to both UI features and protected operations.

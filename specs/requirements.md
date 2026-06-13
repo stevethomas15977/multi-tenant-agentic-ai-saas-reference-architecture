@@ -75,21 +75,22 @@ When the Amazon CloudFront Distribution is provisioned, the system shall configu
 
 ## Backend REST Routing
 
-### REQ-API-001: Route Angular Backend REST Requests to Authorized API Gateway Endpoints
+### REQ-API-001: Configure API Gateway Cognito Authorizer
 
-When the Angular UI Web Application issues a backend REST request, the system shall route the request only to authorized Amazon API Gateway REST endpoints.
+When an Amazon API Gateway endpoint is provisioned, the system shall configure the endpoint to use an Amazon Cognito Authorizer.
 
 **Acceptance Criteria**
 
-- Given the Angular UI Web Application issues a backend REST request, when the request target is authorized for the authenticated user and tenant context, then the system routes the request to the corresponding Amazon API Gateway REST endpoint.
-- Given the Angular UI Web Application issues a backend REST request, when the request target is not authorized for the authenticated user and tenant context, then the system does not route the request to that Amazon API Gateway REST endpoint.
-- Given an Amazon API Gateway REST endpoint is not part of the authorized endpoint set for the authenticated user and tenant context, then the Angular UI Web Application does not use that endpoint for backend REST requests.
+- Given an Amazon API Gateway REST endpoint is provisioned, then the endpoint is configured to use an Amazon Cognito Authorizer.
+- Given an Amazon API Gateway WebSocket endpoint is provisioned where Cognito authorization is supported by the selected API Gateway configuration, then the endpoint is configured to use an Amazon Cognito Authorizer.
+- Given a backend request is made to a provisioned Amazon API Gateway endpoint, when the request does not satisfy the configured Amazon Cognito Authorizer, then Amazon API Gateway does not authorize the request.
+- Given a backend request is made to a provisioned Amazon API Gateway endpoint, when the request satisfies the configured Amazon Cognito Authorizer, then Amazon API Gateway authorizes the request for downstream processing.
 
 ## Backend REST Routing Open Questions
 
-- Is endpoint authorization derived directly from Amazon Verified Permissions actions, a separate endpoint allowlist, or both?
-- Should unauthorized backend REST endpoints be omitted from Angular runtime configuration, blocked by the UI authorization layer, rejected by Amazon API Gateway, or all of these?
-- How should route authorization be represented: by API path, HTTP method, domain action, resource type, or a combination?
+- Which Cognito User Pool, app client, token type, scopes, and claims are used by the Amazon Cognito Authorizer?
+- How should Amazon Cognito Authorizer authentication combine with Amazon Verified Permissions action authorization?
+- Should API Gateway authorization differ for REST endpoints and WebSocket endpoints?
 
 ## DNS Routing
 

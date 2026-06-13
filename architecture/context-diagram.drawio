@@ -29,6 +29,9 @@
     <mxCell id="apigw" value="Amazon API Gateway REST Endpoints" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="system">
       <mxGeometry x="40" y="190" width="190" height="70" as="geometry"/>
     </mxCell>
+    <mxCell id="cognito_authorizer" value="Amazon Cognito Authorizer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="system">
+      <mxGeometry x="280" y="260" width="160" height="70" as="geometry"/>
+    </mxCell>
     <mxCell id="acm" value="Amazon Certificate Manager TLS/SSL Certificate" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="system">
       <mxGeometry x="40" y="270" width="190" height="70" as="geometry"/>
     </mxCell>
@@ -44,7 +47,7 @@
     <mxCell id="e4" value="Authorize actions by tenant_id" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=classic;" edge="1" parent="1" source="ui" target="avp">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
-    <mxCell id="e5" value="Authorized backend REST requests" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=classic;" edge="1" parent="1" source="ui" target="apigw">
+    <mxCell id="e5" value="Backend requests" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=classic;" edge="1" parent="1" source="ui" target="apigw">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
     <mxCell id="e6" value="TLS/SSL certificate for HTTPS" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=classic;" edge="1" parent="1" source="acm" target="cloudfront">
@@ -57,6 +60,12 @@
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
     <mxCell id="e9" value="API Gateway Alias" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=classic;" edge="1" parent="1" source="route53" target="apigw">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e10" value="Uses Cognito Authorizer" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=classic;" edge="1" parent="1" source="apigw" target="cognito_authorizer">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e11" value="Validates tokens" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=classic;" edge="1" parent="1" source="cognito_authorizer" target="cognito">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
   </root>
