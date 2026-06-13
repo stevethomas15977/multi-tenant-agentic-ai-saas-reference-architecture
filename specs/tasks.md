@@ -4,7 +4,7 @@ This file tracks implementation and verification work derived from requirements.
 
 ## Authentication and Authorization
 
-- [x] Create Draw.io context and container diagrams under `/architecture` for the authentication, authorization, Angular UI delivery, CloudFront HTTPS certificate, backend REST routing, Lambda backend processing, WebSocket Bedrock agent memory, and DNS routing design. Related: REQ-AUTH-001, REQ-AUTH-002, REQ-UI-001, REQ-UI-002, REQ-API-001, REQ-API-002, REQ-API-003, REQ-DNS-001, REQ-DNS-002, REQ-DNS-003.
+- [x] Create Draw.io context and container diagrams under `/architecture` for the authentication, authorization, Angular UI delivery, CloudFront HTTPS certificate, backend REST routing, Lambda backend processing, REST DynamoDB session preferences, WebSocket Bedrock agent memory, and DNS routing design. Related: REQ-AUTH-001, REQ-AUTH-002, REQ-UI-001, REQ-UI-002, REQ-API-001, REQ-API-002, REQ-API-003, REQ-API-004, REQ-DNS-001, REQ-DNS-002, REQ-DNS-003.
 - [ ] Define the source of `tenant_id` after Cognito authentication. Related: REQ-AUTH-001, REQ-AUTH-002.
 - [ ] Define the Amazon Verified Permissions action model for tenant-scoped UI features and actions. Related: REQ-AUTH-001, REQ-AUTH-002.
 - [ ] Specify fail-closed behavior for unavailable or incomplete authorization responses. Related: REQ-AUTH-002.
@@ -33,6 +33,10 @@ This file tracks implementation and verification work derived from requirements.
 - [ ] Define what qualifies the Amazon Bedrock Agent as simple. Related: REQ-API-003.
 - [ ] Define tenant isolation, retention, deletion, and retrieval policies for long-term memory. Related: REQ-API-003.
 - [ ] Define verification cases for WebSocket requests invoking Python Lambda, Amazon Bedrock Agent, Amazon Bedrock Knowledge Base, and Amazon S3 vector index memory. Related: REQ-API-003.
+- [ ] Define DynamoDB key schema, indexes, and item model for user sessions and preferences. Related: REQ-API-004.
+- [ ] Define DynamoDB TTL and retention policies for user sessions and preferences. Related: REQ-API-004.
+- [ ] Define tenant isolation strategy for DynamoDB-backed user sessions and preferences. Related: REQ-API-004.
+- [ ] Define verification cases for REST requests using Python Lambda and DynamoDB-backed user session and preferences management. Related: REQ-API-004.
 
 ## DNS Routing
 

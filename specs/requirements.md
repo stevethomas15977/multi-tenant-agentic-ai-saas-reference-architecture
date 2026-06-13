@@ -109,6 +109,18 @@ When an Amazon API Gateway WebSocket endpoint is provisioned, the system shall i
 - Given the Amazon Bedrock Knowledge Base stores or retrieves long-term memory, then the knowledge base is backed by an Amazon S3 vector index.
 - Given a WebSocket request requires agentic processing, when the backend invokes the Amazon Bedrock Agent, then the agent can use the Amazon Bedrock Knowledge Base for long-term memory retrieval.
 
+### REQ-API-004: Integrate REST Backend with DynamoDB Session Preferences
+
+When an Amazon API Gateway REST endpoint is provisioned, the system shall integrate the backend with Python-based Amazon Lambda functions and an Amazon DynamoDB table for user session and preferences management.
+
+**Acceptance Criteria**
+
+- Given an Amazon API Gateway REST endpoint is provisioned, then the endpoint is integrated with one or more Python-based Amazon Lambda functions.
+- Given a Python-based Amazon Lambda function handles REST backend processing, then the function is integrated with an Amazon DynamoDB table.
+- Given user session state is created, read, updated, or deleted by a REST API operation, then the operation uses the Amazon DynamoDB table for session management.
+- Given user preferences are created, read, updated, or deleted by a REST API operation, then the operation uses the Amazon DynamoDB table for preferences management.
+- Given user session or preferences data is persisted, then the data is associated with user and tenant context.
+
 ## Backend REST Routing Open Questions
 
 - Which Cognito User Pool, app client, token type, scopes, and claims are used by the Amazon Cognito Authorizer?
@@ -119,6 +131,9 @@ When an Amazon API Gateway WebSocket endpoint is provisioned, the system shall i
 - What behavior qualifies the Amazon Bedrock Agent as "simple"?
 - What tenant isolation, retention, and deletion rules apply to long-term memory in the Amazon Bedrock Knowledge Base and Amazon S3 vector index?
 - Which WebSocket routes require agentic processing versus non-agentic Lambda processing?
+- What DynamoDB key schema, indexes, and item model support user session and preferences management?
+- Should user session records use DynamoDB TTL, and what retention policy applies to preferences?
+- Are user session and preferences stored in a shared multi-tenant table or tenant-specific tables?
 
 ## DNS Routing
 

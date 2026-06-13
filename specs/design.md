@@ -54,6 +54,10 @@ For Amazon API Gateway WebSocket endpoints, Python-based Amazon Lambda functions
 
 The Amazon Bedrock Knowledge Base is backed by an Amazon S3 vector index. Long-term memory access must preserve tenant boundaries and should use explicit retention, deletion, and retrieval policies before implementation.
 
+For Amazon API Gateway REST endpoints, Python-based Amazon Lambda functions use an Amazon DynamoDB table to manage user session and preferences data.
+
+Session and preferences data must be associated with user and tenant context. DynamoDB key design, indexing, TTL, retention, and tenant isolation remain open design decisions.
+
 ## DNS Routing
 
 Amazon Route 53 Alias DNS records are created when externally addressable AWS service endpoints are provisioned.
@@ -71,5 +75,5 @@ This behavior prevents optimistic UI access when authorization state is missing,
 ## Design Notes
 
 - UI enablement should not be treated as the only authorization control.
-- Backend/API enforcement starts at API Gateway through Amazon Cognito Authorizers and may be extended with downstream action authorization requirements in Python-based Amazon Lambda functions and Bedrock agent workflows.
+- Backend/API enforcement starts at API Gateway through Amazon Cognito Authorizers and may be extended with downstream action authorization requirements in Python-based Amazon Lambda functions, DynamoDB-backed state operations, and Bedrock agent workflows.
 - Authorization checks should use a stable action naming scheme that can be mapped to both UI features and protected operations.
