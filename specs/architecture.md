@@ -16,7 +16,7 @@ Authorization decisions must include tenant context. The initial requirements id
 
 The Angular UI Web Application is deployed for tenant access as static website content hosted by Amazon S3.
 
-All end-user HTTP/HTTPS requests for the Angular UI route through an Amazon CloudFront Distribution. The distribution uses the S3 Static Website endpoint URI for that Angular application as its origin.
+Angular UI access is delivered through an Amazon CloudFront Distribution. The distribution uses the S3 Static Website endpoint URI for that Angular application as its origin.
 
 ## Architecture Notes
 
@@ -26,6 +26,7 @@ All end-user HTTP/HTTPS requests for the Angular UI route through an Amazon Clou
 - Server-side authorization enforcement is not yet specified and should be added before implementation begins.
 - Amazon CloudFront is the end-user entry point for the Angular UI Web Application.
 - Amazon S3 Static Website hosting is the origin hosting model for Angular UI static assets.
+- Amazon API Gateway routing for non-UI HTTP/HTTPS requests is outside REQ-UI-001 and should be specified separately.
 
 ## Open Decisions
 

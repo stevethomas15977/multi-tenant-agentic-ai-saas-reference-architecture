@@ -25,7 +25,9 @@ Store architecture diagram artifacts under `/architecture`.
 
 The Angular UI Web Application is hosted as static website content in Amazon S3.
 
-End-user HTTP/HTTPS requests route through an Amazon CloudFront Distribution before reaching the Angular UI. The CloudFront Distribution origin is the S3 Static Website endpoint URI for the deployed Angular application.
+Angular UI access is delivered through an Amazon CloudFront Distribution before reaching the Angular UI static website content. The CloudFront Distribution origin is the S3 Static Website endpoint URI for the deployed Angular application.
+
+This design scope applies to Angular UI delivery only. Amazon API Gateway routing for API or service HTTP/HTTPS requests should be specified separately.
 
 Editable Draw.io architecture views for this design are stored in `/architecture`:
 

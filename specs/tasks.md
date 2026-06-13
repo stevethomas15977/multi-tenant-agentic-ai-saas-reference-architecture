@@ -16,4 +16,5 @@ This file tracks implementation and verification work derived from requirements.
 - [ ] Define the tenant deployment topology for the Angular UI, CloudFront Distribution, and S3 Static Website origin. Related: REQ-UI-001.
 - [ ] Define whether end users may access the S3 Static Website endpoint URI directly. Related: REQ-UI-001.
 - [ ] Define CloudFront viewer protocol policy, cache behavior, and default root object for the Angular UI. Related: REQ-UI-001.
-- [ ] Define verification cases for CloudFront origin configuration and end-user request routing. Related: REQ-UI-001.
+- [ ] Define verification cases for CloudFront origin configuration and Angular UI delivery. Related: REQ-UI-001.
+- [ ] Add API Gateway routing requirements for API or service HTTP/HTTPS requests. Related: REQ-UI-001.

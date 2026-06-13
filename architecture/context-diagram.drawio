@@ -23,7 +23,7 @@
     <mxCell id="avp" value="Amazon Verified Permissions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="system">
       <mxGeometry x="280" y="170" width="160" height="70" as="geometry"/>
     </mxCell>
-    <mxCell id="e1" value="HTTP/HTTPS" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=classic;" edge="1" parent="1" source="user" target="cloudfront">
+    <mxCell id="e1" value="Angular UI access" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=classic;" edge="1" parent="1" source="user" target="cloudfront">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
     <mxCell id="e2" value="Origin request" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=classic;" edge="1" parent="1" source="cloudfront" target="ui">
@@ -37,4 +37,3 @@
     </mxCell>
   </root>
 </mxGraphModel>
-
