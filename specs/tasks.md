@@ -22,6 +22,15 @@ This file tracks implementation and verification work derived from requirements.
 - [ ] Define verification cases for CloudFront origin configuration, HTTPS certificate configuration, and Angular UI delivery. Related: REQ-UI-001, REQ-UI-002.
 - [x] Add API Gateway routing requirements for API or service HTTP/HTTPS requests. Related: REQ-UI-001, REQ-API-001.
 
+## Angular UI Layout
+
+- [ ] Define Angular shell layout structure for top navigation, center panel, left-side menu, and selected action view region. Related: REQ-UI-003, REQ-UI-004, REQ-UI-006, REQ-UI-007.
+- [ ] Define tenant name display source and fallback behavior for the top navigation tenant name field. Related: REQ-UI-003, REQ-TENANT-001.
+- [ ] Define Profile, Logout, and Help link routing and behavior. Related: REQ-UI-003.
+- [ ] Define the mapping between Amazon Verified Permissions Cedar-authorized actions and left-side menu action links. Related: REQ-UI-004, REQ-UI-005, REQ-AUTH-002.
+- [ ] Define verification cases for permitted, denied, missing, and unavailable menu action authorization results. Related: REQ-UI-004, REQ-UI-005.
+- [ ] Define center panel action view replacement behavior and DOM transition verification cases. Related: REQ-UI-006, REQ-UI-007.
+
 ## Backend REST Routing
 
 - [ ] Define the Cognito User Pool, app client, token type, scopes, and claims used by Amazon Cognito Authorizers. Related: REQ-API-001.

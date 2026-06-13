@@ -48,6 +48,18 @@ Editable Draw.io architecture views for this design are stored in `/architecture
 - Context Diagram: `/architecture/context-diagram.drawio`
 - Container Diagram: `/architecture/container-diagram.drawio`
 
+## Angular UI Layout
+
+The Angular UI layout uses a persistent shell with a top navigation bar and a center panel.
+
+The top navigation bar contains the tenant name field, Profile link, Logout button, and Help link. These elements remain visible and unchanged while the user stays in the same page session and switches between center panel action views.
+
+The center panel contains a left-side menu list and a selected action view region. The left-side menu list is derived from the current user's tenant-scoped Amazon Verified Permissions Cedar policy authorization results.
+
+Only permitted action links are rendered in the left-side menu list. Actions that are not permitted, cannot be evaluated, or are missing authorization data are omitted from the menu list by default and should not appear as selectable DOM links.
+
+When a user selects a permitted left-side menu action link, the Angular UI replaces the selected action view DOM in the center panel while preserving the top navigation bar.
+
 ## Backend REST Routing
 
 Provisioned Amazon API Gateway endpoints use an Amazon Cognito Authorizer to authorize backend requests before downstream processing.

@@ -99,6 +99,59 @@ When the Amazon CloudFront Distribution is provisioned, the system shall configu
 - Given an end user accesses the Angular UI through the Amazon CloudFront Distribution over HTTPS, then the distribution uses the configured Amazon Certificate Manager certificate for TLS/SSL.
 - Given the Amazon CloudFront Distribution is provisioned for tenant access, then the certificate configuration supports secure HTTPS connections for the distribution's intended domain name.
 
+### REQ-UI-003: Display Angular Layout Top Navigation Bar
+
+When the Angular UI layout is rendered, the system shall display a top navigation bar containing a tenant name field, a Profile link, a Logout button, and a Help link.
+
+**Acceptance Criteria**
+
+- Given the Angular UI layout is rendered for an authenticated user, then the top navigation bar is visible.
+- Given the top navigation bar is visible, then it contains a tenant name field.
+- Given the top navigation bar is visible, then it contains a Profile link.
+- Given the top navigation bar is visible, then it contains a Logout button.
+- Given the top navigation bar is visible, then it contains a Help link.
+
+### REQ-UI-004: Display Authorized Action Menu
+
+When the Angular UI layout is rendered, the system shall display a center panel with a left-side menu list of action links authorized for the current user by the applicable Amazon Verified Permissions Cedar policy.
+
+**Acceptance Criteria**
+
+- Given the Angular UI layout is rendered for an authenticated user, then the center panel is visible.
+- Given the center panel is visible, then it contains a left-side menu list.
+- Given Amazon Verified Permissions Cedar policy authorizes actions for the current user, then the left-side menu list displays action links for the authorized actions.
+- Given action authorization is evaluated, then the menu list reflects the current user's tenant-scoped authorization context.
+
+### REQ-UI-005: Omit Unauthorized Menu Actions
+
+If an action is not permitted for the current user by the Amazon Verified Permissions Cedar policy, then the system shall omit that action from the left-side menu list.
+
+**Acceptance Criteria**
+
+- Given an action is not permitted for the current user by the applicable Cedar policy, then the left-side menu list does not render a link for that action.
+- Given an action authorization decision cannot be retrieved or evaluated, then the left-side menu list does not render a link for that action by default.
+- Given menu actions are rendered, then unauthorized actions are not present in the DOM as selectable left-side menu links.
+
+### REQ-UI-006: Replace Center Panel Content on Menu Action
+
+When a user clicks a left-side menu action link, the system shall replace the center panel DOM content with the DOM for the selected action.
+
+**Acceptance Criteria**
+
+- Given a permitted left-side menu action link is visible, when the user clicks the action link, then the center panel displays the selected action view.
+- Given the selected action view is displayed, then the prior action view DOM content is replaced in the center panel.
+- Given the user selects a different permitted action link, then the center panel DOM content transitions to the newly selected action view.
+
+### REQ-UI-007: Preserve Top Navigation During Action Transitions
+
+While the user remains on the same page session, the system shall keep the top navigation bar visible and unchanged during center panel DOM transitions between action views.
+
+**Acceptance Criteria**
+
+- Given the user remains in the same page session, when the center panel transitions between action views, then the top navigation bar remains visible.
+- Given the center panel transitions between action views, then the tenant name field, Profile link, Logout button, and Help link remain present in the top navigation bar.
+- Given the center panel transitions between action views, then the top navigation bar is not re-rendered in a way that changes its visible content.
+
 ## Global Assumptions
 
 - Each deployed Angular UI Web Application has a corresponding S3 Static Website endpoint URI.
@@ -111,6 +164,9 @@ When the Amazon CloudFront Distribution is provisioned, the system shall configu
 - Does the requirement intentionally prefer the S3 Static Website endpoint over the S3 REST endpoint with CloudFront Origin Access Control?
 - Which end-user HTTP/HTTPS requests should be routed through Amazon API Gateway instead of the Angular UI CloudFront Distribution?
 - Are Amazon Certificate Manager certificates tenant-specific, application-specific, or shared across tenant domains?
+- What source provides the tenant display name shown in the Angular top navigation bar?
+- Should Profile, Logout, and Help be fixed global actions or also governed by authorization policy?
+- Should center panel action views be implemented with Angular routing, dynamic components, or another view composition mechanism?
 
 ## Backend REST Routing
 
