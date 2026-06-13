@@ -26,6 +26,8 @@ When Amazon API Gateway endpoints are provisioned, they use an Amazon Cognito Au
 
 Provisioned Amazon API Gateway endpoints integrate with Python-based Amazon Lambda functions for request processing and business logic execution.
 
+Provisioned Amazon API Gateway WebSocket endpoints integrate with Python-based Amazon Lambda functions and a simple Amazon Bedrock Agent. The Amazon Bedrock Agent uses an Amazon Bedrock Knowledge Base backed by an Amazon S3 vector index for long-term memory.
+
 ## DNS Routing Context
 
 Amazon Route 53 provides Alias DNS records for provisioned service endpoints. Alias records route to the Amazon CloudFront Distribution URI, the Cognito authorization endpoint, and Amazon API Gateway REST or WebSocket endpoint URIs.
@@ -44,6 +46,8 @@ Amazon Route 53 provides Alias DNS records for provisioned service endpoints. Al
 - Amazon API Gateway is the entry point for backend REST and WebSocket requests.
 - Amazon Cognito Authorizers are responsible for authorizing requests received by provisioned Amazon API Gateway endpoints.
 - Python-based Amazon Lambda functions process backend requests and execute business logic behind Amazon API Gateway.
+- Amazon Bedrock Agents provide agentic processing for WebSocket backend interactions.
+- Amazon Bedrock Knowledge Bases backed by Amazon S3 vector indexes provide long-term memory for agentic WebSocket interactions.
 
 ## Open Decisions
 
@@ -58,6 +62,9 @@ Amazon Route 53 provides Alias DNS records for provisioned service endpoints. Al
 - Cognito User Pool, app client, token type, scopes, and claims used by API Gateway Cognito Authorizers.
 - Relationship between Amazon Cognito Authorizer authentication and Amazon Verified Permissions action authorization.
 - API Gateway Lambda integration style and Lambda function organization strategy.
+- Scope of "simple" Amazon Bedrock Agent behavior.
+- Tenant isolation, retention, deletion, and retrieval policy for long-term memory.
+- WebSocket route mapping between Lambda-only processing and Bedrock Agent processing.
 - Hosted zone and domain naming strategy for Route 53 Alias records.
 - Whether Route 53 Alias records are tenant-specific, environment-specific, application-specific, or shared.
 - Whether the Cognito authorization endpoint uses a Cognito-managed domain or a custom domain.

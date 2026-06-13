@@ -50,6 +50,10 @@ After API Gateway authorizes a backend request, the request is processed by one 
 
 The API Gateway to Lambda integration style, function granularity, and tenant isolation model remain open design decisions.
 
+For Amazon API Gateway WebSocket endpoints, Python-based Amazon Lambda functions integrate with a simple Amazon Bedrock Agent when agentic processing is required. The Bedrock Agent uses an Amazon Bedrock Knowledge Base for long-term memory.
+
+The Amazon Bedrock Knowledge Base is backed by an Amazon S3 vector index. Long-term memory access must preserve tenant boundaries and should use explicit retention, deletion, and retrieval policies before implementation.
+
 ## DNS Routing
 
 Amazon Route 53 Alias DNS records are created when externally addressable AWS service endpoints are provisioned.
@@ -67,5 +71,5 @@ This behavior prevents optimistic UI access when authorization state is missing,
 ## Design Notes
 
 - UI enablement should not be treated as the only authorization control.
-- Backend/API enforcement starts at API Gateway through Amazon Cognito Authorizers and may be extended with downstream action authorization requirements in Python-based Amazon Lambda functions.
+- Backend/API enforcement starts at API Gateway through Amazon Cognito Authorizers and may be extended with downstream action authorization requirements in Python-based Amazon Lambda functions and Bedrock agent workflows.
 - Authorization checks should use a stable action naming scheme that can be mapped to both UI features and protected operations.

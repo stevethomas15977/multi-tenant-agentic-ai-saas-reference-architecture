@@ -32,6 +32,15 @@
     <mxCell id="lambda" value="Python-based Amazon Lambda Functions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="system">
       <mxGeometry x="40" y="350" width="190" height="70" as="geometry"/>
     </mxCell>
+    <mxCell id="bedrock_agent" value="Simple Amazon Bedrock Agent" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="system">
+      <mxGeometry x="280" y="350" width="160" height="70" as="geometry"/>
+    </mxCell>
+    <mxCell id="bedrock_kb" value="Amazon Bedrock Knowledge Base" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="system">
+      <mxGeometry x="280" y="430" width="160" height="70" as="geometry"/>
+    </mxCell>
+    <mxCell id="s3_vector" value="Amazon S3 Vector Index Long-Term Memory" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="system">
+      <mxGeometry x="40" y="450" width="190" height="80" as="geometry"/>
+    </mxCell>
     <mxCell id="cognito_authorizer" value="Amazon Cognito Authorizer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="system">
       <mxGeometry x="280" y="260" width="160" height="70" as="geometry"/>
     </mxCell>
@@ -72,6 +81,15 @@
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
     <mxCell id="e12" value="Invokes backend logic" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=classic;" edge="1" parent="1" source="apigw" target="lambda">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e13" value="WebSocket agentic processing" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=classic;" edge="1" parent="1" source="lambda" target="bedrock_agent">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e14" value="Uses knowledge base" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=classic;" edge="1" parent="1" source="bedrock_agent" target="bedrock_kb">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+    <mxCell id="e15" value="Backed by vector index" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=classic;" edge="1" parent="1" source="bedrock_kb" target="s3_vector">
       <mxGeometry relative="1" as="geometry"/>
     </mxCell>
   </root>

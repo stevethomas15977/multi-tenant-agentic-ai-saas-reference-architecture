@@ -97,6 +97,18 @@ When an Amazon API Gateway endpoint is provisioned, the system shall integrate t
 - Given an authorized request is received by the Amazon API Gateway endpoint, when the request is routed for backend processing, then the integrated Python-based Amazon Lambda function processes the request.
 - Given backend business logic is required for an API operation, then the business logic executes in a Python-based Amazon Lambda function.
 
+### REQ-API-003: Integrate WebSocket Backend with Bedrock Agent Memory
+
+When an Amazon API Gateway WebSocket endpoint is provisioned, the system shall integrate the endpoint with Python-based Amazon Lambda functions and a simple Amazon Bedrock Agent that uses an Amazon Bedrock Knowledge Base backed by an Amazon S3 vector index for long-term memory.
+
+**Acceptance Criteria**
+
+- Given an Amazon API Gateway WebSocket endpoint is provisioned, then the endpoint is integrated with one or more Python-based Amazon Lambda functions.
+- Given a Python-based Amazon Lambda function handles WebSocket backend processing, then the function integrates with a simple Amazon Bedrock Agent.
+- Given the Amazon Bedrock Agent requires long-term memory, then the agent uses an Amazon Bedrock Knowledge Base.
+- Given the Amazon Bedrock Knowledge Base stores or retrieves long-term memory, then the knowledge base is backed by an Amazon S3 vector index.
+- Given a WebSocket request requires agentic processing, when the backend invokes the Amazon Bedrock Agent, then the agent can use the Amazon Bedrock Knowledge Base for long-term memory retrieval.
+
 ## Backend REST Routing Open Questions
 
 - Which Cognito User Pool, app client, token type, scopes, and claims are used by the Amazon Cognito Authorizer?
@@ -104,6 +116,9 @@ When an Amazon API Gateway endpoint is provisioned, the system shall integrate t
 - Should API Gateway authorization differ for REST endpoints and WebSocket endpoints?
 - Should API Gateway use Lambda proxy integration or non-proxy integration for Python-based Amazon Lambda functions?
 - Are Lambda functions organized per API route, per bounded context, per tenant, or shared across tenants?
+- What behavior qualifies the Amazon Bedrock Agent as "simple"?
+- What tenant isolation, retention, and deletion rules apply to long-term memory in the Amazon Bedrock Knowledge Base and Amazon S3 vector index?
+- Which WebSocket routes require agentic processing versus non-agentic Lambda processing?
 
 ## DNS Routing
 
