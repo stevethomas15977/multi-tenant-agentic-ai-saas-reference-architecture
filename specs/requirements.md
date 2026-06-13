@@ -213,3 +213,24 @@ When an Amazon API Gateway REST or WebSocket endpoint is provisioned, the system
 - Should Route 53 records be tenant-specific, environment-specific, application-specific, or shared?
 - Does the Cognito authorization endpoint use a Cognito-managed domain or a custom domain backed by Amazon CloudFront?
 - Should DNS records be created only for public endpoints, or are private/internal endpoints also in scope?
+
+## Infrastructure as Code
+
+### REQ-IAC-001: Manage AWS Resources with Terraform
+
+When AWS infrastructure resources are provisioned for the system, the system shall manage those resources using Terraform infrastructure-as-code definitions.
+
+**Acceptance Criteria**
+
+- Given an AWS infrastructure resource is required by the architecture, then the resource is defined in version-controlled Terraform unless an exception is documented.
+- Given Terraform provisions or updates an AWS infrastructure resource, then Terraform state tracks the managed resource lifecycle.
+- Given an AWS infrastructure resource cannot be managed by Terraform, then the exception is documented with the reason, operational owner, and lifecycle process.
+- Given infrastructure changes are proposed, then the changes are reviewed using Terraform plan output before apply.
+- Given tenant-specific infrastructure resources are provisioned, then the Terraform design preserves the tenant isolation requirements defined by `REQ-TENANT-001`.
+
+## Infrastructure as Code Open Questions
+
+- What Terraform backend, state locking, workspace, and environment strategy should be used?
+- Which AWS resources are shared platform resources versus tenant-specific resources?
+- Which bootstrap resources, if any, are created before Terraform state exists?
+- Which AWS resources or runtime configurations are explicitly excluded from Terraform lifecycle management?

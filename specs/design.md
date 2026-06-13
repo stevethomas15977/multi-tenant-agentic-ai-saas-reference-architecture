@@ -76,6 +76,16 @@ The CloudFront DNS record routes Angular UI access to the Amazon CloudFront Dist
 
 Route 53 DNS records should be updated when the underlying service endpoint URI changes during replacement or reprovisioning.
 
+## Terraform Infrastructure as Code
+
+Terraform is the infrastructure lifecycle mechanism for AWS resources required by this architecture.
+
+Terraform should manage stable AWS infrastructure resources, including Amazon S3 buckets, Amazon CloudFront distributions, Amazon Route 53 records, Amazon Certificate Manager certificates and DNS validation records, Amazon Cognito User Pools and app clients, Amazon Verified Permissions policy stores and stable policy templates, Amazon API Gateway REST and WebSocket APIs, Amazon Lambda functions and execution roles, Amazon DynamoDB tables, Amazon Bedrock Agent and Knowledge Base resources where provider support is sufficient, IAM roles and policies, KMS keys, CloudWatch log groups and alarms, and AWS WAF resources when used.
+
+Terraform should not manage high-churn runtime data such as Cognito users, tenant runtime memberships, DynamoDB session or preference records, Bedrock Knowledge Base documents or embeddings, or tenant authorization grants that change during normal application operation unless they are explicitly defined as bootstrap/reference configuration.
+
+Terraform module boundaries should reflect tenant isolation, environment separation, and lifecycle ownership. The Terraform design should document the backend, state locking, environment strategy, shared versus tenant-specific resources, and any resource exceptions.
+
 ## Fail-Closed UI Behavior
 
 Until authorization is successfully retrieved and evaluated, tenant-scoped UI features and actions should not be enabled by default.

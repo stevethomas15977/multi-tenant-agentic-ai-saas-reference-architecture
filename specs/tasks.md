@@ -46,3 +46,11 @@ This file tracks implementation and verification work derived from requirements.
 - [ ] Define whether Route 53 Alias or CNAME records are tenant-specific, environment-specific, application-specific, or shared. Related: REQ-DNS-001, REQ-DNS-002, REQ-DNS-003.
 - [ ] Define Cognito authorization endpoint domain strategy. Related: REQ-DNS-002.
 - [ ] Define verification cases for Route 53 Alias or CNAME DNS records routing to CloudFront, Cognito authorization, REST API, and WebSocket API endpoints. Related: REQ-DNS-001, REQ-DNS-002, REQ-DNS-003.
+
+## Infrastructure as Code
+
+- [ ] Define Terraform backend, state locking, workspace, and environment strategy. Related: REQ-IAC-001.
+- [ ] Define Terraform module boundaries for shared platform resources and tenant-specific resources. Related: REQ-IAC-001, REQ-TENANT-001.
+- [ ] Create a Terraform-managed AWS resource inventory for S3, CloudFront, Route 53, ACM, Cognito, Verified Permissions, API Gateway, Lambda, DynamoDB, Bedrock, IAM, KMS, CloudWatch, and AWS WAF resources. Related: REQ-IAC-001.
+- [ ] Define Terraform lifecycle exceptions for runtime data, user records, tenant memberships, session records, preference records, knowledge base documents, embeddings, and operational authorization grants. Related: REQ-IAC-001.
+- [ ] Define Terraform plan review and drift detection verification cases. Related: REQ-IAC-001.

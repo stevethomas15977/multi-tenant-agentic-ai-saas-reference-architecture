@@ -38,9 +38,18 @@ Provisioned Amazon API Gateway REST endpoints integrate with Python-based and/or
 
 Amazon Route 53 provides Alias or CNAME DNS records for provisioned service endpoints. DNS records route to the Amazon CloudFront Distribution URI, the Cognito authorization endpoint, and Amazon API Gateway REST or WebSocket endpoint URIs.
 
+## Infrastructure as Code Context
+
+Terraform manages the lifecycle of AWS infrastructure resources required by the architecture. Terraform state is the source of managed infrastructure resource ownership and drift detection.
+
+Terraform-managed resources include stable AWS platform resources such as Amazon S3, Amazon CloudFront, Amazon Route 53, Amazon Certificate Manager, Amazon Cognito, Amazon Verified Permissions, Amazon API Gateway, Amazon Lambda, Amazon DynamoDB, Amazon Bedrock Agent and Knowledge Base resources where provider support is sufficient, IAM, KMS, CloudWatch, and AWS WAF when used.
+
+High-churn runtime data, user records, tenant memberships, session records, preference records, knowledge base documents, embeddings, and operational authorization grants are not Terraform-managed unless they are explicitly classified as bootstrap/reference configuration.
+
 ## Architecture Notes
 
 - Amazon Route 53 is responsible for DNS alias routing to provisioned AWS service endpoints.
+- Terraform is responsible for AWS infrastructure resource lifecycle management unless an exception is documented.
 - Amazon Cognito User Pools are responsible for authenticating users.
 - Amazon Verified Permissions is responsible for evaluating action authorization.
 - UI feature/action enablement depends on authorization decisions scoped by `tenant_id`.
@@ -78,3 +87,7 @@ Amazon Route 53 provides Alias or CNAME DNS records for provisioned service endp
 - Hosted zone and domain naming strategy for Route 53 DNS records.
 - Whether Route 53 DNS records are tenant-specific, environment-specific, application-specific, or shared.
 - Whether the Cognito authorization endpoint uses a Cognito-managed domain or a custom domain.
+- Terraform backend, state locking, workspace, and environment strategy.
+- Terraform module boundaries for shared platform resources versus tenant-specific resources.
+- Bootstrap resources required before Terraform state exists.
+- AWS resource lifecycle exceptions that are not Terraform-managed.
