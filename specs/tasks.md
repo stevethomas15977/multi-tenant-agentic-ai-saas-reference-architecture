@@ -4,7 +4,7 @@ This file tracks implementation and verification work derived from requirements.
 
 ## Authentication and Authorization
 
-- [ ] Plan and implement `SLICE-001` using the build tasks, test tasks, and acceptance evidence in `specs/implementation-slices.md`. Related: REQ-AUTH-000, REQ-AUTH-001, REQ-AUTH-002, REQ-AUTH-004, REQ-AUTHZ-001, REQ-AUTHZ-002, REQ-AUTHZ-003, REQ-AUTHZ-004, REQ-AUTHZ-007, REQ-AUTHZ-008, REQ-UI-003, REQ-UI-004, REQ-UI-005, REQ-UI-006, REQ-UI-007.
+- [ ] Plan and implement `SLICE-001` using the build tasks, test tasks, and acceptance evidence in `specs/implementation-slices.md`. Related: REQ-AUTH-000, REQ-AUTH-001, REQ-AUTH-002, REQ-AUTH-004, REQ-AUTHZ-001, REQ-AUTHZ-002, REQ-AUTHZ-003, REQ-AUTHZ-004, REQ-AUTHZ-005, REQ-AUTHZ-006, REQ-AUTHZ-007, REQ-AUTHZ-008, REQ-AUTHZ-011, REQ-AUTHZ-012, REQ-UI-003, REQ-UI-004, REQ-UI-005, REQ-UI-006, REQ-UI-007.
 - [x] Create Draw.io context and container diagrams under `/architecture` for the authentication, authorization, Angular UI delivery, CloudFront HTTPS certificate, backend REST routing, Lambda backend processing, WebSocket Bedrock agent memory, and DNS routing design. Related: REQ-AUTH-001, REQ-AUTH-002, REQ-UI-001, REQ-UI-002, REQ-API-001, REQ-API-002, REQ-API-003, REQ-DNS-001, REQ-DNS-002, REQ-DNS-003.
 - [ ] Export SVG preview images for each Draw.io diagram under `/architecture` and add Markdown image references so GitHub reviewers can visualize diagrams in the repository. Related: Design Standards.
 - [ ] Define Angular Cognito sign-in, token acquisition, and token use for API Gateway access. Related: REQ-AUTH-000, REQ-API-001.
@@ -17,9 +17,9 @@ This file tracks implementation and verification work derived from requirements.
 
 ## Authorization Policy Taxonomy
 
-- [ ] Define Cedar schema for `App::User`, `App::Group`, `App::Action`, `App::Resource`, and `App::Tenant`. Related: REQ-AUTHZ-001, REQ-AUTHZ-002, REQ-AUTHZ-010.
+- [x] Define Cedar schema for `App::User`, `App::Group`, `App::Action`, `App::Resource`, and `App::Tenant`. See `specs/cedar-avp.md`. Related: REQ-AUTHZ-001, REQ-AUTHZ-002, REQ-AUTHZ-010, REQ-AUTHZ-011.
 - [x] Define authorization backing source and data model for users, groups, user-group memberships, group-action grants, resources, and action catalog records before DynamoDB persistence is introduced. See `specs/authorization-backing.md` and `DEC-007`. Related: REQ-AUTHZ-005, REQ-AUTHZ-006.
-- [ ] Define Cedar policy templates for group-action permit, cross-tenant forbid, and default-deny behavior. Related: REQ-AUTHZ-001, REQ-AUTHZ-002, REQ-AUTHZ-003, REQ-AUTHZ-004.
+- [x] Define Cedar policy templates for group-action permit, cross-tenant forbid, and default-deny behavior. See `specs/cedar-avp.md`. Related: REQ-AUTHZ-001, REQ-AUTHZ-002, REQ-AUTHZ-003, REQ-AUTHZ-004, REQ-AUTHZ-012.
 - [ ] Define authorization context builder behavior for same-tenant group memberships, stale cross-tenant memberships, duplicate group-action mappings, and missing tenant context. Related: REQ-AUTHZ-001, REQ-AUTHZ-005, REQ-AUTHZ-006.
 - [ ] Define canonical action catalog governance, starter action catalog ownership, and action rename migration review. Related: REQ-AUTHZ-010.
 - [ ] Define UI route and API operation mappings to canonical action IDs. Related: REQ-AUTHZ-007, REQ-AUTHZ-008, REQ-AUTHZ-009, REQ-UI-004, REQ-UI-006, REQ-AUTH-003.
@@ -74,4 +74,5 @@ This file tracks implementation and verification work derived from requirements.
 - [ ] Define Terraform module boundaries for shared platform resources and tenant-specific resources. Related: REQ-IAC-001, REQ-TENANT-001.
 - [ ] Create a Terraform-managed AWS resource inventory for S3, CloudFront, Route 53, ACM, Cognito, Verified Permissions, API Gateway, Lambda, Bedrock, IAM, KMS, CloudWatch, AWS WAF, and DynamoDB resources when durable persistence is included. Related: REQ-IAC-001.
 - [ ] Define Terraform lifecycle exceptions for runtime data, user records, tenant memberships, session records, preference records, knowledge base documents, embeddings, and operational authorization grants. Related: REQ-IAC-001.
+- [ ] Define Terraform provisioning details for Amazon Verified Permissions policy store, Cedar schema, baseline cross-tenant forbid policy, and stable bootstrap policy artifacts. Related: REQ-IAC-001, REQ-AUTHZ-011, REQ-AUTHZ-012.
 - [ ] Define Terraform plan review and drift detection verification cases. Related: REQ-IAC-001.

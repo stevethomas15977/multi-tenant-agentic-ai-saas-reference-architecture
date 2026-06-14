@@ -185,3 +185,38 @@ This keeps the first implementation slice focused on Cognito tenant context, Ced
 **Related Slice**
 
 - `SLICE-001`
+
+## DEC-008: Align Verified Permissions Provisioning to Cedar Artifacts
+
+**Status:** Accepted
+
+**Decision**
+
+Provision Amazon Verified Permissions policy stores from version-controlled Cedar artifacts that define the schema, policy patterns, and bootstrap policy artifacts for the active implementation slice.
+
+For `SLICE-001`, use one environment-scoped policy store with the `App` namespace, the entity and action model in `cedar-avp.md`, the static backing fixture in `authorization-backing.md`, and baseline policies for same-tenant group-action permit behavior and cross-tenant forbid behavior.
+
+**Rationale**
+
+Verified Permissions provisioning must stay aligned with the authorization model. Version-controlled Cedar artifacts make schema drift, missing action mappings, and policy-template ambiguity visible during review.
+
+**Consequences**
+
+- AVP policy store provisioning must include schema deployment or an explicit lifecycle exception.
+- Cedar policies and templates must validate against the version-controlled schema.
+- Terraform should manage stable AVP infrastructure and bootstrap policy artifacts.
+- High-churn tenant grants remain outside Terraform unless classified as bootstrap/reference configuration.
+
+**Related Requirements**
+
+- `REQ-AUTHZ-001`
+- `REQ-AUTHZ-002`
+- `REQ-AUTHZ-003`
+- `REQ-AUTHZ-004`
+- `REQ-AUTHZ-011`
+- `REQ-AUTHZ-012`
+
+**Related Artifacts**
+
+- `cedar-avp.md`
+- `authorization-backing.md`

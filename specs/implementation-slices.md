@@ -46,8 +46,12 @@ An authenticated tenant user sees only the Angular left-side menu actions author
 - `REQ-AUTHZ-002`
 - `REQ-AUTHZ-003`
 - `REQ-AUTHZ-004`
+- `REQ-AUTHZ-005`
+- `REQ-AUTHZ-006`
 - `REQ-AUTHZ-007`
 - `REQ-AUTHZ-008`
+- `REQ-AUTHZ-011`
+- `REQ-AUTHZ-012`
 - `REQ-UI-003`
 - `REQ-UI-004`
 - `REQ-UI-005`
@@ -61,6 +65,7 @@ An authenticated tenant user sees only the Angular left-side menu actions author
 - `DEC-003`: Use Angular Router Child Routes for Action Views.
 - `DEC-004`: Defer DynamoDB Durable Persistence.
 - `DEC-007`: Use Static Authorization Fixture for SLICE-001.
+- `DEC-008`: Align Verified Permissions Provisioning to Cedar Artifacts.
 
 ### Verification Coverage
 
@@ -71,14 +76,21 @@ An authenticated tenant user sees only the Angular left-side menu actions author
 - `TM-AUTHZ-003`
 - `TM-AUTHZ-004`
 - `TM-AUTHZ-005`
+- `TM-AUTHZ-006`
+- `TM-AUTHZ-007`
+- `TM-AUTHZ-008`
 - `TM-AUTHZ-009`
 - `TM-AUTHZ-010`
 - `TM-AUTHZ-011`
+- `TM-AUTHZ-016`
+- `TM-AUTHZ-017`
+- `TM-AUTHZ-018`
 - `TM-UI-001`
 
 ### Implementation Assumptions
 
 - The first slice uses the version-controlled static authorization fixture defined in `authorization-backing.md` for users, groups, user-group memberships, group-action grants, resources, and action catalog entries.
+- Any local AVP mock, simulator, or provisioned policy store used by the first slice must follow the Cedar schema and policy patterns in `cedar-avp.md`.
 - The Angular UI can use a development or mocked Cognito/AVP integration during local implementation, provided the interfaces preserve the required token, `tenant_id`, and authorization decision behavior.
 - Backend enforcement beyond the authorized menu path may be stubbed for this slice, but authorization semantics must match the Cedar policy expectations.
 
@@ -91,6 +103,7 @@ An authenticated tenant user sees only the Angular left-side menu actions author
 | SLICE-001-B03 | Implement Cognito-style authentication adapter that produces user identity, token state, `user_id`, and `tenant_id` custom claim for the slice. | REQ-AUTH-000, REQ-AUTH-004 |
 | SLICE-001-B04 | Implement authorization service interface that requests or simulates Amazon Verified Permissions / Cedar decisions for the current user, tenant, action, and resource context. | REQ-AUTH-001, REQ-AUTHZ-001 |
 | SLICE-001-B05 | Implement or load the version-controlled static authorization fixture for users, groups, user-group memberships, group-action grants, resources, and action catalog entries. | REQ-AUTHZ-001, REQ-AUTHZ-002, REQ-AUTHZ-003, REQ-AUTHZ-004, REQ-AUTHZ-005, REQ-AUTHZ-006 |
+| SLICE-001-B05A | Implement or provision the Cedar schema and schema-aligned policy artifacts defined in `cedar-avp.md`. | REQ-AUTHZ-001, REQ-AUTHZ-002, REQ-AUTHZ-003, REQ-AUTHZ-004, REQ-AUTHZ-011, REQ-AUTHZ-012 |
 | SLICE-001-B06 | Implement fail-closed handling for missing `tenant_id`, cross-tenant access, unknown actions, unavailable authorization data, and users with no granting group. | REQ-AUTH-002, REQ-AUTH-004, REQ-AUTHZ-003, REQ-AUTHZ-004, REQ-UI-005 |
 | SLICE-001-B07 | Map permitted Cedar action identifiers to left-side Angular menu links. | REQ-AUTH-002, REQ-AUTHZ-007, REQ-UI-004 |
 | SLICE-001-B08 | Omit unauthorized actions from selectable left-side menu links. | REQ-AUTHZ-007, REQ-UI-005 |
@@ -103,6 +116,8 @@ An authenticated tenant user sees only the Angular left-side menu actions author
 | SLICE-001-T01 | Test that a Cognito-style authenticated user token exposes the configured `tenant_id` custom claim. | TM-AUTH-001 |
 | SLICE-001-T02 | Test that missing or invalid tenant context fails closed when validation is required. | TM-AUTH-002, TM-AUTHZ-003 |
 | SLICE-001-T03 | Test same-tenant granted action permits. | TM-AUTHZ-001, TM-AUTHZ-004 |
+| SLICE-001-T03A | Test that the authorization fixture loads same-tenant group memberships, group-action grants, and duplicate effective mappings as expected. | TM-AUTHZ-006, TM-AUTHZ-007, TM-AUTHZ-008 |
+| SLICE-001-T03B | Test or statically validate that Cedar schema and policy artifacts align with `cedar-avp.md`. | TM-AUTHZ-016, TM-AUTHZ-017, TM-AUTHZ-018 |
 | SLICE-001-T04 | Test cross-tenant apparent grant denies. | TM-AUTHZ-002 |
 | SLICE-001-T05 | Test default-deny behavior for no matching grant and users with no granting group. | TM-AUTHZ-005 |
 | SLICE-001-T06 | Test authorized action menu renders only permitted links. | TM-AUTHZ-009 |
@@ -115,7 +130,7 @@ An authenticated tenant user sees only the Angular left-side menu actions author
 | Evidence ID | Evidence | Source |
 | --- | --- | --- |
 | SLICE-001-E01 | Screenshot or test output showing authenticated tenant user and visible tenant context. | SLICE-001-T01 |
-| SLICE-001-E02 | Cedar-compatible authorization test results for same-tenant permit, cross-tenant deny, missing-tenant deny, and default deny. | SLICE-001-T02 through SLICE-001-T05 |
+| SLICE-001-E02 | Cedar-compatible authorization test results for same-tenant permit, fixture grant loading, schema-aligned policy validation, cross-tenant deny, missing-tenant deny, and default deny. | SLICE-001-T02 through SLICE-001-T05 |
 | SLICE-001-E03 | UI test or screenshot showing only authorized left-side menu links. | SLICE-001-T06, SLICE-001-T07 |
 | SLICE-001-E04 | UI test or screenshot showing selected action view rendered in the center panel. | SLICE-001-T08 |
 | SLICE-001-E05 | UI test or screenshot showing top navigation remains visible across action view transitions. | SLICE-001-T09 |
@@ -124,6 +139,8 @@ An authenticated tenant user sees only the Angular left-side menu actions author
 
 - An authenticated user has a resolved `tenant_id` from a Cognito-style custom claim.
 - Authorization evaluation uses tenant context and Cedar-compatible group-action semantics.
+- Cedar schema and policy artifacts follow `cedar-avp.md`.
+- Authorization fixture memberships and grants load according to `authorization-backing.md`.
 - Same-tenant granted actions are permitted.
 - Cross-tenant and missing-tenant authorization attempts are denied.
 - The Angular left-side menu renders only authorized action links.

@@ -34,3 +34,6 @@ This file defines verification scenarios for requirements that are ready for tes
 | TM-AUTHZ-013 | REQ-AUTHZ-009, REQ-AUTH-003 | Unauthorized WebSocket action call | Authorization denied response and no operation execution | WebSocket integration test |
 | TM-AUTHZ-014 | REQ-AUTHZ-010 | Validate action catalog uniqueness | No duplicate action IDs | Unit or static validation test |
 | TM-AUTHZ-015 | REQ-AUTHZ-010 | Trace operation-to-action mapping | Every protected UI/API operation maps to a canonical action | Static validation or architecture review |
+| TM-AUTHZ-016 | REQ-AUTHZ-011 | Validate AVP policy store schema artifact | Schema includes required entity types, action applicability, and tenant attributes | Static validation or Terraform plan review |
+| TM-AUTHZ-017 | REQ-AUTHZ-012 | Validate group-action permit policy artifacts against schema | Same-tenant granted actions permit and missing grants deny | Cedar policy test |
+| TM-AUTHZ-018 | REQ-AUTHZ-012 | Validate baseline cross-tenant forbid policy artifact | Cross-tenant request denies even when a permit policy appears to match | Cedar policy test |

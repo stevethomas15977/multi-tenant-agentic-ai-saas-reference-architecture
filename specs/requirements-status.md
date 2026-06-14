@@ -27,6 +27,8 @@ This file tracks implementation readiness for requirements without cluttering th
 | REQ-AUTHZ-008 | Ready | Selected action view rendering is defined and Angular Router composition decision is accepted in `DEC-003`. |
 | REQ-AUTHZ-009 | Ready | Unauthorized REST/WebSocket action denial behavior is defined. |
 | REQ-AUTHZ-010 | Draft | Canonical action taxonomy is defined; action catalog ownership, versioning, and migration process remain open. |
+| REQ-AUTHZ-011 | Ready | AVP policy store schema provisioning is defined in `cedar-avp.md`; implementation needs Terraform/provider details. |
+| REQ-AUTHZ-012 | Ready | Schema-aligned Cedar policy provisioning is defined in `cedar-avp.md`; implementation needs validation tooling and Terraform lifecycle detail. |
 | REQ-TENANT-001 | Draft | Tenant isolation behavior is defined; tenant-specific versus shared resource strategy and evidence expectations remain open. |
 | REQ-UI-001 | Draft | CloudFront/S3 delivery is defined; direct S3 endpoint access and tenant deployment topology remain open. |
 | REQ-UI-002 | Draft | ACM certificate requirement is defined; certificate scope across tenants/applications remains open. |
@@ -46,7 +48,7 @@ This file tracks implementation readiness for requirements without cluttering th
 
 ## Current Implementation Readiness Summary
 
-- Ready: 18
+- Ready: 20
 - Draft: 13
 - Blocked: 0
 

@@ -65,6 +65,8 @@ Amazon Verified Permissions uses a Cedar policy model with tenant-scoped users, 
 - Forbid cross-tenant access: deny when `principal.tenant_id` and `resource.tenant_id` differ, regardless of any apparent group-action grant.
 - Deny by default: rely on Cedar's default deny behavior when no permit policy matches.
 
+The Cedar schema, policy patterns, and Amazon Verified Permissions provisioning alignment are defined in `cedar-avp.md`. AVP policy stores, policies, and stable templates must be provisioned from version-controlled artifacts that match that schema.
+
 ### Action Taxonomy
 
 Canonical action identifiers use lowercase dot-separated segments in the format `<domain>.<resource>.<verb>` or `app.navigate.<view>`. Action identifiers are stable; breaking renames require migration and mapping review.

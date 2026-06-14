@@ -150,12 +150,36 @@ When action identifiers are defined, the system shall use a canonical action tax
 - Given a UI route and API endpoint mapping process is completed, then each protected operation references a canonical action ID.
 - Given a breaking action rename, when change review occurs, then impacted policies and mappings are identified before release.
 
+### REQ-AUTHZ-011: Provision Verified Permissions with Cedar Schema
+
+When an Amazon Verified Permissions policy store is provisioned, the system shall configure the policy store with a version-controlled Cedar schema that defines the entity types, action identifiers, principal/resource applicability, and tenant attributes required by the active implementation slice.
+
+**Acceptance Criteria**
+
+- Given the Amazon Verified Permissions policy store is provisioned, then the policy store has a Cedar schema aligned to the `App::User`, `App::Group`, `App::Action`, `App::Resource`, and `App::Tenant` model.
+- Given a Cedar schema is provisioned, then the schema includes `tenant_id` attributes for principals and resources used in tenant-scoped authorization.
+- Given a starter action is used by the Angular UI or backend authorization flow, then the action is represented in the Cedar schema or schema-aligned action catalog.
+- Given a policy or authorization request references an action that is not in the schema-aligned action catalog, then the request fails closed or is rejected before authorization succeeds.
+
+### REQ-AUTHZ-012: Provision Schema-Aligned Cedar Policies
+
+When Cedar policies or policy templates are provisioned in Amazon Verified Permissions, the system shall validate that the policy artifacts align with the version-controlled Cedar schema and implement the required same-tenant group-action permit, cross-tenant forbid, and default-deny behavior.
+
+**Acceptance Criteria**
+
+- Given policy artifacts are provisioned, then they validate against the version-controlled Cedar schema before they are accepted.
+- Given same-tenant group-action grants are configured, then the provisioned policy artifacts permit only the matching action for users in a granting same-tenant group.
+- Given principal and resource tenants differ, then the provisioned policy artifacts deny access regardless of any apparent group-action permit.
+- Given no policy grants the requested action, then Amazon Verified Permissions returns a deny decision by default.
+- Given Terraform provisions Amazon Verified Permissions resources, then the policy store, Cedar schema, baseline cross-tenant forbid policy, and stable bootstrap policy artifacts are managed or explicitly documented as lifecycle exceptions.
+
 ## Authorization Policy Taxonomy Assumptions
 
 - Canonical action identifiers use lowercase dot-separated segments in the format `<domain>.<resource>.<verb>` or `app.navigate.<view>`.
 - Initial action identifiers include `app.navigate.dashboard`, `app.navigate.reports`, `app.navigate.admin`, `api.orders.read`, `api.orders.create`, `membership.assign`, `membership.revoke`, `user.read`, and `user.update`.
 - Cedar policy evaluation denies by default when no permit policy matches.
 - Before durable persistence is introduced, `SLICE-001` uses the version-controlled static authorization fixture defined in `authorization-backing.md` as the backing source for users, groups, memberships, grants, resources, and action catalog entries.
+- Amazon Verified Permissions provisioning is aligned to the Cedar schema and policy patterns in `cedar-avp.md`.
 
 ## Authorization Policy Taxonomy Open Questions
 
