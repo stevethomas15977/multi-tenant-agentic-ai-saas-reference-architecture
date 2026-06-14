@@ -54,4 +54,4 @@ This file tracks implementation readiness for requirements without cluttering th
 
 - Move `REQ-AUTHZ-005` and `REQ-AUTHZ-006` to `Ready` after the authorization backing source and data model are selected.
 - Move `REQ-UI-003` to `Ready` after tenant display name source and Profile/Logout/Help policy behavior are decided.
-- Move the first implementation slice requirements to `Ready` before coding: `REQ-AUTH-000`, `REQ-AUTH-004`, `REQ-AUTHZ-001` through `REQ-AUTHZ-004`, `REQ-AUTHZ-007`, `REQ-UI-004`, `REQ-UI-005`, `REQ-UI-006`, and `REQ-UI-007`.
+- Use `SLICE-001` in `implementation-slices.md` as the first implementation planning target.
