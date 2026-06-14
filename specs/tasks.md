@@ -39,7 +39,7 @@ This file tracks implementation and verification work derived from requirements.
 - [ ] Define Profile, Logout, and Help link routing and behavior. Related: REQ-UI-003.
 - [ ] Define the mapping between Amazon Verified Permissions Cedar-authorized actions and left-side menu action links. Related: REQ-UI-004, REQ-UI-005, REQ-AUTH-002.
 - [ ] Define verification cases for permitted, denied, missing, and unavailable menu action authorization results. Related: REQ-UI-004, REQ-UI-005.
-- [ ] Define center panel action view replacement behavior and DOM transition verification cases. Related: REQ-UI-006, REQ-UI-007.
+- [ ] Define center panel action view replacement behavior, Angular view composition mechanism, and transition verification cases. Related: REQ-UI-006, REQ-UI-007.
 
 ## Backend REST Routing
 

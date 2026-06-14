@@ -113,11 +113,11 @@ When the Angular UI layout is rendered, the system shall display left-side actio
 
 ### REQ-AUTHZ-008: Render Selected Action View
 
-When a user clicks an authorized menu action link, the system shall replace the center panel DOM with the selected action view.
+When a user clicks an authorized menu action link, the system shall display the selected action view in the center panel.
 
 **Acceptance Criteria**
 
-- Given user clicks `app.navigate.reports`, when the route or action is handled, then the center panel shows the reports DOM view.
+- Given user clicks `app.navigate.reports`, when the route or action is handled, then the center panel shows the reports action view.
 - Given user clicks another authorized action after reports, when the route or action is handled, then the reports view is replaced by the newly selected action view.
 
 ### REQ-AUTHZ-009: Protect Unauthorized Backend Action Invocation
@@ -243,17 +243,17 @@ If an action is not permitted for the current user by the Amazon Verified Permis
 
 ### REQ-UI-006: Replace Center Panel Content on Menu Action
 
-When a user clicks a left-side menu action link, the system shall replace the center panel DOM content with the DOM for the selected action.
+When a user clicks a left-side menu action link, the system shall replace the current center panel action view with the selected action view.
 
 **Acceptance Criteria**
 
 - Given a permitted left-side menu action link is visible, when the user clicks the action link, then the center panel displays the selected action view.
-- Given the selected action view is displayed, then the prior action view DOM content is replaced in the center panel.
-- Given the user selects a different permitted action link, then the center panel DOM content transitions to the newly selected action view.
+- Given the selected action view is displayed, then the prior action view is no longer the active center panel view.
+- Given the user selects a different permitted action link, then the center panel transitions to the newly selected action view.
 
 ### REQ-UI-007: Preserve Top Navigation During Action Transitions
 
-While the user remains on the same page session, the system shall keep the top navigation bar visible and unchanged during center panel DOM transitions between action views.
+While the user remains on the same page session, the system shall keep the top navigation bar visible and unchanged during center panel transitions between action views.
 
 **Acceptance Criteria**
 

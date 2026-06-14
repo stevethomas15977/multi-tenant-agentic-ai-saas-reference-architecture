@@ -15,7 +15,7 @@ This file maps requirements to design notes, tasks, and verification coverage.
 | REQ-AUTHZ-005 | `design.md` Cedar Authorization Model | Define same-tenant user-group membership loading; define stale membership filtering | `verification.md` TM-AUTHZ-006 |
 | REQ-AUTHZ-006 | `design.md` Cedar Authorization Model | Define group-action persistence model; define duplicate mapping handling | `verification.md` TM-AUTHZ-007, TM-AUTHZ-008 |
 | REQ-AUTHZ-007 | `design.md` Cedar Authorization Model; `design.md` Angular UI Layout | Define Cedar-authorized UI navigation mapping | `verification.md` TM-AUTHZ-009, TM-AUTHZ-010 |
-| REQ-AUTHZ-008 | `design.md` Cedar Authorization Model; `design.md` Angular UI Layout | Define selected action view mapping and DOM replacement behavior | `verification.md` TM-AUTHZ-011 |
+| REQ-AUTHZ-008 | `design.md` Cedar Authorization Model; `design.md` Angular UI Layout | Define selected action view mapping and center panel replacement behavior | `verification.md` TM-AUTHZ-011 |
 | REQ-AUTHZ-009 | `design.md` Cedar Authorization Model; `design.md` Backend REST Routing | Define protected REST and WebSocket action enforcement | `verification.md` TM-AUTHZ-012, TM-AUTHZ-013 |
 | REQ-AUTHZ-010 | `design.md` Cedar Authorization Model | Define canonical action catalog governance and operation mapping review | `verification.md` TM-AUTHZ-014, TM-AUTHZ-015 |
 | REQ-TENANT-001 | `design.md` Tenant Isolation; `architecture.md` Tenant Boundary | Define tenant isolation strategy; define shared versus tenant-specific resources; define tenant isolation verification evidence | Pending |
@@ -24,7 +24,7 @@ This file maps requirements to design notes, tasks, and verification coverage.
 | REQ-UI-003 | `design.md` Angular UI Layout | Define Angular shell layout; define tenant name display source; define Profile, Logout, and Help behavior | Pending |
 | REQ-UI-004 | `design.md` Angular UI Layout; `design.md` Authentication and Authorization Flow | Define Cedar-authorized action menu mapping; define authorized menu rendering cases | Pending |
 | REQ-UI-005 | `design.md` Angular UI Layout; `design.md` Fail-Closed UI Behavior | Define denied, missing, and unavailable menu authorization behavior; verify unauthorized actions are omitted from DOM links | Pending |
-| REQ-UI-006 | `design.md` Angular UI Layout | Define selected action view replacement behavior; define center panel DOM transition verification cases | Pending |
+| REQ-UI-006 | `design.md` Angular UI Layout | Define selected action view replacement behavior; define Angular view composition mechanism and transition verification cases | Pending |
 | REQ-UI-007 | `design.md` Angular UI Layout | Define persistent shell behavior; verify top navigation remains visible and unchanged during action transitions | Pending |
 | REQ-API-001 | `design.md` Backend REST Routing; `/architecture/context-diagram.drawio`; `/architecture/container-diagram.drawio` | Define Cognito authorizer configuration; define Cognito and AVP authorization relationship; define fail-closed authorizer behavior; define API Gateway authorizer verification cases | Pending |
 | REQ-API-002 | `design.md` Backend REST Routing; `/architecture/context-diagram.drawio`; `/architecture/container-diagram.drawio` | Define API Gateway Lambda integration style; define Lambda runtime selection; define Lambda function granularity and tenant isolation; define Lambda invocation verification cases | Pending |

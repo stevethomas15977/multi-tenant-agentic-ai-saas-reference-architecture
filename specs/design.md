@@ -103,7 +103,9 @@ The center panel contains a left-side menu list and a selected action view regio
 
 Only permitted action links are rendered in the left-side menu list. Actions that are not permitted, cannot be evaluated, or are missing authorization data are omitted from the menu list by default and should not appear as selectable DOM links.
 
-When a user selects a permitted left-side menu action link, the Angular UI replaces the selected action view DOM in the center panel while preserving the top navigation bar.
+When a user selects a permitted left-side menu action link, the Angular UI replaces the active action view in the center panel while preserving the top navigation bar.
+
+The Angular implementation may use an Angular Router outlet, dynamic component loading, or another view composition mechanism to perform center panel action view transitions. The selected mechanism must preserve the persistent shell behavior defined by the layout requirements.
 
 ## Backend REST Routing
 

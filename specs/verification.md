@@ -16,7 +16,7 @@ This file defines verification scenarios for requirements that are ready for tes
 | TM-AUTHZ-008 | REQ-AUTHZ-006 | Duplicate group-action mapping | Single effective mapping | Unit or persistence test |
 | TM-AUTHZ-009 | REQ-AUTHZ-007, REQ-UI-004 | Render menu for authorized actions | Only authorized links displayed | UI component or e2e test |
 | TM-AUTHZ-010 | REQ-AUTHZ-007, REQ-UI-005 | Unauthorized action exists in catalog | Link not displayed | UI component or e2e test |
-| TM-AUTHZ-011 | REQ-AUTHZ-008, REQ-UI-006 | Click authorized menu link | Center panel DOM updates to selected action view | UI component or e2e test |
+| TM-AUTHZ-011 | REQ-AUTHZ-008, REQ-UI-006 | Click authorized menu link | Center panel displays selected action view and prior action view is no longer active | UI component or e2e test |
 | TM-AUTHZ-012 | REQ-AUTHZ-009, REQ-AUTH-003 | Unauthorized REST action call | HTTP 403 and no operation execution | API integration test |
 | TM-AUTHZ-013 | REQ-AUTHZ-009, REQ-AUTH-003 | Unauthorized WebSocket action call | Authorization denied response and no operation execution | WebSocket integration test |
 | TM-AUTHZ-014 | REQ-AUTHZ-010 | Validate action catalog uniqueness | No duplicate action IDs | Unit or static validation test |
