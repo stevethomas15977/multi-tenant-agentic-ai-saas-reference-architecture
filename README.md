@@ -1,6 +1,6 @@
 # Multi-tenant Agentic AI SaaS Reference Architecture
 
-This repository documents a reference architecture for a multi-tenant Agentic AI SaaS application on AWS.
+This repository defines a reference architecture for a multi-tenant Agentic AI SaaS application on AWS that can be used as a starting point for complex web applications.
 
 It is also a portfolio project: the purpose is to demonstrate Spec-Driven Development skills, architecture thinking, and disciplined technical decision-making as I transition from a traditional software engineering role toward an architect role.
 
