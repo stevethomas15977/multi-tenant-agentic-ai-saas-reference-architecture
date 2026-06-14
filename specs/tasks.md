@@ -5,6 +5,7 @@ This file tracks implementation and verification work derived from requirements.
 ## Authentication and Authorization
 
 - [x] Create Draw.io context and container diagrams under `/architecture` for the authentication, authorization, Angular UI delivery, CloudFront HTTPS certificate, backend REST routing, Lambda backend processing, WebSocket Bedrock agent memory, and DNS routing design. Related: REQ-AUTH-001, REQ-AUTH-002, REQ-UI-001, REQ-UI-002, REQ-API-001, REQ-API-002, REQ-API-003, REQ-DNS-001, REQ-DNS-002, REQ-DNS-003.
+- [ ] Export SVG preview images for each Draw.io diagram under `/architecture` and add Markdown image references so GitHub reviewers can visualize diagrams in the repository. Related: Design Standards.
 - [ ] Define Angular Cognito sign-in, token acquisition, and token use for API Gateway access. Related: REQ-AUTH-000, REQ-API-001.
 - [x] Define the source of `tenant_id` after Cognito authentication. Related: REQ-AUTH-000, REQ-AUTH-001, REQ-AUTH-002, REQ-AUTH-004, REQ-TENANT-001.
 - [x] Define the Amazon Verified Permissions action model for tenant-scoped UI features, actions, and backend operations. Related: REQ-AUTH-001, REQ-AUTH-002, REQ-AUTH-003, REQ-AUTHZ-001, REQ-AUTHZ-002, REQ-AUTHZ-010.

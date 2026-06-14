@@ -15,6 +15,8 @@ Use the AWS 2026 (Open Library) within Draw.io for each specified AWS service wh
 
 Store architecture diagram artifacts under `/architecture`.
 
+After creating or updating a Draw.io diagram, export an SVG preview image and add or update a Markdown image reference so GitHub reviewers can visualize the diagram without opening Draw.io.
+
 ## Authentication and Authorization Flow
 
 1. The user accesses protected Angular UI functionality.
