@@ -9,6 +9,7 @@ This directory contains the spec-driven development artifacts for the Multi-tena
 - [design.md](design.md): Design details that explain how requirements are intended to be satisfied.
 - [tasks.md](tasks.md): Implementation and verification work items derived from requirements.
 - [traceability.md](traceability.md): Mapping between requirements, design notes, tasks, and verification evidence.
+- [verification.md](verification.md): Test scenarios and evidence expectations for requirements that are ready for verification design.
 - [../architecture](../architecture): Editable Draw.io architecture diagrams.
 
 ## Working Rules

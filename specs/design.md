@@ -27,6 +27,51 @@ Store architecture diagram artifacts under `/architecture`.
 
 Backend operations that require tenant-scoped action authorization must enforce Amazon Verified Permissions decisions before completing the operation.
 
+## Cedar Authorization Model
+
+Amazon Verified Permissions uses a Cedar policy model with tenant-scoped users, groups, actions, resources, and tenants.
+
+### Entity Types
+
+- `App::User`: includes `user_id` and `tenant_id`; may be a member of one or more `App::Group` entities.
+- `App::Group`: includes `group_id`, `tenant_id`, and `name`; grants one or more `App::Action` entities.
+- `App::Action`: includes `action_id` and `category`; represents UI and backend operations such as `app.navigate.dashboard`, `api.orders.read`, and `membership.assign`.
+- `App::Resource`: includes `resource_id`, `resource_type`, and `tenant_id`; represents the protected target of an action.
+- `App::Tenant`: includes `tenant_id`; represents the tenant isolation boundary.
+
+### Relationships
+
+- `App::User` to `App::Group` is many-to-many and tenant constrained.
+- `App::Group` to `App::Action` is many-to-many.
+- `App::Resource` to `App::Tenant` is many-to-one.
+- `App::User` to `App::Tenant` is many-to-one.
+- `App::Group` to `App::Tenant` is many-to-one.
+
+### Policy Patterns
+
+- Permit by group action and tenant match: allow an action only when the principal and resource share the same `tenant_id` and at least one same-tenant user group grants the requested action.
+- Forbid cross-tenant access: deny when `principal.tenant_id` and `resource.tenant_id` differ, regardless of any apparent group-action grant.
+- Deny by default: rely on Cedar's default deny behavior when no permit policy matches.
+
+### Action Taxonomy
+
+Canonical action identifiers use lowercase dot-separated segments in the format `<domain>.<resource>.<verb>` or `app.navigate.<view>`. Action identifiers are stable; breaking renames require migration and mapping review.
+
+The starter action taxonomy is `app.navigate.dashboard`, `app.navigate.reports`, `app.navigate.admin`, `api.orders.read`, `api.orders.create`, `membership.assign`, `membership.revoke`, `user.read`, and `user.update`.
+
+### Authorization Data Backing Model
+
+The authorization backing model includes `Users`, `Groups`, `UserGroupMembership`, `GroupActionGrant`, and `Resources` records. These records provide the user groups, same-tenant memberships, group-action grants, resource tenant context, and action identifiers used to build Cedar entities and authorization requests.
+
+### Evaluation Flow
+
+1. The user authenticates with Amazon Cognito.
+2. The Angular UI or backend requests authorization for the current context.
+3. The backend loads user groups and group action grants from DynamoDB.
+4. The backend builds Cedar entities and context for Amazon Verified Permissions.
+5. Amazon Verified Permissions returns a decision.
+6. The decision controls Angular menu rendering and REST/WebSocket backend action execution.
+
 ## Tenant Isolation
 
 Tenant isolation is a system-wide requirement across identity, authorization, API access, data storage, DNS/resource scoping, and long-term memory.

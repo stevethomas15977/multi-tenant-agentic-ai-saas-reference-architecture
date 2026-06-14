@@ -10,6 +10,14 @@ Authentication identifies the user. Authorization determines which tenant-scoped
 
 The Angular UI Web Application uses Amazon Cognito authentication to obtain tokens for Angular UI identity and Amazon API Gateway access.
 
+## Authorization Policy Context
+
+Amazon Verified Permissions evaluates Cedar policies using tenant-scoped authorization entities: `App::User`, `App::Group`, `App::Action`, `App::Resource`, and `App::Tenant`.
+
+Authorization decisions are based on tenant match, same-tenant user group memberships, group-action grants, resource tenant context, and canonical action identifiers.
+
+The initial policy model permits actions through group-action grants, forbids cross-tenant access, and relies on Cedar default-deny behavior when no permit applies.
+
 ## Tenant Boundary
 
 Authorization decisions must include tenant context. The initial requirements identify `tenant_id` as the tenant-scoping value used to determine which UI features or actions are enabled.
@@ -52,6 +60,8 @@ High-churn runtime data, user records, tenant memberships, session records, pref
 - Terraform is responsible for AWS infrastructure resource lifecycle management unless an exception is documented.
 - Amazon Cognito User Pools are responsible for authenticating users.
 - Amazon Verified Permissions is responsible for evaluating action authorization.
+- Cedar policy evaluation uses tenant-scoped users, groups, actions, resources, and tenants.
+- Canonical action identifiers map protected UI routes and backend operations to policy decisions.
 - UI feature/action enablement depends on authorization decisions scoped by `tenant_id`.
 - Backend operations that require tenant-scoped action authorization must enforce Amazon Verified Permissions decisions.
 - Tenant isolation applies to identity, authorization, API access, data storage, DNS/resource scoping, and long-term memory.
@@ -70,7 +80,9 @@ High-churn runtime data, user records, tenant memberships, session records, pref
 
 - Source and validation rules for `tenant_id`.
 - Tenant-specific versus shared resource strategy.
-- Policy model and action taxonomy for Amazon Verified Permissions.
+- DynamoDB key strategy for Cedar authorization backing data.
+- Cedar policy template packaging and deployment strategy.
+- Action catalog ownership, versioning, and migration process.
 - Caching strategy and failure behavior for authorization decisions.
 - Relationship between UI enablement and backend/API authorization enforcement.
 - Whether direct S3 Static Website endpoint access is allowed, blocked, or redirected.

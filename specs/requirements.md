@@ -44,6 +44,115 @@ When a backend operation requires tenant-scoped action authorization, the system
 - Given a backend operation requires tenant-scoped action authorization, when the authenticated user is not authorized by Amazon Verified Permissions for the requested action and tenant context, then the system rejects the operation.
 - Given Amazon Verified Permissions cannot be evaluated for a backend operation that requires tenant-scoped action authorization, then the system does not allow the operation by default.
 
+## Authorization Policy Taxonomy
+
+### REQ-AUTHZ-001: Evaluate Tenant-Scoped Authorization
+
+When an authorization request is evaluated, the system shall evaluate access within tenant scope and include `tenant_id` for principal and resource context.
+
+**Acceptance Criteria**
+
+- Given principal `tenant_id` is `T1` and resource `tenant_id` is `T1`, when an action is granted by policy, then the request is permitted.
+- Given principal `tenant_id` is `T1` and resource `tenant_id` is `T2`, when any action is requested, then the request is denied.
+- Given a request is missing principal or resource `tenant_id`, when authorization evaluation occurs, then the request is denied.
+
+### REQ-AUTHZ-002: Permit Group-Based Action Grants
+
+When a user requests an action, the system shall permit the action only if at least one associated group grants that action.
+
+**Acceptance Criteria**
+
+- Given user `U1` belongs to groups `G1` and `G2`, and `G2` grants action `app.navigate.reports`, when `U1` requests `app.navigate.reports`, then the request is permitted.
+- Given user `U1` belongs to groups `G1` and `G2`, and neither group grants action `user.disable`, when `U1` requests `user.disable`, then the request is denied.
+- Given user `U1` has no group memberships, when any protected action is requested, then the request is denied.
+
+### REQ-AUTHZ-003: Deny by Default
+
+If no applicable permit policy exists for a request, then the system shall deny the request.
+
+**Acceptance Criteria**
+
+- Given a valid tenant-scoped request has no matching action grant, when authorization evaluation occurs, then the decision is deny.
+- Given a request uses an unknown action identifier, when authorization evaluation occurs, then the decision is deny.
+
+### REQ-AUTHZ-004: Forbid Cross-Tenant Access
+
+If principal tenant and resource tenant are different, then the system shall deny the request regardless of any permit policy outcome.
+
+**Acceptance Criteria**
+
+- Given `principal.tenant_id` does not equal `resource.tenant_id`, when policy is evaluated, then the decision is deny.
+- Given a misconfigured action grant exists for cross-tenant access, when policy is evaluated, then the decision remains deny.
+
+### REQ-AUTHZ-005: Include Same-Tenant User Group Associations
+
+When user identity and group memberships are loaded for authorization, the system shall include all groups associated with the user within the same tenant.
+
+**Acceptance Criteria**
+
+- Given user `U1` is mapped to `G1`, `G2`, and `G3` in tenant `T1`, when authorization context is built, then all three groups are included.
+- Given user `U1` has a stale mapping to group `G9` in tenant `T2`, when authorization context is built for tenant `T1`, then `G9` is excluded.
+
+### REQ-AUTHZ-006: Support Group-to-Action Mappings
+
+When group permissions are configured, the system shall support one-to-many mappings between a group and action identifiers.
+
+**Acceptance Criteria**
+
+- Given group `manager` is mapped to `app.navigate.dashboard`, `api.orders.read`, and `membership.assign`, when mappings are saved, then all mappings are retrievable for evaluation.
+- Given a duplicate mapping attempt for the same `group_id` and `action_id`, when the mapping is persisted, then only one effective mapping exists.
+
+### REQ-AUTHZ-007: Render Cedar-Authorized UI Navigation
+
+When the Angular UI layout is rendered, the system shall display left-side action links only for actions authorized for the current user by Cedar policy evaluation.
+
+**Acceptance Criteria**
+
+- Given user `U1` is authorized for `app.navigate.dashboard` and `app.navigate.reports`, when the UI menu is rendered, then both links are visible.
+- Given user `U1` is not authorized for `app.navigate.admin`, when the UI menu is rendered, then `app.navigate.admin` is not visible.
+
+### REQ-AUTHZ-008: Render Selected Action View
+
+When a user clicks an authorized menu action link, the system shall replace the center panel DOM with the selected action view.
+
+**Acceptance Criteria**
+
+- Given user clicks `app.navigate.reports`, when the route or action is handled, then the center panel shows the reports DOM view.
+- Given user clicks another authorized action after reports, when the route or action is handled, then the reports view is replaced by the newly selected action view.
+
+### REQ-AUTHZ-009: Protect Unauthorized Backend Action Invocation
+
+If a user attempts to invoke an unauthorized backend REST or WebSocket action, then the system shall deny execution and return an authorization error response.
+
+**Acceptance Criteria**
+
+- Given an action is not granted by any user group, when a REST endpoint is called, then the response is denied with HTTP 403.
+- Given an action is not granted by any user group, when a WebSocket action is invoked, then the response indicates denied authorization and no business operation executes.
+
+### REQ-AUTHZ-010: Govern Canonical Action Taxonomy
+
+When action identifiers are defined, the system shall use a canonical action taxonomy with unique action IDs and stable naming conventions for policy and UI/API mappings.
+
+**Acceptance Criteria**
+
+- Given an action catalog update, when the action catalog is validated, then each action ID is unique.
+- Given a UI route and API endpoint mapping process is completed, then each protected operation references a canonical action ID.
+- Given a breaking action rename, when change review occurs, then impacted policies and mappings are identified before release.
+
+## Authorization Policy Taxonomy Assumptions
+
+- Canonical action identifiers use lowercase dot-separated segments in the format `<domain>.<resource>.<verb>` or `app.navigate.<view>`.
+- Initial action identifiers include `app.navigate.dashboard`, `app.navigate.reports`, `app.navigate.admin`, `api.orders.read`, `api.orders.create`, `membership.assign`, `membership.revoke`, `user.read`, and `user.update`.
+- Cedar policy evaluation denies by default when no permit policy matches.
+
+## Authorization Policy Taxonomy Open Questions
+
+- Which DynamoDB table design should store users, groups, user-group memberships, group-action grants, resources, and action catalog records?
+- Should the starter action taxonomy be versioned as `v1` with migration metadata for future action renames?
+- Are delegated administration workflows for tenant-defined custom actions out of scope for the initial implementation?
+- Are attribute-based constraints beyond tenant isolation and group action grants out of scope for the initial implementation?
+- Are time-based, location-based, or risk-adaptive policy conditions out of scope for the initial implementation?
+
 ## Multi-Tenant SaaS
 
 ### REQ-TENANT-001: Enforce Tenant Isolation
@@ -73,7 +182,7 @@ The system shall enforce tenant isolation across identity, authorization, API ac
 
 - Where does `tenant_id` originate: Cognito token claims, application tenant membership lookup, request context, or another source?
 - Should unauthorized UI features be hidden, disabled, or shown with an access-request path?
-- What action model should Amazon Verified Permissions use: coarse UI feature flags, domain actions, API operations, or a combination?
+- Which additional UI, API, membership, and user-management operations belong in the initial action catalog?
 - What is the required behavior when Amazon Verified Permissions is unavailable?
 
 ## Angular UI Delivery

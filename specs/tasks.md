@@ -7,11 +7,21 @@ This file tracks implementation and verification work derived from requirements.
 - [x] Create Draw.io context and container diagrams under `/architecture` for the authentication, authorization, Angular UI delivery, CloudFront HTTPS certificate, backend REST routing, Lambda backend processing, REST DynamoDB session preferences, WebSocket Bedrock agent memory, and DNS routing design. Related: REQ-AUTH-001, REQ-AUTH-002, REQ-UI-001, REQ-UI-002, REQ-API-001, REQ-API-002, REQ-API-003, REQ-API-004, REQ-DNS-001, REQ-DNS-002, REQ-DNS-003.
 - [ ] Define Angular Cognito sign-in, token acquisition, and token use for API Gateway access. Related: REQ-AUTH-000, REQ-API-001.
 - [ ] Define the source of `tenant_id` after Cognito authentication. Related: REQ-AUTH-000, REQ-AUTH-001, REQ-AUTH-002, REQ-TENANT-001.
-- [ ] Define the Amazon Verified Permissions action model for tenant-scoped UI features, actions, and backend operations. Related: REQ-AUTH-001, REQ-AUTH-002, REQ-AUTH-003.
+- [x] Define the Amazon Verified Permissions action model for tenant-scoped UI features, actions, and backend operations. Related: REQ-AUTH-001, REQ-AUTH-002, REQ-AUTH-003, REQ-AUTHZ-001, REQ-AUTHZ-002, REQ-AUTHZ-010.
 - [ ] Specify fail-closed behavior for unavailable or incomplete authorization responses. Related: REQ-AUTH-002.
 - [ ] Define downstream action authorization requirements for protected backend/API operations. Related: REQ-AUTH-003, REQ-API-001.
 - [ ] Define tenant isolation strategy across identity, authorization, API access, data storage, DNS/resource scoping, and long-term memory. Related: REQ-TENANT-001.
 - [ ] Define verification cases for authenticated users with allowed, denied, and missing tenant-scoped actions. Related: REQ-AUTH-001, REQ-AUTH-002.
+
+## Authorization Policy Taxonomy
+
+- [ ] Define Cedar schema for `App::User`, `App::Group`, `App::Action`, `App::Resource`, and `App::Tenant`. Related: REQ-AUTHZ-001, REQ-AUTHZ-002, REQ-AUTHZ-010.
+- [ ] Define DynamoDB item model and key strategy for users, groups, user-group memberships, group-action grants, resources, and action catalog records. Related: REQ-AUTHZ-005, REQ-AUTHZ-006, REQ-API-004.
+- [ ] Define Cedar policy templates for group-action permit, cross-tenant forbid, and default-deny behavior. Related: REQ-AUTHZ-001, REQ-AUTHZ-002, REQ-AUTHZ-003, REQ-AUTHZ-004.
+- [ ] Define authorization context builder behavior for same-tenant group memberships, stale cross-tenant memberships, duplicate group-action mappings, and missing tenant context. Related: REQ-AUTHZ-001, REQ-AUTHZ-005, REQ-AUTHZ-006.
+- [ ] Define canonical action catalog governance, starter action catalog ownership, and action rename migration review. Related: REQ-AUTHZ-010.
+- [ ] Define UI route and API operation mappings to canonical action IDs. Related: REQ-AUTHZ-007, REQ-AUTHZ-008, REQ-AUTHZ-009, REQ-UI-004, REQ-UI-006, REQ-AUTH-003.
+- [ ] Define authorization verification cases for tenant scope, group grants, default deny, cross-tenant forbid, group memberships, group-action mappings, UI menu rendering, action view rendering, backend denial, and action catalog governance. Related: REQ-AUTHZ-001, REQ-AUTHZ-002, REQ-AUTHZ-003, REQ-AUTHZ-004, REQ-AUTHZ-005, REQ-AUTHZ-006, REQ-AUTHZ-007, REQ-AUTHZ-008, REQ-AUTHZ-009, REQ-AUTHZ-010.
 
 ## Angular UI Delivery
 
