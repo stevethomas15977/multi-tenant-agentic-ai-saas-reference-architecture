@@ -2,6 +2,19 @@
 
 This file defines verification scenarios for requirements that are ready for test design.
 
+## Authentication and Tenant Context
+
+| Test ID | Requirement | Scenario | Expected Result | Evidence Type |
+| --- | --- | --- | --- | --- |
+| TM-AUTH-001 | REQ-AUTH-004 | Cognito-authenticated user token includes tenant custom claim | `tenant_id` is resolved from the Cognito-issued custom claim | Authentication integration test |
+| TM-AUTH-002 | REQ-AUTH-004, REQ-TENANT-001 | Tenant custom claim missing or invalid when validation is required | Tenant-scoped operation fails closed | API integration or authorization test |
+
+## Angular UI Layout
+
+| Test ID | Requirement | Scenario | Expected Result | Evidence Type |
+| --- | --- | --- | --- | --- |
+| TM-UI-001 | REQ-UI-006, REQ-UI-007 | User selects authorized left-side menu action rendered as an Angular child route | Center panel router outlet displays selected action view while top navigation remains unchanged | UI component or e2e test |
+
 ## Authorization Policy Taxonomy
 
 | Test ID | Requirement | Scenario | Expected Result | Evidence Type |

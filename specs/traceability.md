@@ -5,9 +5,10 @@ This file maps requirements to design notes, tasks, and verification coverage.
 | Requirement | Design Reference | Tasks | Verification |
 | --- | --- | --- | --- |
 | REQ-AUTH-000 | `design.md` Authentication and Authorization Flow | Define Angular Cognito sign-in and token use; define API Gateway token behavior | Pending |
-| REQ-AUTH-001 | `design.md` Authentication and Authorization Flow | Define `tenant_id` source; define AVP action model; define verification cases | Pending |
+| REQ-AUTH-001 | `design.md` Authentication and Authorization Flow; `design.md` Tenant Context Source | Define AVP action model; define verification cases | Pending |
 | REQ-AUTH-002 | `design.md` Authentication and Authorization Flow; Fail-Closed UI Behavior | Define AVP action model; specify fail-closed behavior; define verification cases | Pending |
 | REQ-AUTH-003 | `design.md` Authentication and Authorization Flow; Design Notes | Define backend AVP enforcement model; define protected backend operation mapping; define fail-closed backend authorization cases | Pending |
+| REQ-AUTH-004 | `design.md` Tenant Context Source; `architecture.md` Authentication and Authorization Context | Use Cognito custom claim as primary tenant source; define backend validation behavior when required | `verification.md` TM-AUTH-001, TM-AUTH-002 |
 | REQ-AUTHZ-001 | `design.md` Cedar Authorization Model; `architecture.md` Authorization Policy Context | Define Cedar schema; define tenant-scoped context builder; define policy templates | `verification.md` TM-AUTHZ-001, TM-AUTHZ-002, TM-AUTHZ-003 |
 | REQ-AUTHZ-002 | `design.md` Cedar Authorization Model | Define group-action grant model; define group-action permit policy template | `verification.md` TM-AUTHZ-004, TM-AUTHZ-005 |
 | REQ-AUTHZ-003 | `design.md` Cedar Authorization Model; `design.md` Fail-Closed UI Behavior | Define default-deny behavior; define unknown action handling | `verification.md` TM-AUTHZ-003, TM-AUTHZ-005 |
@@ -24,7 +25,7 @@ This file maps requirements to design notes, tasks, and verification coverage.
 | REQ-UI-003 | `design.md` Angular UI Layout | Define Angular shell layout; define tenant name display source; define Profile, Logout, and Help behavior | Pending |
 | REQ-UI-004 | `design.md` Angular UI Layout; `design.md` Authentication and Authorization Flow | Define Cedar-authorized action menu mapping; define authorized menu rendering cases | Pending |
 | REQ-UI-005 | `design.md` Angular UI Layout; `design.md` Fail-Closed UI Behavior | Define denied, missing, and unavailable menu authorization behavior; verify unauthorized actions are omitted from DOM links | Pending |
-| REQ-UI-006 | `design.md` Angular UI Layout | Define selected action view replacement behavior; define Angular view composition mechanism and transition verification cases | Pending |
+| REQ-UI-006 | `design.md` Angular UI Layout | Use Angular Router child routes in persistent shell router outlet; define transition verification cases | `verification.md` TM-UI-001 |
 | REQ-UI-007 | `design.md` Angular UI Layout | Define persistent shell behavior; verify top navigation remains visible and unchanged during action transitions | Pending |
 | REQ-API-001 | `design.md` Backend REST Routing; `/architecture/context-diagram.drawio`; `/architecture/container-diagram.drawio` | Define Cognito authorizer configuration; define Cognito and AVP authorization relationship; define fail-closed authorizer behavior; define API Gateway authorizer verification cases | Pending |
 | REQ-API-002 | `design.md` Backend REST Routing; `/architecture/context-diagram.drawio`; `/architecture/container-diagram.drawio` | Define API Gateway Lambda integration style; define Lambda runtime selection; define Lambda function granularity and tenant isolation; define Lambda invocation verification cases | Pending |

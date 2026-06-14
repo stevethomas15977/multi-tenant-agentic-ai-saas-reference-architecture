@@ -6,7 +6,7 @@ This file tracks implementation and verification work derived from requirements.
 
 - [x] Create Draw.io context and container diagrams under `/architecture` for the authentication, authorization, Angular UI delivery, CloudFront HTTPS certificate, backend REST routing, Lambda backend processing, WebSocket Bedrock agent memory, and DNS routing design. Related: REQ-AUTH-001, REQ-AUTH-002, REQ-UI-001, REQ-UI-002, REQ-API-001, REQ-API-002, REQ-API-003, REQ-DNS-001, REQ-DNS-002, REQ-DNS-003.
 - [ ] Define Angular Cognito sign-in, token acquisition, and token use for API Gateway access. Related: REQ-AUTH-000, REQ-API-001.
-- [ ] Define the source of `tenant_id` after Cognito authentication. Related: REQ-AUTH-000, REQ-AUTH-001, REQ-AUTH-002, REQ-TENANT-001.
+- [x] Define the source of `tenant_id` after Cognito authentication. Related: REQ-AUTH-000, REQ-AUTH-001, REQ-AUTH-002, REQ-AUTH-004, REQ-TENANT-001.
 - [x] Define the Amazon Verified Permissions action model for tenant-scoped UI features, actions, and backend operations. Related: REQ-AUTH-001, REQ-AUTH-002, REQ-AUTH-003, REQ-AUTHZ-001, REQ-AUTHZ-002, REQ-AUTHZ-010.
 - [ ] Specify fail-closed behavior for unavailable or incomplete authorization responses. Related: REQ-AUTH-002.
 - [ ] Define downstream action authorization requirements for protected backend/API operations. Related: REQ-AUTH-003, REQ-API-001.
@@ -39,7 +39,8 @@ This file tracks implementation and verification work derived from requirements.
 - [ ] Define Profile, Logout, and Help link routing and behavior. Related: REQ-UI-003.
 - [ ] Define the mapping between Amazon Verified Permissions Cedar-authorized actions and left-side menu action links. Related: REQ-UI-004, REQ-UI-005, REQ-AUTH-002.
 - [ ] Define verification cases for permitted, denied, missing, and unavailable menu action authorization results. Related: REQ-UI-004, REQ-UI-005.
-- [ ] Define center panel action view replacement behavior, Angular view composition mechanism, and transition verification cases. Related: REQ-UI-006, REQ-UI-007.
+- [x] Define center panel action view replacement behavior and Angular view composition mechanism. Related: REQ-UI-006, REQ-UI-007.
+- [ ] Define transition verification cases for Angular Router child route action views. Related: REQ-UI-006, REQ-UI-007.
 
 ## Backend REST Routing
 

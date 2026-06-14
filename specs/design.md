@@ -20,12 +20,20 @@ Store architecture diagram artifacts under `/architecture`.
 1. The user accesses protected Angular UI functionality.
 2. The system authenticates the user through the configured Amazon Cognito User Pool.
 3. The Angular UI receives Cognito-issued tokens required for UI identity and API Gateway access.
-4. After successful authentication, the system resolves the user's tenant context, including `tenant_id`.
+4. After successful authentication, the system resolves the user's tenant context, including `tenant_id`, from a Cognito-issued custom claim.
 5. The system requests action authorization from Amazon Verified Permissions.
 6. The UI authorization layer receives the resulting action permissions.
 7. The UI enables only the tenant-scoped features or actions authorized for the authenticated user.
 
 Backend operations that require tenant-scoped action authorization must enforce Amazon Verified Permissions decisions before completing the operation.
+
+## Tenant Context Source
+
+The primary source of `tenant_id` is a Cognito-issued custom claim in the authenticated user's token.
+
+Backend components use the Cognito-issued `tenant_id` claim when building authorization context for Amazon Verified Permissions. When a tenant-scoped operation requires stronger assurance, the backend validates the claimed `tenant_id` against the configured authorization backing source before completing the operation.
+
+If the `tenant_id` claim is missing or cannot be validated when validation is required, tenant-scoped operations fail closed.
 
 ## Cedar Authorization Model
 
@@ -105,7 +113,7 @@ Only permitted action links are rendered in the left-side menu list. Actions tha
 
 When a user selects a permitted left-side menu action link, the Angular UI replaces the active action view in the center panel while preserving the top navigation bar.
 
-The Angular implementation may use an Angular Router outlet, dynamic component loading, or another view composition mechanism to perform center panel action view transitions. The selected mechanism must preserve the persistent shell behavior defined by the layout requirements.
+The Angular implementation uses a persistent shell layout with Angular Router child routes rendered through a center panel router outlet. Dynamic component loading is reserved for a future plugin-like action view model and is not the default composition strategy.
 
 ## Backend REST Routing
 

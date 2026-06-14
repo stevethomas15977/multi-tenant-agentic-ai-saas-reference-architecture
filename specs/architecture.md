@@ -10,6 +10,8 @@ Authentication identifies the user. Authorization determines which tenant-scoped
 
 The Angular UI Web Application uses Amazon Cognito authentication to obtain tokens for Angular UI identity and Amazon API Gateway access.
 
+Tenant context is sourced primarily from a Cognito-issued custom claim containing `tenant_id`. Backend components may validate the claim against the configured authorization backing source before completing tenant-scoped operations.
+
 ## Authorization Policy Context
 
 Amazon Verified Permissions evaluates Cedar policies using tenant-scoped authorization entities: `App::User`, `App::Group`, `App::Action`, `App::Resource`, and `App::Tenant`.
@@ -62,6 +64,7 @@ High-churn runtime data, user records, tenant memberships, session records, pref
 - Amazon Verified Permissions is responsible for evaluating action authorization.
 - Cedar policy evaluation uses tenant-scoped users, groups, actions, resources, and tenants.
 - Canonical action identifiers map protected UI routes and backend operations to policy decisions.
+- Cognito-issued custom claims provide the primary `tenant_id` source for authorization context.
 - UI feature/action enablement depends on authorization decisions scoped by `tenant_id`.
 - Backend operations that require tenant-scoped action authorization must enforce Amazon Verified Permissions decisions.
 - Tenant isolation applies to identity, authorization, API access, data storage, DNS/resource scoping, and long-term memory.
@@ -78,7 +81,6 @@ High-churn runtime data, user records, tenant memberships, session records, pref
 
 ## Open Decisions
 
-- Source and validation rules for `tenant_id`.
 - Tenant-specific versus shared resource strategy.
 - Authorization backing source and data model before DynamoDB persistence is introduced.
 - Cedar policy template packaging and deployment strategy.

@@ -44,6 +44,17 @@ When a backend operation requires tenant-scoped action authorization, the system
 - Given a backend operation requires tenant-scoped action authorization, when the authenticated user is not authorized by Amazon Verified Permissions for the requested action and tenant context, then the system rejects the operation.
 - Given Amazon Verified Permissions cannot be evaluated for a backend operation that requires tenant-scoped action authorization, then the system does not allow the operation by default.
 
+### REQ-AUTH-004: Resolve Tenant Context from Cognito Claims
+
+When Amazon Cognito successfully authenticates a user, the system shall use a Cognito-issued custom claim as the primary source for the user's `tenant_id`.
+
+**Acceptance Criteria**
+
+- Given Amazon Cognito successfully authenticates a user, then the issued token includes the custom claim used as the primary `tenant_id` source.
+- Given the system builds authorization context for a user, then the system resolves `tenant_id` from the Cognito-issued custom claim.
+- Given backend validation against an authorization backing source is required, when the Cognito-issued `tenant_id` is evaluated, then the backend validates the claim before completing tenant-scoped operations.
+- Given the Cognito-issued `tenant_id` claim is missing or cannot be validated when validation is required, then tenant-scoped operations fail closed.
+
 ## Authorization Policy Taxonomy
 
 ### REQ-AUTHZ-001: Evaluate Tenant-Scoped Authorization
@@ -168,19 +179,17 @@ The system shall enforce tenant isolation across identity, authorization, API ac
 
 ## Tenant Isolation Open Questions
 
-- Is `tenant_id` sourced from Cognito token claims, application membership data, request context, or a combination?
 - Which resources are tenant-specific versus shared multi-tenant resources?
 - What tenant isolation verification evidence is required before implementation is accepted?
 
 ## Assumptions
 
-- `tenant_id` is available to the authorization flow after authentication.
+- `tenant_id` is available to the authorization flow after authentication through a Cognito-issued custom claim.
 - Amazon Cognito User Pool authentication establishes user identity, but Amazon Verified Permissions remains the source of truth for action authorization.
 - UI enablement is treated as a usability control. Backend authorization enforcement is specified separately by `REQ-AUTH-003`.
 
 ## Open Questions
 
-- Where does `tenant_id` originate: Cognito token claims, application tenant membership lookup, request context, or another source?
 - Should unauthorized UI features be hidden, disabled, or shown with an access-request path?
 - Which additional UI, API, membership, and user-management operations belong in the initial action catalog?
 - What is the required behavior when Amazon Verified Permissions is unavailable?
@@ -275,7 +284,6 @@ While the user remains on the same page session, the system shall keep the top n
 - Are Amazon Certificate Manager certificates tenant-specific, application-specific, or shared across tenant domains?
 - What source provides the tenant display name shown in the Angular top navigation bar?
 - Should Profile, Logout, and Help be fixed global actions or also governed by authorization policy?
-- Should center panel action views be implemented with Angular routing, dynamic components, or another view composition mechanism?
 
 ## Backend REST Routing
 
