@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Container Diagram: Angular UI Static Website Delivery</title>
+  <desc id="desc">SVG preview of the Angular UI static website delivery container diagram.</desc>
+  <defs>
+    <style>
+      .title { font: 700 22px Arial, sans-serif; fill: #1f2937; }
+      .box { fill: #ffffff; stroke: #64748b; stroke-width: 2; rx: 8; }
+      .aws { fill: #fff7ed; stroke: #f97316; }
+      .app { fill: #ecfeff; stroke: #0891b2; }
+      .auth { fill: #fdf2f8; stroke: #db2777; }
+      .edge { fill: none; stroke: #334155; stroke-width: 2; marker-end: url(#arrow); }
+      .label { font: 13px Arial, sans-serif; fill: #334155; }
+      .node { font: 700 14px Arial, sans-serif; fill: #111827; }
+      .small { font: 12px Arial, sans-serif; fill: #475569; }
+      .band { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 1; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="760" fill="#ffffff"/>
+  <text x="40" y="44" class="title">Container Diagram: Angular UI Static Website Delivery</text>
+  <rect x="30" y="90" width="1120" height="590" class="band"/>
+
+  <rect x="60" y="160" width="160" height="64" class="box"/>
+  <text x="92" y="187" class="node">End User Browser</text>
+  <text x="95" y="206" class="small">Tenant access</text>
+
+  <rect x="285" y="145" width="190" height="82" class="box aws"/>
+  <text x="332" y="176" class="node">CloudFront</text>
+  <text x="313" y="197" class="small">HTTPS CDN distribution</text>
+
+  <rect x="285" y="285" width="190" height="74" class="box aws"/>
+  <text x="330" y="314" class="node">ACM Certificate</text>
+  <text x="326" y="334" class="small">TLS / SSL for UI</text>
+
+  <rect x="60" y="285" width="175" height="74" class="box aws"/>
+  <text x="98" y="314" class="node">Route 53</text>
+  <text x="84" y="334" class="small">DNS alias records</text>
+
+  <rect x="545" y="145" width="190" height="82" class="box aws"/>
+  <text x="592" y="176" class="node">Amazon S3</text>
+  <text x="570" y="197" class="small">Static website endpoint</text>
+
+  <rect x="795" y="145" width="200" height="82" class="box app"/>
+  <text x="842" y="176" class="node">Angular UI</text>
+  <text x="823" y="197" class="small">Static application assets</text>
+
+  <rect x="795" y="310" width="180" height="74" class="box auth"/>
+  <text x="824" y="339" class="node">Cognito User Pool</text>
+  <text x="845" y="359" class="small">Authentication</text>
+
+  <rect x="795" y="430" width="180" height="74" class="box auth"/>
+  <text x="806" y="459" class="node">Verified Permissions</text>
+  <text x="828" y="479" class="small">Cedar decisions</text>
+
+  <rect x="1030" y="305" width="180" height="82" class="box aws"/>
+  <text x="1070" y="337" class="node">API Gateway</text>
+  <text x="1062" y="358" class="small">REST endpoints</text>
+
+  <rect x="1030" y="430" width="180" height="74" class="box auth"/>
+  <text x="1050" y="459" class="node">Cognito Authorizer</text>
+  <text x="1066" y="479" class="small">Token validation</text>
+
+  <rect x="1030" y="550" width="180" height="82" class="box aws"/>
+  <text x="1080" y="582" class="node">Lambda</text>
+  <text x="1055" y="603" class="small">Backend processing</text>
+
+  <rect x="795" y="560" width="180" height="74" class="box aws"/>
+  <text x="824" y="589" class="node">Bedrock Agent</text>
+  <text x="828" y="609" class="small">Agentic workflow</text>
+
+  <rect x="545" y="560" width="180" height="74" class="box aws"/>
+  <text x="567" y="589" class="node">Knowledge Base</text>
+  <text x="582" y="609" class="small">Long-term memory</text>
+
+  <rect x="285" y="550" width="190" height="82" class="box aws"/>
+  <text x="338" y="582" class="node">S3 Vector</text>
+  <text x="328" y="603" class="small">Memory index</text>
+
+  <path d="M220 192 H285" class="edge"/>
+  <text x="228" y="180" class="label">UI access</text>
+  <path d="M475 186 H545" class="edge"/>
+  <text x="492" y="174" class="label">Origin</text>
+  <path d="M735 186 H795" class="edge"/>
+  <text x="742" y="174" class="label">Serves assets</text>
+  <path d="M895 227 V310" class="edge"/>
+  <text x="908" y="270" class="label">Authenticate</text>
+  <path d="M895 384 V430" class="edge"/>
+  <text x="908" y="415" class="label">Authorize</text>
+  <path d="M995 346 H1030" class="edge"/>
+  <text x="976" y="334" class="label">REST calls</text>
+  <path d="M1120 387 V430" class="edge"/>
+  <text x="1132" y="415" class="label">Uses</text>
+  <path d="M1120 504 V550" class="edge"/>
+  <text x="1132" y="532" class="label">Invokes</text>
+  <path d="M1030 590 H975" class="edge"/>
+  <text x="982" y="578" class="label">Agent</text>
+  <path d="M795 597 H725" class="edge"/>
+  <text x="744" y="585" class="label">KB</text>
+  <path d="M545 591 H475" class="edge"/>
+  <text x="494" y="579" class="label">Index</text>
+  <path d="M380 285 V227" class="edge"/>
+  <text x="392" y="260" class="label">TLS cert</text>
+  <path d="M235 322 H285" class="edge"/>
+  <text x="92" y="379" class="label">DNS routes to CloudFront, Cognito, and API Gateway</text>
+</svg>

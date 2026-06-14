@@ -7,6 +7,18 @@ This directory stores editable Draw.io architecture artifacts.
 - [context-diagram.drawio](context-diagram.drawio): System context for tenant access, authentication, and authorization.
 - [container-diagram.drawio](container-diagram.drawio): Container view for Angular UI static website delivery through CloudFront and S3.
 
+## SVG Previews
+
+The SVG previews below let GitHub reviewers view the architecture without opening Draw.io.
+
+### Context Diagram
+
+![Context Diagram](context-diagram.svg)
+
+### Container Diagram
+
+![Container Diagram](container-diagram.svg)
+
 ## Draw.io Authoring Standards
 
 Use the latest AWS 2026 icon set available in Draw.io for AWS services whenever a corresponding service icon exists.
@@ -30,3 +42,16 @@ Draw.io source files are editable artifacts. Exported SVG preview images should 
 Preferred preview format: SVG.
 
 SVG is preferred because architecture diagrams contain text, icons, boxes, and connectors that should remain sharp at any zoom level. JPG should be avoided for diagrams unless a downstream tool specifically requires a raster image.
+
+## Validation Notes
+
+Current validation result:
+
+- `context-diagram.drawio` and `container-diagram.drawio` are valid editable Draw.io XML files.
+- The current Draw.io sources do not yet use AWS icon shape styles such as `mxgraph.aws*`; they use generic Draw.io shapes with AWS service labels.
+- The local environment used for this update did not have the Draw.io desktop/CLI exporter available on `PATH`, so the SVG previews were generated as repository preview artifacts from the diagram content rather than exported by the Draw.io application.
+
+Next diagram refactor:
+
+- Replace generic AWS service shapes in the `.drawio` sources with the latest AWS 2026 Open Library icons.
+- Re-export the SVG previews from Draw.io after the icon refactor.
