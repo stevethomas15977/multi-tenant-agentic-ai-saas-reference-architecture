@@ -294,9 +294,32 @@ While the user remains on the same page session, the system shall keep the top n
 - Given the center panel transitions between action views, then the tenant name field, Profile link, Logout button, and Help link remain present in the top navigation bar.
 - Given the center panel transitions between action views, then the top navigation bar is not re-rendered in a way that changes its visible content.
 
+### REQ-UI-008: Map Authorized Actions to Angular Child Routes
+
+When the Angular UI renders authorized navigation actions, the system shall map each rendered left-side menu action link to a version-controlled Angular child route associated with exactly one canonical action identifier.
+
+**Acceptance Criteria**
+
+- Given action `app.navigate.dashboard` is authorized, when the left-side menu is rendered, then the dashboard menu link routes to `/app/dashboard`.
+- Given action `app.navigate.reports` is authorized, when the left-side menu is rendered, then the reports menu link routes to `/app/reports`.
+- Given action `app.navigate.admin` is authorized, when the left-side menu is rendered, then the admin menu link routes to `/app/admin`.
+- Given a protected Angular child route is defined, then the route maps to exactly one canonical action ID.
+
+### REQ-UI-009: Prevent Unauthorized Direct Action Route Activation
+
+If a user directly navigates to an Angular child route for an action that is not authorized, then the system shall prevent the protected action view from rendering.
+
+**Acceptance Criteria**
+
+- Given a user is not authorized for `app.navigate.admin`, when the user directly navigates to `/app/admin`, then the admin action view is not rendered.
+- Given a direct route navigation is denied, then the authenticated shell top navigation remains visible if the user session is still valid.
+- Given route authorization data is unavailable or cannot be evaluated, then protected child routes fail closed.
+
 ## Global Assumptions
 
 - Each deployed Angular UI Web Application has a corresponding S3 Static Website endpoint URI.
+- For `SLICE-001`, the Angular top navigation tenant name field is resolved from authenticated tenant context and may fall back to the raw `tenant_id`.
+- For `SLICE-001`, Profile, Logout, and Help are fixed global shell actions and are not governed by Cedar action authorization.
 
 ## Global Open Questions
 
@@ -306,8 +329,6 @@ While the user remains on the same page session, the system shall keep the top n
 - Does the requirement intentionally prefer the S3 Static Website endpoint over the S3 REST endpoint with CloudFront Origin Access Control?
 - Which end-user HTTP/HTTPS requests should be routed through Amazon API Gateway instead of the Angular UI CloudFront Distribution?
 - Are Amazon Certificate Manager certificates tenant-specific, application-specific, or shared across tenant domains?
-- What source provides the tenant display name shown in the Angular top navigation bar?
-- Should Profile, Logout, and Help be fixed global actions or also governed by authorization policy?
 
 ## Backend REST Routing
 

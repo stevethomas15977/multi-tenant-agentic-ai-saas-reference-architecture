@@ -220,3 +220,37 @@ Verified Permissions provisioning must stay aligned with the authorization model
 
 - `cedar-avp.md`
 - `authorization-backing.md`
+
+## DEC-009: Use Fixed Shell Actions and Guarded Angular Child Routes
+
+**Status:** Accepted
+
+**Decision**
+
+For `SLICE-001`, use a persistent Angular authenticated shell with fixed Profile, Logout, and Help top navigation actions, an authorized left-side action menu, and guarded Angular Router child routes for action views.
+
+The tenant name field is resolved from authenticated tenant context and may fall back to the raw `tenant_id`. Left-side menu links are generated only from authorized `app.navigate.*` actions. Direct navigation to an unauthorized child route is blocked from rendering the protected action view.
+
+**Rationale**
+
+This keeps the first UI slice focused on tenant authorization and action-view routing without overloading global shell controls with policy decisions.
+
+**Consequences**
+
+- Profile, Logout, and Help are not included in the `SLICE-001` Cedar action menu.
+- Protected child routes must map to canonical action IDs.
+- Menu rendering and direct route activation must use the same authorization result.
+
+**Related Requirements**
+
+- `REQ-UI-003`
+- `REQ-UI-004`
+- `REQ-UI-005`
+- `REQ-UI-006`
+- `REQ-UI-007`
+- `REQ-UI-008`
+- `REQ-UI-009`
+
+**Related Artifacts**
+
+- `angular-ui.md`

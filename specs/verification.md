@@ -14,6 +14,9 @@ This file defines verification scenarios for requirements that are ready for tes
 | Test ID | Requirement | Scenario | Expected Result | Evidence Type |
 | --- | --- | --- | --- | --- |
 | TM-UI-001 | REQ-UI-006, REQ-UI-007 | User selects authorized left-side menu action rendered as an Angular child route | Center panel router outlet displays selected action view while top navigation remains unchanged | UI component or e2e test |
+| TM-UI-002 | REQ-UI-003 | Authenticated shell renders top navigation | Tenant name, Profile link, Logout button, and Help link are visible | UI component or e2e test |
+| TM-UI-003 | REQ-UI-004, REQ-UI-008 | Authorized navigation actions are mapped to child routes | Menu links route to `/app/dashboard`, `/app/reports`, and `/app/admin` only when corresponding actions are authorized | UI route/component test |
+| TM-UI-004 | REQ-UI-005, REQ-UI-009 | User directly navigates to unauthorized child route | Protected action view is not rendered and route fails closed | Route guard or e2e test |
 
 ## Authorization Policy Taxonomy
 

@@ -32,11 +32,13 @@ This file tracks implementation readiness for requirements without cluttering th
 | REQ-TENANT-001 | Draft | Tenant isolation behavior is defined; tenant-specific versus shared resource strategy and evidence expectations remain open. |
 | REQ-UI-001 | Draft | CloudFront/S3 delivery is defined; direct S3 endpoint access and tenant deployment topology remain open. |
 | REQ-UI-002 | Draft | ACM certificate requirement is defined; certificate scope across tenants/applications remains open. |
-| REQ-UI-003 | Draft | Top navigation layout is defined; tenant display name source and fixed-versus-policy-controlled global links remain open. |
+| REQ-UI-003 | Ready | Top navigation layout is defined; tenant name source and fixed global shell actions are accepted in `DEC-009` and detailed in `angular-ui.md`. |
 | REQ-UI-004 | Ready | Authorized action menu behavior is defined and backed by Cedar taxonomy requirements. |
 | REQ-UI-005 | Ready | Unauthorized action omission is defined with fail-closed behavior. |
 | REQ-UI-006 | Ready | Action view replacement is defined and Angular Router child route strategy is accepted in `DEC-003`. |
 | REQ-UI-007 | Ready | Persistent top navigation behavior during action transitions is defined. |
+| REQ-UI-008 | Ready | Authorized action to Angular child route mapping is defined in `angular-ui.md`. |
+| REQ-UI-009 | Ready | Unauthorized direct child route activation behavior is defined in `angular-ui.md`. |
 | REQ-API-001 | Draft | Cognito Authorizer requirement is defined; token type, scopes, claims, and REST/WebSocket differences remain open. |
 | REQ-API-002 | Draft | Lambda backend integration is defined; runtime selection, integration style, and function organization remain open. |
 | REQ-API-003 | Draft | WebSocket Bedrock Agent memory integration is defined; simple agent scope, route mapping, and memory retention remain open. |
@@ -48,12 +50,11 @@ This file tracks implementation readiness for requirements without cluttering th
 
 ## Current Implementation Readiness Summary
 
-- Ready: 20
-- Draft: 13
+- Ready: 23
+- Draft: 12
 - Blocked: 0
 
 ## Recommended Next Status Moves
 
 - Move `REQ-AUTHZ-010` to `Ready` after action catalog ownership, versioning, and migration review are decided.
-- Move `REQ-UI-003` to `Ready` after tenant display name source and Profile/Logout/Help policy behavior are decided.
 - Use `SLICE-001` in `implementation-slices.md` as the first implementation planning target.

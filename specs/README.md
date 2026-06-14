@@ -11,6 +11,7 @@ This directory contains the spec-driven development artifacts for the Multi-tena
 - [decisions.md](decisions.md): Lightweight ADR-style decision log for accepted architecture and SDD decisions.
 - [authorization-backing.md](authorization-backing.md): First-slice authorization backing source and fixture data model.
 - [cedar-avp.md](cedar-avp.md): Cedar schema, policy patterns, and Amazon Verified Permissions provisioning alignment.
+- [angular-ui.md](angular-ui.md): Angular shell, authorized menu, child route, and route guard design for the first slice.
 - [implementation-slices.md](implementation-slices.md): Focused implementation slices with scope, exclusions, verification, and definition of done.
 - [tasks.md](tasks.md): Implementation and verification work items derived from requirements.
 - [traceability.md](traceability.md): Mapping between requirements, design notes, tasks, and verification evidence.

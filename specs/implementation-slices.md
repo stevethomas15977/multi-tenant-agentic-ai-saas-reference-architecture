@@ -57,6 +57,8 @@ An authenticated tenant user sees only the Angular left-side menu actions author
 - `REQ-UI-005`
 - `REQ-UI-006`
 - `REQ-UI-007`
+- `REQ-UI-008`
+- `REQ-UI-009`
 
 ### Supporting Decisions
 
@@ -66,6 +68,7 @@ An authenticated tenant user sees only the Angular left-side menu actions author
 - `DEC-004`: Defer DynamoDB Durable Persistence.
 - `DEC-007`: Use Static Authorization Fixture for SLICE-001.
 - `DEC-008`: Align Verified Permissions Provisioning to Cedar Artifacts.
+- `DEC-009`: Use Fixed Shell Actions and Guarded Angular Child Routes.
 
 ### Verification Coverage
 
@@ -86,11 +89,15 @@ An authenticated tenant user sees only the Angular left-side menu actions author
 - `TM-AUTHZ-017`
 - `TM-AUTHZ-018`
 - `TM-UI-001`
+- `TM-UI-002`
+- `TM-UI-003`
+- `TM-UI-004`
 
 ### Implementation Assumptions
 
 - The first slice uses the version-controlled static authorization fixture defined in `authorization-backing.md` for users, groups, user-group memberships, group-action grants, resources, and action catalog entries.
 - Any local AVP mock, simulator, or provisioned policy store used by the first slice must follow the Cedar schema and policy patterns in `cedar-avp.md`.
+- Angular shell, menu, and route behavior follows `angular-ui.md`.
 - The Angular UI can use a development or mocked Cognito/AVP integration during local implementation, provided the interfaces preserve the required token, `tenant_id`, and authorization decision behavior.
 - Backend enforcement beyond the authorized menu path may be stubbed for this slice, but authorization semantics must match the Cedar policy expectations.
 
@@ -99,7 +106,7 @@ An authenticated tenant user sees only the Angular left-side menu actions author
 | Task ID | Task | Related Requirements |
 | --- | --- | --- |
 | SLICE-001-B01 | Create or scaffold the Angular application shell with persistent top navigation, left-side menu region, and center panel router outlet. | REQ-UI-003, REQ-UI-004, REQ-UI-006, REQ-UI-007 |
-| SLICE-001-B02 | Define Angular routes for starter authorized action views such as dashboard, reports, and admin. | REQ-AUTHZ-008, REQ-UI-006 |
+| SLICE-001-B02 | Define Angular child routes for starter authorized action views such as dashboard, reports, and admin. | REQ-AUTHZ-008, REQ-UI-006, REQ-UI-008 |
 | SLICE-001-B03 | Implement Cognito-style authentication adapter that produces user identity, token state, `user_id`, and `tenant_id` custom claim for the slice. | REQ-AUTH-000, REQ-AUTH-004 |
 | SLICE-001-B04 | Implement authorization service interface that requests or simulates Amazon Verified Permissions / Cedar decisions for the current user, tenant, action, and resource context. | REQ-AUTH-001, REQ-AUTHZ-001 |
 | SLICE-001-B05 | Implement or load the version-controlled static authorization fixture for users, groups, user-group memberships, group-action grants, resources, and action catalog entries. | REQ-AUTHZ-001, REQ-AUTHZ-002, REQ-AUTHZ-003, REQ-AUTHZ-004, REQ-AUTHZ-005, REQ-AUTHZ-006 |
@@ -107,7 +114,8 @@ An authenticated tenant user sees only the Angular left-side menu actions author
 | SLICE-001-B06 | Implement fail-closed handling for missing `tenant_id`, cross-tenant access, unknown actions, unavailable authorization data, and users with no granting group. | REQ-AUTH-002, REQ-AUTH-004, REQ-AUTHZ-003, REQ-AUTHZ-004, REQ-UI-005 |
 | SLICE-001-B07 | Map permitted Cedar action identifiers to left-side Angular menu links. | REQ-AUTH-002, REQ-AUTHZ-007, REQ-UI-004 |
 | SLICE-001-B08 | Omit unauthorized actions from selectable left-side menu links. | REQ-AUTHZ-007, REQ-UI-005 |
-| SLICE-001-B09 | Ensure selecting an authorized menu item updates the center panel route while preserving the top navigation shell. | REQ-AUTHZ-008, REQ-UI-006, REQ-UI-007 |
+| SLICE-001-B09 | Ensure selecting an authorized menu item updates the center panel route while preserving the top navigation shell. | REQ-AUTHZ-008, REQ-UI-006, REQ-UI-007, REQ-UI-008 |
+| SLICE-001-B10 | Add route guard behavior that prevents unauthorized direct child route activation. | REQ-UI-005, REQ-UI-009 |
 
 ### Test Tasks
 
@@ -124,6 +132,9 @@ An authenticated tenant user sees only the Angular left-side menu actions author
 | SLICE-001-T07 | Test unauthorized catalog actions are not rendered as selectable links. | TM-AUTHZ-010 |
 | SLICE-001-T08 | Test authorized menu click displays the selected Angular child route in the center panel. | TM-AUTHZ-011, TM-UI-001 |
 | SLICE-001-T09 | Test top navigation remains visible and unchanged during center panel route transitions. | TM-UI-001 |
+| SLICE-001-T10 | Test top navigation renders tenant name, Profile, Logout, and Help controls. | TM-UI-002 |
+| SLICE-001-T11 | Test authorized action links map to the expected Angular child routes. | TM-UI-003 |
+| SLICE-001-T12 | Test direct navigation to an unauthorized child route fails closed. | TM-UI-004 |
 
 ### Acceptance Evidence
 
@@ -134,6 +145,7 @@ An authenticated tenant user sees only the Angular left-side menu actions author
 | SLICE-001-E03 | UI test or screenshot showing only authorized left-side menu links. | SLICE-001-T06, SLICE-001-T07 |
 | SLICE-001-E04 | UI test or screenshot showing selected action view rendered in the center panel. | SLICE-001-T08 |
 | SLICE-001-E05 | UI test or screenshot showing top navigation remains visible across action view transitions. | SLICE-001-T09 |
+| SLICE-001-E06 | UI route guard test output showing unauthorized direct route activation is blocked. | SLICE-001-T12 |
 
 ### Definition of Done
 
@@ -145,6 +157,7 @@ An authenticated tenant user sees only the Angular left-side menu actions author
 - Cross-tenant and missing-tenant authorization attempts are denied.
 - The Angular left-side menu renders only authorized action links.
 - Unauthorized action links are not rendered as selectable menu links.
+- Direct navigation to unauthorized child routes is blocked from rendering protected action views.
 - Selecting an authorized menu action displays the corresponding Angular child route action view in the center panel.
 - The top navigation remains visible and unchanged during action view transitions.
 - Verification scenarios listed for this slice are implemented or explicitly mapped to pending test work.

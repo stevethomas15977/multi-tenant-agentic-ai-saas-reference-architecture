@@ -4,7 +4,7 @@ This file tracks implementation and verification work derived from requirements.
 
 ## Authentication and Authorization
 
-- [ ] Plan and implement `SLICE-001` using the build tasks, test tasks, and acceptance evidence in `specs/implementation-slices.md`. Related: REQ-AUTH-000, REQ-AUTH-001, REQ-AUTH-002, REQ-AUTH-004, REQ-AUTHZ-001, REQ-AUTHZ-002, REQ-AUTHZ-003, REQ-AUTHZ-004, REQ-AUTHZ-005, REQ-AUTHZ-006, REQ-AUTHZ-007, REQ-AUTHZ-008, REQ-AUTHZ-011, REQ-AUTHZ-012, REQ-UI-003, REQ-UI-004, REQ-UI-005, REQ-UI-006, REQ-UI-007.
+- [ ] Plan and implement `SLICE-001` using the build tasks, test tasks, and acceptance evidence in `specs/implementation-slices.md`. Related: REQ-AUTH-000, REQ-AUTH-001, REQ-AUTH-002, REQ-AUTH-004, REQ-AUTHZ-001, REQ-AUTHZ-002, REQ-AUTHZ-003, REQ-AUTHZ-004, REQ-AUTHZ-005, REQ-AUTHZ-006, REQ-AUTHZ-007, REQ-AUTHZ-008, REQ-AUTHZ-011, REQ-AUTHZ-012, REQ-UI-003, REQ-UI-004, REQ-UI-005, REQ-UI-006, REQ-UI-007, REQ-UI-008, REQ-UI-009.
 - [x] Create Draw.io context and container diagrams under `/architecture` for the authentication, authorization, Angular UI delivery, CloudFront HTTPS certificate, backend REST routing, Lambda backend processing, WebSocket Bedrock agent memory, and DNS routing design. Related: REQ-AUTH-001, REQ-AUTH-002, REQ-UI-001, REQ-UI-002, REQ-API-001, REQ-API-002, REQ-API-003, REQ-DNS-001, REQ-DNS-002, REQ-DNS-003.
 - [ ] Export SVG preview images for each Draw.io diagram under `/architecture` and add Markdown image references so GitHub reviewers can visualize diagrams in the repository. Related: Design Standards.
 - [ ] Define Angular Cognito sign-in, token acquisition, and token use for API Gateway access. Related: REQ-AUTH-000, REQ-API-001.
@@ -36,13 +36,13 @@ This file tracks implementation and verification work derived from requirements.
 
 ## Angular UI Layout
 
-- [ ] Define Angular shell layout structure for top navigation, center panel, left-side menu, and selected action view region. Related: REQ-UI-003, REQ-UI-004, REQ-UI-006, REQ-UI-007.
-- [ ] Define tenant name display source and fallback behavior for the top navigation tenant name field. Related: REQ-UI-003, REQ-TENANT-001.
-- [ ] Define Profile, Logout, and Help link routing and behavior. Related: REQ-UI-003.
-- [ ] Define the mapping between Amazon Verified Permissions Cedar-authorized actions and left-side menu action links. Related: REQ-UI-004, REQ-UI-005, REQ-AUTH-002.
+- [x] Define Angular shell layout structure for top navigation, center panel, left-side menu, and selected action view region. See `specs/angular-ui.md`. Related: REQ-UI-003, REQ-UI-004, REQ-UI-006, REQ-UI-007.
+- [x] Define tenant name display source and fallback behavior for the top navigation tenant name field. See `DEC-009` and `specs/angular-ui.md`. Related: REQ-UI-003, REQ-TENANT-001.
+- [x] Define Profile, Logout, and Help link routing and behavior. See `DEC-009` and `specs/angular-ui.md`. Related: REQ-UI-003.
+- [x] Define the mapping between Amazon Verified Permissions Cedar-authorized actions and left-side menu action links. See `specs/angular-ui.md`. Related: REQ-UI-004, REQ-UI-005, REQ-UI-008, REQ-AUTH-002.
 - [ ] Define verification cases for permitted, denied, missing, and unavailable menu action authorization results. Related: REQ-UI-004, REQ-UI-005.
 - [x] Define center panel action view replacement behavior and Angular view composition mechanism. Related: REQ-UI-006, REQ-UI-007.
-- [ ] Define transition verification cases for Angular Router child route action views. Related: REQ-UI-006, REQ-UI-007.
+- [x] Define transition verification cases for Angular Router child route action views. Related: REQ-UI-006, REQ-UI-007, REQ-UI-008, REQ-UI-009.
 
 ## Backend REST Routing
 

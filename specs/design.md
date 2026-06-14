@@ -117,6 +117,8 @@ The Angular UI layout uses a persistent shell with a top navigation bar and a ce
 
 The top navigation bar contains the tenant name field, Profile link, Logout button, and Help link. These elements remain visible and unchanged while the user stays in the same page session and switches between center panel action views.
 
+For `SLICE-001`, the tenant name field is resolved from authenticated tenant context and may fall back to the raw `tenant_id`. Profile, Logout, and Help are fixed global shell actions and are not governed by Cedar action authorization.
+
 The center panel contains a left-side menu list and a selected action view region. The left-side menu list is derived from the current user's tenant-scoped Amazon Verified Permissions Cedar policy authorization results.
 
 Only permitted action links are rendered in the left-side menu list. Actions that are not permitted, cannot be evaluated, or are missing authorization data are omitted from the menu list by default and should not appear as selectable DOM links.
@@ -124,6 +126,8 @@ Only permitted action links are rendered in the left-side menu list. Actions tha
 When a user selects a permitted left-side menu action link, the Angular UI replaces the active action view in the center panel while preserving the top navigation bar.
 
 The Angular implementation uses a persistent shell layout with Angular Router child routes rendered through a center panel router outlet. Dynamic component loading is reserved for a future plugin-like action view model and is not the default composition strategy.
+
+The detailed Angular shell, menu, route mapping, and direct route guard contract is defined in `angular-ui.md`.
 
 ## Backend REST Routing
 
