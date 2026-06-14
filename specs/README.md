@@ -5,6 +5,7 @@ This directory contains the spec-driven development artifacts for the Multi-tena
 ## Artifacts
 
 - [requirements.md](requirements.md): Canonical EARS requirements.
+- [requirements-status.md](requirements-status.md): Draft, Ready, and Blocked status tracking for requirements.
 - [architecture.md](architecture.md): Architecture context, boundaries, and major system decisions.
 - [design.md](design.md): Design details that explain how requirements are intended to be satisfied.
 - [decisions.md](decisions.md): Lightweight ADR-style decision log for accepted architecture and SDD decisions.
