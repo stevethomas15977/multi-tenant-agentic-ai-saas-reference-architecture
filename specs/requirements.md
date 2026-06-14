@@ -67,7 +67,7 @@ The system shall enforce tenant isolation across identity, authorization, API ac
 
 - `tenant_id` is available to the authorization flow after authentication.
 - Amazon Cognito User Pool authentication establishes user identity, but Amazon Verified Permissions remains the source of truth for action authorization.
-- UI enablement is treated as a usability control. Server-side enforcement requirements still need to be specified separately.
+- UI enablement is treated as a usability control. Backend authorization enforcement is specified separately by `REQ-AUTH-003`.
 
 ## Open Questions
 
