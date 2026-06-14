@@ -21,8 +21,8 @@ This file tracks implementation readiness for requirements without cluttering th
 | REQ-AUTHZ-002 | Ready | Group-based action grant behavior is defined. |
 | REQ-AUTHZ-003 | Ready | Default-deny behavior is defined. |
 | REQ-AUTHZ-004 | Ready | Cross-tenant forbid behavior is defined. |
-| REQ-AUTHZ-005 | Draft | Same-tenant group loading behavior is defined; authorization backing source and data model remain open. |
-| REQ-AUTHZ-006 | Draft | Group-action mapping behavior is defined; persistence/backing source uniqueness enforcement remains open. |
+| REQ-AUTHZ-005 | Ready | Same-tenant group loading behavior is defined and backed by the `authorization-backing.md` static fixture model for `SLICE-001`. |
+| REQ-AUTHZ-006 | Ready | Group-action mapping behavior is defined and duplicate effective grants are handled by the `authorization-backing.md` static fixture model for `SLICE-001`. |
 | REQ-AUTHZ-007 | Ready | Cedar-authorized UI navigation rendering is defined and traceable to UI verification. |
 | REQ-AUTHZ-008 | Ready | Selected action view rendering is defined and Angular Router composition decision is accepted in `DEC-003`. |
 | REQ-AUTHZ-009 | Ready | Unauthorized REST/WebSocket action denial behavior is defined. |
@@ -46,12 +46,12 @@ This file tracks implementation readiness for requirements without cluttering th
 
 ## Current Implementation Readiness Summary
 
-- Ready: 16
-- Draft: 15
+- Ready: 18
+- Draft: 13
 - Blocked: 0
 
 ## Recommended Next Status Moves
 
-- Move `REQ-AUTHZ-005` and `REQ-AUTHZ-006` to `Ready` after the authorization backing source and data model are selected.
+- Move `REQ-AUTHZ-010` to `Ready` after action catalog ownership, versioning, and migration review are decided.
 - Move `REQ-UI-003` to `Ready` after tenant display name source and Profile/Logout/Help policy behavior are decided.
 - Use `SLICE-001` in `implementation-slices.md` as the first implementation planning target.

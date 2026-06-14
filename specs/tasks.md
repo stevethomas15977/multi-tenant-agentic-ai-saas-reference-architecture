@@ -18,7 +18,7 @@ This file tracks implementation and verification work derived from requirements.
 ## Authorization Policy Taxonomy
 
 - [ ] Define Cedar schema for `App::User`, `App::Group`, `App::Action`, `App::Resource`, and `App::Tenant`. Related: REQ-AUTHZ-001, REQ-AUTHZ-002, REQ-AUTHZ-010.
-- [ ] Define authorization backing source and data model for users, groups, user-group memberships, group-action grants, resources, and action catalog records before DynamoDB persistence is introduced. Related: REQ-AUTHZ-005, REQ-AUTHZ-006.
+- [x] Define authorization backing source and data model for users, groups, user-group memberships, group-action grants, resources, and action catalog records before DynamoDB persistence is introduced. See `specs/authorization-backing.md` and `DEC-007`. Related: REQ-AUTHZ-005, REQ-AUTHZ-006.
 - [ ] Define Cedar policy templates for group-action permit, cross-tenant forbid, and default-deny behavior. Related: REQ-AUTHZ-001, REQ-AUTHZ-002, REQ-AUTHZ-003, REQ-AUTHZ-004.
 - [ ] Define authorization context builder behavior for same-tenant group memberships, stale cross-tenant memberships, duplicate group-action mappings, and missing tenant context. Related: REQ-AUTHZ-001, REQ-AUTHZ-005, REQ-AUTHZ-006.
 - [ ] Define canonical action catalog governance, starter action catalog ownership, and action rename migration review. Related: REQ-AUTHZ-010.

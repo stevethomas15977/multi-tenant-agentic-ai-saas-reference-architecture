@@ -75,6 +75,10 @@ The starter action taxonomy is `app.navigate.dashboard`, `app.navigate.reports`,
 
 The authorization backing model includes `Users`, `Groups`, `UserGroupMembership`, `GroupActionGrant`, and `Resources` records. These records provide the user groups, same-tenant memberships, group-action grants, resource tenant context, and action identifiers used to build Cedar entities and authorization requests.
 
+For `SLICE-001`, the configured authorization backing source is the version-controlled static fixture model defined in `authorization-backing.md`. This fixture backs users, groups, user-group memberships, group-action grants, resources, and action catalog entries until durable persistence is introduced.
+
+Any future durable authorization backing source must preserve the same tenant-constrained membership behavior, effective group-action grant semantics, canonical action IDs, resource tenant ownership, and fail-closed handling for missing or invalid tenant context.
+
 ### Evaluation Flow
 
 1. The user authenticates with Amazon Cognito.

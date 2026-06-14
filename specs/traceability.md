@@ -13,8 +13,8 @@ This file maps requirements to design notes, tasks, and verification coverage.
 | REQ-AUTHZ-002 | `design.md` Cedar Authorization Model | Define group-action grant model; define group-action permit policy template | `verification.md` TM-AUTHZ-004, TM-AUTHZ-005 |
 | REQ-AUTHZ-003 | `design.md` Cedar Authorization Model; `design.md` Fail-Closed UI Behavior | Define default-deny behavior; define unknown action handling | `verification.md` TM-AUTHZ-003, TM-AUTHZ-005 |
 | REQ-AUTHZ-004 | `design.md` Cedar Authorization Model; `architecture.md` Tenant Boundary | Define cross-tenant forbid policy template; define misconfiguration protection cases | `verification.md` TM-AUTHZ-002 |
-| REQ-AUTHZ-005 | `design.md` Cedar Authorization Model | Define same-tenant user-group membership loading; define stale membership filtering | `verification.md` TM-AUTHZ-006 |
-| REQ-AUTHZ-006 | `design.md` Cedar Authorization Model | Define group-action persistence model; define duplicate mapping handling | `verification.md` TM-AUTHZ-007, TM-AUTHZ-008 |
+| REQ-AUTHZ-005 | `design.md` Cedar Authorization Model; `authorization-backing.md` | Define same-tenant user-group membership loading from the static fixture; define stale membership filtering | `verification.md` TM-AUTHZ-006 |
+| REQ-AUTHZ-006 | `design.md` Cedar Authorization Model; `authorization-backing.md` | Define group-action grant fixture model; define duplicate mapping handling | `verification.md` TM-AUTHZ-007, TM-AUTHZ-008 |
 | REQ-AUTHZ-007 | `design.md` Cedar Authorization Model; `design.md` Angular UI Layout | Define Cedar-authorized UI navigation mapping | `verification.md` TM-AUTHZ-009, TM-AUTHZ-010 |
 | REQ-AUTHZ-008 | `design.md` Cedar Authorization Model; `design.md` Angular UI Layout | Define selected action view mapping and center panel replacement behavior | `verification.md` TM-AUTHZ-011 |
 | REQ-AUTHZ-009 | `design.md` Cedar Authorization Model; `design.md` Backend REST Routing | Define protected REST and WebSocket action enforcement | `verification.md` TM-AUTHZ-012, TM-AUTHZ-013 |

@@ -60,6 +60,7 @@ An authenticated tenant user sees only the Angular left-side menu actions author
 - `DEC-002`: Use Cedar Group-Action Taxonomy for Initial Authorization.
 - `DEC-003`: Use Angular Router Child Routes for Action Views.
 - `DEC-004`: Defer DynamoDB Durable Persistence.
+- `DEC-007`: Use Static Authorization Fixture for SLICE-001.
 
 ### Verification Coverage
 
@@ -77,7 +78,7 @@ An authenticated tenant user sees only the Angular left-side menu actions author
 
 ### Implementation Assumptions
 
-- The first slice may use stubbed or static authorization backing data for users, groups, group-action grants, resources, and action catalog entries until a durable backing source is selected.
+- The first slice uses the version-controlled static authorization fixture defined in `authorization-backing.md` for users, groups, user-group memberships, group-action grants, resources, and action catalog entries.
 - The Angular UI can use a development or mocked Cognito/AVP integration during local implementation, provided the interfaces preserve the required token, `tenant_id`, and authorization decision behavior.
 - Backend enforcement beyond the authorized menu path may be stubbed for this slice, but authorization semantics must match the Cedar policy expectations.
 
@@ -89,7 +90,7 @@ An authenticated tenant user sees only the Angular left-side menu actions author
 | SLICE-001-B02 | Define Angular routes for starter authorized action views such as dashboard, reports, and admin. | REQ-AUTHZ-008, REQ-UI-006 |
 | SLICE-001-B03 | Implement Cognito-style authentication adapter that produces user identity, token state, `user_id`, and `tenant_id` custom claim for the slice. | REQ-AUTH-000, REQ-AUTH-004 |
 | SLICE-001-B04 | Implement authorization service interface that requests or simulates Amazon Verified Permissions / Cedar decisions for the current user, tenant, action, and resource context. | REQ-AUTH-001, REQ-AUTHZ-001 |
-| SLICE-001-B05 | Implement starter Cedar-compatible authorization fixtures for users, groups, group-action grants, resources, and action catalog entries. | REQ-AUTHZ-001, REQ-AUTHZ-002, REQ-AUTHZ-003, REQ-AUTHZ-004 |
+| SLICE-001-B05 | Implement or load the version-controlled static authorization fixture for users, groups, user-group memberships, group-action grants, resources, and action catalog entries. | REQ-AUTHZ-001, REQ-AUTHZ-002, REQ-AUTHZ-003, REQ-AUTHZ-004, REQ-AUTHZ-005, REQ-AUTHZ-006 |
 | SLICE-001-B06 | Implement fail-closed handling for missing `tenant_id`, cross-tenant access, unknown actions, unavailable authorization data, and users with no granting group. | REQ-AUTH-002, REQ-AUTH-004, REQ-AUTHZ-003, REQ-AUTHZ-004, REQ-UI-005 |
 | SLICE-001-B07 | Map permitted Cedar action identifiers to left-side Angular menu links. | REQ-AUTH-002, REQ-AUTHZ-007, REQ-UI-004 |
 | SLICE-001-B08 | Omit unauthorized actions from selectable left-side menu links. | REQ-AUTHZ-007, REQ-UI-005 |

@@ -154,3 +154,34 @@ Keeping diagrams alongside requirements and design artifacts helps preserve arch
 **Related Requirements**
 
 - `specs/design.md` Design Standards
+
+## DEC-007: Use Static Authorization Fixture for SLICE-001
+
+**Status:** Accepted
+
+**Decision**
+
+Use a version-controlled static authorization fixture as the authorization backing source for `SLICE-001`.
+
+The fixture represents users, groups, user-group memberships, group-action grants, resources, and action catalog entries. It is the first-slice backing source for building Cedar-compatible authorization entities and deterministic tests.
+
+**Rationale**
+
+This keeps the first implementation slice focused on Cognito tenant context, Cedar/Verified Permissions authorization semantics, and Angular authorized menu rendering while DynamoDB durable persistence remains deferred.
+
+**Consequences**
+
+- `SLICE-001` implementation and tests should use the fixture data model in `authorization-backing.md`.
+- The fixture must include same-tenant grants, default-deny cases, cross-tenant denial cases, missing-tenant denial cases, and authorized navigation mappings.
+- Future durable persistence must preserve the fixture model's tenant isolation and fail-closed semantics.
+
+**Related Requirements**
+
+- `REQ-AUTHZ-005`
+- `REQ-AUTHZ-006`
+- `REQ-AUTHZ-007`
+- `REQ-AUTH-004`
+
+**Related Slice**
+
+- `SLICE-001`

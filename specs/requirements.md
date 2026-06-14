@@ -110,8 +110,8 @@ When group permissions are configured, the system shall support one-to-many mapp
 
 **Acceptance Criteria**
 
-- Given group `manager` is mapped to `app.navigate.dashboard`, `api.orders.read`, and `membership.assign`, when mappings are saved, then all mappings are retrievable for evaluation.
-- Given a duplicate mapping attempt for the same `group_id` and `action_id`, when the mapping is persisted, then only one effective mapping exists.
+- Given group `manager` is mapped to `app.navigate.dashboard`, `api.orders.read`, and `membership.assign`, when mappings are loaded for authorization evaluation, then all mappings are available for evaluation.
+- Given a duplicate mapping exists for the same `group_id` and `action_id`, when mappings are loaded for authorization evaluation, then only one effective mapping exists.
 
 ### REQ-AUTHZ-007: Render Cedar-Authorized UI Navigation
 
@@ -155,10 +155,10 @@ When action identifiers are defined, the system shall use a canonical action tax
 - Canonical action identifiers use lowercase dot-separated segments in the format `<domain>.<resource>.<verb>` or `app.navigate.<view>`.
 - Initial action identifiers include `app.navigate.dashboard`, `app.navigate.reports`, `app.navigate.admin`, `api.orders.read`, `api.orders.create`, `membership.assign`, `membership.revoke`, `user.read`, and `user.update`.
 - Cedar policy evaluation denies by default when no permit policy matches.
+- Before durable persistence is introduced, `SLICE-001` uses the version-controlled static authorization fixture defined in `authorization-backing.md` as the backing source for users, groups, memberships, grants, resources, and action catalog entries.
 
 ## Authorization Policy Taxonomy Open Questions
 
-- Which authorization backing source should store users, groups, user-group memberships, group-action grants, resources, and action catalog records before DynamoDB persistence is introduced?
 - Should the starter action taxonomy be versioned as `v1` with migration metadata for future action renames?
 - Are delegated administration workflows for tenant-defined custom actions out of scope for the initial implementation?
 - Are attribute-based constraints beyond tenant isolation and group action grants out of scope for the initial implementation?
