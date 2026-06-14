@@ -11,7 +11,9 @@ Every design update shall include the following architecture views when the chan
 
 Use the Draw.io MCP service to generate diagrams.
 
-Use the AWS 2026 (Open Library) within Draw.io for each specified AWS service when a corresponding service shape exists.
+Use the latest AWS 2026 (Open Library) icon set within Draw.io for each specified AWS service when a corresponding service icon exists.
+
+Draw.io diagrams should use AWS service icons rather than generic boxes for AWS services, an AWS Cloud group/container for the AWS boundary, external user icons for users outside AWS, concise directional connectors, and small callout boxes for important assumptions or deferred decisions.
 
 Store architecture diagram artifacts under `/architecture`.
 

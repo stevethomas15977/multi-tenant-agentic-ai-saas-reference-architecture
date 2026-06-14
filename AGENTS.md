@@ -18,6 +18,7 @@ This repository contains the Multi-tenant Agentic AI SaaS Reference Architecture
 - Preserve the EARS wording unless a correction is needed for clarity, consistency, or testability.
 - When changing requirements, update related design notes, task lists, acceptance criteria, and verification notes when those artifacts exist.
 - When implementation begins, default to the current active implementation slice in `specs/implementation-slices.md` and do not implement out-of-scope capabilities unless explicitly requested.
+- When creating or updating Draw.io architecture diagrams, use the latest AWS 2026 Draw.io icons for AWS services when available and follow the diagram conventions in `architecture/README.md`.
 - If an EARS requirement is ambiguous, make a reasonable interpretation when safe and record the assumption. Ask for clarification only when the ambiguity changes architecture, data boundaries, security posture, or user-facing behavior.
 
 ## EARS Requirement Style
