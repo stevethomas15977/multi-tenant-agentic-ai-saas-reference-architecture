@@ -67,7 +67,7 @@ The authorization backing model includes `Users`, `Groups`, `UserGroupMembership
 
 1. The user authenticates with Amazon Cognito.
 2. The Angular UI or backend requests authorization for the current context.
-3. The backend loads user groups and group action grants from DynamoDB.
+3. The backend loads user groups and group action grants from the configured authorization backing source.
 4. The backend builds Cedar entities and context for Amazon Verified Permissions.
 5. Amazon Verified Permissions returns a decision.
 6. The decision controls Angular menu rendering and REST/WebSocket backend action execution.
@@ -121,9 +121,9 @@ For Amazon API Gateway WebSocket endpoints, Python-based and/or TypeScript-based
 
 The Amazon Bedrock Knowledge Base is backed by an Amazon S3 vector index. Long-term memory access must preserve tenant boundaries and should use explicit retention, deletion, and retrieval policies before implementation.
 
-For Amazon API Gateway REST endpoints, Python-based and/or TypeScript-based Amazon Lambda functions use an Amazon DynamoDB table to manage user session and preferences data.
+For Amazon API Gateway REST endpoints, Python-based and/or TypeScript-based Amazon Lambda functions may use durable tenant-scoped persistence for user session and preferences data when that capability is included.
 
-Session and preferences data must be associated with user and tenant context. DynamoDB key design, indexing, TTL, retention, and tenant isolation remain open design decisions.
+Session and preferences data must be associated with user and tenant context when persisted. DynamoDB-based persistence is deferred and remains an optional later capability.
 
 ## DNS Routing
 
@@ -137,7 +137,7 @@ Route 53 DNS records should be updated when the underlying service endpoint URI 
 
 Terraform is the infrastructure lifecycle mechanism for AWS resources required by this architecture.
 
-Terraform should manage stable AWS infrastructure resources, including Amazon S3 buckets, Amazon CloudFront distributions, Amazon Route 53 records, Amazon Certificate Manager certificates and DNS validation records, Amazon Cognito User Pools and app clients, Amazon Verified Permissions policy stores and stable policy templates, Amazon API Gateway REST and WebSocket APIs, Amazon Lambda functions and execution roles, Amazon DynamoDB tables, Amazon Bedrock Agent and Knowledge Base resources where provider support is sufficient, IAM roles and policies, KMS keys, CloudWatch log groups and alarms, and AWS WAF resources when used.
+Terraform should manage stable AWS infrastructure resources, including Amazon S3 buckets, Amazon CloudFront distributions, Amazon Route 53 records, Amazon Certificate Manager certificates and DNS validation records, Amazon Cognito User Pools and app clients, Amazon Verified Permissions policy stores and stable policy templates, Amazon API Gateway REST and WebSocket APIs, Amazon Lambda functions and execution roles, Amazon Bedrock Agent and Knowledge Base resources where provider support is sufficient, IAM roles and policies, KMS keys, CloudWatch log groups and alarms, AWS WAF resources when used, and Amazon DynamoDB tables when durable persistence is included.
 
 Terraform should not manage high-churn runtime data such as Cognito users, tenant runtime memberships, DynamoDB session or preference records, Bedrock Knowledge Base documents or embeddings, or tenant authorization grants that change during normal application operation unless they are explicitly defined as bootstrap/reference configuration.
 
@@ -152,5 +152,5 @@ This behavior prevents optimistic UI access when authorization state is missing,
 ## Design Notes
 
 - UI enablement should not be treated as the only authorization control.
-- Backend/API enforcement starts at API Gateway through Amazon Cognito Authorizers and may be extended with downstream action authorization requirements in Python-based and/or TypeScript-based Amazon Lambda functions, DynamoDB-backed state operations, and Bedrock agent workflows.
+- Backend/API enforcement starts at API Gateway through Amazon Cognito Authorizers and may be extended with downstream action authorization requirements in Python-based and/or TypeScript-based Amazon Lambda functions, optional durable state operations, and Bedrock agent workflows.
 - Authorization checks should use a stable action naming scheme that can be mapped to both UI features and protected operations.

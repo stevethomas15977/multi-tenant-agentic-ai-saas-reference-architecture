@@ -147,7 +147,7 @@ When action identifiers are defined, the system shall use a canonical action tax
 
 ## Authorization Policy Taxonomy Open Questions
 
-- Which DynamoDB table design should store users, groups, user-group memberships, group-action grants, resources, and action catalog records?
+- Which authorization backing source should store users, groups, user-group memberships, group-action grants, resources, and action catalog records before DynamoDB persistence is introduced?
 - Should the starter action taxonomy be versioned as `v1` with migration metadata for future action renames?
 - Are delegated administration workflows for tenant-defined custom actions out of scope for the initial implementation?
 - Are attribute-based constraints beyond tenant isolation and group action grants out of scope for the initial implementation?
@@ -313,17 +313,16 @@ When an Amazon API Gateway WebSocket endpoint is provisioned, the system shall i
 - Given the Amazon Bedrock Knowledge Base stores or retrieves long-term memory, then the knowledge base is backed by an Amazon S3 vector index.
 - Given a WebSocket request requires agentic processing, when the backend invokes the Amazon Bedrock Agent, then the agent can use the Amazon Bedrock Knowledge Base for long-term memory retrieval.
 
-### REQ-API-004: Integrate REST Backend with DynamoDB Session Preferences
+### REQ-API-004: Support Optional Durable REST Session Preferences
 
-When an Amazon API Gateway REST endpoint is provisioned, the system shall integrate the backend with Python-based and/or TypeScript-based Amazon Lambda functions and an Amazon DynamoDB table for user session and preferences management.
+Where durable user session state or user preference persistence is included, the system shall persist session and preference data using tenant-scoped storage.
 
 **Acceptance Criteria**
 
-- Given an Amazon API Gateway REST endpoint is provisioned, then the endpoint is integrated with one or more Python-based and/or TypeScript-based Amazon Lambda functions.
-- Given a Python-based or TypeScript-based Amazon Lambda function handles REST backend processing, then the function is integrated with an Amazon DynamoDB table.
-- Given user session state is created, read, updated, or deleted by a REST API operation, then the operation uses the Amazon DynamoDB table for session management.
-- Given user preferences are created, read, updated, or deleted by a REST API operation, then the operation uses the Amazon DynamoDB table for preferences management.
-- Given user session or preferences data is persisted, then the data is associated with user and tenant context.
+- Given durable user session state persistence is included, then persisted session records are associated with user and tenant context.
+- Given durable user preference persistence is included, then persisted preference records are associated with user and tenant context.
+- Given durable session or preference persistence is not included, then the system shall not require a DynamoDB table for REST backend operation.
+- Given DynamoDB is later selected for durable session or preference persistence, then the DynamoDB table design shall preserve tenant isolation.
 
 ## Backend REST Routing Open Questions
 
@@ -335,9 +334,9 @@ When an Amazon API Gateway REST endpoint is provisioned, the system shall integr
 - What behavior qualifies the Amazon Bedrock Agent as "simple"?
 - What tenant isolation, retention, and deletion rules apply to long-term memory in the Amazon Bedrock Knowledge Base and Amazon S3 vector index?
 - Which WebSocket routes require agentic processing versus non-agentic Lambda processing?
-- What DynamoDB key schema, indexes, and item model support user session and preferences management?
-- Should user session records use DynamoDB TTL, and what retention policy applies to preferences?
-- Are user session and preferences stored in a shared multi-tenant table or tenant-specific tables?
+- When should durable user session state and user preference persistence be introduced?
+- If DynamoDB is selected later, what key schema, indexes, TTL, retention policy, and tenant isolation model should support user session and preferences management?
+- If DynamoDB is selected later, are user session and preferences stored in a shared multi-tenant table or tenant-specific tables?
 
 ## DNS Routing
 

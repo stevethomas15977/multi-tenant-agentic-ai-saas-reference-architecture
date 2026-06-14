@@ -40,7 +40,7 @@ Provisioned Amazon API Gateway endpoints integrate with Python-based and/or Type
 
 Provisioned Amazon API Gateway WebSocket endpoints integrate with Python-based and/or TypeScript-based Amazon Lambda functions and a simple Amazon Bedrock Agent. The Amazon Bedrock Agent uses an Amazon Bedrock Knowledge Base backed by an Amazon S3 vector index for long-term memory.
 
-Provisioned Amazon API Gateway REST endpoints integrate with Python-based and/or TypeScript-based Amazon Lambda functions and an Amazon DynamoDB table for user session and preferences management.
+Provisioned Amazon API Gateway REST endpoints integrate with Python-based and/or TypeScript-based Amazon Lambda functions. Durable user session and preferences persistence is deferred and may be introduced later using tenant-scoped storage.
 
 ## DNS Routing Context
 
@@ -50,7 +50,7 @@ Amazon Route 53 provides Alias or CNAME DNS records for provisioned service endp
 
 Terraform manages the lifecycle of AWS infrastructure resources required by the architecture. Terraform state is the source of managed infrastructure resource ownership and drift detection.
 
-Terraform-managed resources include stable AWS platform resources such as Amazon S3, Amazon CloudFront, Amazon Route 53, Amazon Certificate Manager, Amazon Cognito, Amazon Verified Permissions, Amazon API Gateway, Amazon Lambda, Amazon DynamoDB, Amazon Bedrock Agent and Knowledge Base resources where provider support is sufficient, IAM, KMS, CloudWatch, and AWS WAF when used.
+Terraform-managed resources include stable AWS platform resources such as Amazon S3, Amazon CloudFront, Amazon Route 53, Amazon Certificate Manager, Amazon Cognito, Amazon Verified Permissions, Amazon API Gateway, Amazon Lambda, Amazon Bedrock Agent and Knowledge Base resources where provider support is sufficient, IAM, KMS, CloudWatch, AWS WAF when used, and Amazon DynamoDB when durable persistence is included.
 
 High-churn runtime data, user records, tenant memberships, session records, preference records, knowledge base documents, embeddings, and operational authorization grants are not Terraform-managed unless they are explicitly classified as bootstrap/reference configuration.
 
@@ -72,7 +72,7 @@ High-churn runtime data, user records, tenant memberships, session records, pref
 - Amazon API Gateway is the entry point for backend REST and WebSocket requests.
 - Amazon Cognito Authorizers are responsible for authorizing requests received by provisioned Amazon API Gateway endpoints.
 - Python-based and/or TypeScript-based Amazon Lambda functions process backend requests and execute business logic behind Amazon API Gateway.
-- Amazon DynamoDB stores user session and preferences data for REST backend operations.
+- Durable user session and preferences persistence is deferred and may later use Amazon DynamoDB or another tenant-scoped persistence design.
 - Amazon Bedrock Agents provide agentic processing for WebSocket backend interactions.
 - Amazon Bedrock Knowledge Bases backed by Amazon S3 vector indexes provide long-term memory for agentic WebSocket interactions.
 
@@ -80,7 +80,7 @@ High-churn runtime data, user records, tenant memberships, session records, pref
 
 - Source and validation rules for `tenant_id`.
 - Tenant-specific versus shared resource strategy.
-- DynamoDB key strategy for Cedar authorization backing data.
+- Authorization backing source and data model before DynamoDB persistence is introduced.
 - Cedar policy template packaging and deployment strategy.
 - Action catalog ownership, versioning, and migration process.
 - Caching strategy and failure behavior for authorization decisions.
@@ -95,7 +95,7 @@ High-churn runtime data, user records, tenant memberships, session records, pref
 - Scope of "simple" Amazon Bedrock Agent behavior.
 - Tenant isolation, retention, deletion, and retrieval policy for long-term memory.
 - WebSocket route mapping between Lambda-only processing and Bedrock Agent processing.
-- DynamoDB key schema, indexing, TTL, retention, and tenant isolation model for user sessions and preferences.
+- Durable session and preference persistence timing, storage choice, key schema, TTL, retention, and tenant isolation model.
 - Hosted zone and domain naming strategy for Route 53 DNS records.
 - Whether Route 53 DNS records are tenant-specific, environment-specific, application-specific, or shared.
 - Whether the Cognito authorization endpoint uses a Cognito-managed domain or a custom domain.
